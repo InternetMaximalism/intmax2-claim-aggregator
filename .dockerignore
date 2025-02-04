@@ -1,0 +1,34 @@
+# Dependencies
+node_modules
+**/node_modules
+out
+**/n
+
+# Development files
+.git
+.gitignore
+.github
+.vscode
+.idea
+*.md
+!README.md
+*.log
+*.local
+
+# Environment files
+.env*
+
+# Docker files
+docker
+docker-compose*.yml
+Dockerfile*
+.dockerignore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Debug files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -1,0 +1,17 @@
+{
+  "name": "dispatcher",
+  "version": "1.0.0",
+  "dependencies": {
+    "@intmax2-claim-aggregator/shared": "workspace:*"
+  },
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsx watch --env-file=./../../.env src/index.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}

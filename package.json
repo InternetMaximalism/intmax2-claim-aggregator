@@ -1,0 +1,35 @@
+{
+  "name": "intmax2-claim-aggregator",
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "yarn workspaces foreach --all --topological run build",
+    "build:shared": "yarn workspace @intmax2-claim-aggregator/shared run build",
+    "build:parallel": "yarn workspaces foreach --all -pt run build",
+    "lint": "biome lint .",
+    "format": "biome check --write --unsafe .",
+    "check": "biome check .",
+    "migrate": "prisma migrate dev --schema=./prisma/schema.event.prisma",
+    "migrate:deploy": "prisma migrate deploy --schema=./prisma/schema.event.prisma",
+    "generate:withdrawal": "prisma generate --schema=./prisma/schema.withdrawal.prisma",
+    "generate:event": "prisma generate --schema=./prisma/schema.event.prisma",
+    "generate": "yarn generate:withdrawal && yarn generate:event",
+    "reset": "prisma migrate reset --schema=./prisma/schema.event.prisma"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/node": "^22.13.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@prisma/client": "6.3.0",
+    "prisma": "^6.3.0"
+  },
+  "prisma": {
+    "seed": "tsx --env-file=./.env prisma/seed.ts"
+  },
+  "packageManager": "yarn@4.6.0"
+}

@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+  output =  "../node_modules/.prisma/event-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("EVENT_DATABASE_URL")
+}
+
+model Event {
+  id              String   @id @default(uuid())
+  name            String   @unique
+  lastBlockNumber BigInt   @map("last_block_number")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  metadata        Json?
+
+  @@map("events")
+}
