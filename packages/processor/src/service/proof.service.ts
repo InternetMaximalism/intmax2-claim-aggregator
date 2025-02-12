@@ -5,8 +5,8 @@ import {
   logger,
 } from "@intmax2-claim-aggregator/shared";
 import { DEFAULT_ID_LENGTH } from "../constants";
-import { pollGnarkProof, pollClaimProof, pollClaimWrapperProof } from "../lib/poll";
-import { createGnarkProof, createClaimProof, createWrappedProof } from "../lib/zkp";
+import { pollClaimProof, pollClaimWrapperProof, pollGnarkProof } from "../lib/poll";
+import { createClaimProof, createGnarkProof, createWrappedProof } from "../lib/zkp";
 import type { ClaimProof, ClaimWithProof } from "../types";
 
 export const generateClaimProofs = async (claims: ClaimWithProof[]) => {

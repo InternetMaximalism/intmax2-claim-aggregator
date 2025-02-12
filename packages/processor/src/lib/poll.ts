@@ -1,6 +1,6 @@
 import { DEFAULT_POLL_OPTIONS } from "../constants";
-import type { GnarkProof, PollOptions, PollResult, ClaimProof } from "../types";
-import { getGnarkProof, getClaimProof, getClaimWrapperProof } from "./zkp";
+import type { ClaimProof, GnarkProof, PollOptions, PollResult } from "../types";
+import { getClaimProof, getClaimWrapperProof, getGnarkProof } from "./zkp";
 
 const poll = async <T>(pollFn: () => Promise<PollResult<T>>, options?: PollOptions) => {
   const pollOptions = { ...DEFAULT_POLL_OPTIONS, ...options };

@@ -1,7 +1,7 @@
 import { createNetworkClient, eventPrisma } from "@intmax2-claim-aggregator/shared";
 import { CLAIM_EVENT_NAMES } from "../types";
-import { handleAllWithdrawalEvents } from "./event.service";
 import { batchUpdateClaimStatusTransactions } from "./claim.service";
+import { handleAllWithdrawalEvents } from "./event.service";
 
 export const performJob = async (): Promise<void> => {
   const ethereumClient = createNetworkClient("scroll");

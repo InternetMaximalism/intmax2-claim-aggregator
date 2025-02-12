@@ -1,12 +1,12 @@
 import { config } from "@intmax2-claim-aggregator/shared";
 import axios, { type AxiosError, type AxiosRequestConfig } from "axios";
 import type {
+  ClaimProof,
   CreateGnarkProofResponse,
   CreateProofResponse,
   GetZKProofResponse,
   GnarkProof,
   ProverRequestParams,
-  ClaimProof,
 } from "../types";
 
 export const createClaimProof = async (

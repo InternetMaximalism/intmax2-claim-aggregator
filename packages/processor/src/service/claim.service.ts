@@ -6,8 +6,8 @@ import {
   withdrawalPrisma,
 } from "@intmax2-claim-aggregator/shared";
 import { formatContractWithdrawal, getLastClaimHashFromClaimProofs } from "../lib/utils";
-import type { GnarkProof, ClaimProof, ClaimWithProof } from "../types";
-import { generateGnarkProof, generateClaimProofs, generateWrappedProof } from "./proof.service";
+import type { ClaimProof, ClaimWithProof, GnarkProof } from "../types";
+import { generateClaimProofs, generateGnarkProof, generateWrappedProof } from "./proof.service";
 import { submitClaimProof } from "./submit.service";
 
 export const processClaimGroup = async (requestingClaims: RequestingClaim[]) => {
