@@ -1,16 +1,16 @@
 import {
   BLOCK_RANGE_MINIMUM,
-  type DirectWithdrawalSuccessedEvent,
+  type DirectWithdrawalQueuedEvent,
   type Event,
   LIQUIDITY_CONTRACT_ADDRESS,
   LIQUIDITY_CONTRACT_DEPLOYED_BLOCK,
-  directWithdrawalSuccessedEvent,
+  directWithdrawalQueuedEvent,
   fetchEvents,
   validateBlockRange,
 } from "@intmax2-claim-aggregator/shared";
 import { parseAbiItem } from "abitype";
 import type { PublicClient } from "viem";
-import type { WithdrawalEventType } from "../types";
+import type { ClaimEventType } from "../types";
 
 const handleWithdrawalEvent = async <T extends { args: { withdrawalHash: string } }>(
   ethereumClient: PublicClient,
@@ -18,7 +18,7 @@ const handleWithdrawalEvent = async <T extends { args: { withdrawalHash: string 
     startBlockNumber: bigint;
     endBlockNumber: bigint;
     eventInterface: ReturnType<typeof parseAbiItem>;
-    eventName: WithdrawalEventType;
+    eventName: ClaimEventType;
   },
 ) => {
   const { eventName, eventInterface, startBlockNumber, endBlockNumber } = params;
@@ -33,9 +33,7 @@ const handleWithdrawalEvent = async <T extends { args: { withdrawalHash: string 
     eventInterface,
   });
 
-  return events.map((log) => ({
-    withdrawalHash: log.args.withdrawalHash,
-  }));
+  return events.map(({ args }) => args) as T["args"][];
 };
 
 export const handleAllWithdrawalEvents = async (
@@ -43,26 +41,23 @@ export const handleAllWithdrawalEvents = async (
   currentBlockNumber: bigint,
   events: Event[],
 ) => {
-  const [claimDirectWithdrawals] = await Promise.all([
-    handleWithdrawalEvent<DirectWithdrawalSuccessedEvent>(ethereumClient, {
-      startBlockNumber: getLastProcessedBlockNumberByEventName(
-        events,
-        "ClaimDirectWithdrawalSuccessed",
-      ),
+  const [directWithdrawalQueues] = await Promise.all([
+    handleWithdrawalEvent<DirectWithdrawalQueuedEvent>(ethereumClient, {
+      startBlockNumber: getLastProcessedBlockNumberByEventName(events, "DirectWithdrawalQueued"),
       endBlockNumber: currentBlockNumber,
-      eventInterface: directWithdrawalSuccessedEvent,
-      eventName: "ClaimDirectWithdrawalSuccessed",
+      eventInterface: directWithdrawalQueuedEvent,
+      eventName: "DirectWithdrawalQueued",
     }),
   ]);
 
   return {
-    claimDirectWithdrawals,
+    directWithdrawalQueues,
   };
 };
 
 export const getLastProcessedBlockNumberByEventName = (
   events: Event[],
-  eventName: WithdrawalEventType,
+  eventName: ClaimEventType,
 ) => {
   const filteredEvents = events.filter((event) => event.name === eventName);
   if (filteredEvents.length === 0) {

@@ -5,60 +5,60 @@ import {
   logger,
 } from "@intmax2-claim-aggregator/shared";
 import { DEFAULT_ID_LENGTH } from "../constants";
-import { pollGnarkProof, pollWithdrawalProof, pollWithdrawalWrapperProof } from "../lib/poll";
-import { createGnarkProof, createWithdrawalProof, createWrappedProof } from "../lib/zkp";
-import type { WithdrawalProof, WithdrawalWithProof } from "../types";
+import { pollClaimProof, pollClaimWrapperProof, pollGnarkProof } from "../lib/poll";
+import { createClaimProof, createGnarkProof, createWrappedProof } from "../lib/zkp";
+import type { ClaimProof, ClaimWithProof } from "../types";
 
-export const generateWithdrawalProofs = async (withdrawals: WithdrawalWithProof[]) => {
-  const withdrawalProofs: WithdrawalProof[] = [];
+export const generateClaimProofs = async (claims: ClaimWithProof[]) => {
+  const claimProofs: ClaimProof[] = [];
 
-  for (const [index, withdrawal] of withdrawals.entries()) {
-    const { uuid, singleWithdrawalProof } = withdrawal;
-    if (!singleWithdrawalProof) {
-      throw new Error(`Missing single withdrawal proof for withdrawal ${uuid}`);
+  for (const [index, claim] of claims.entries()) {
+    const { uuid, singleClaimProof } = claim;
+    if (!singleClaimProof) {
+      throw new Error(`Missing single claim proof for claim ${uuid}`);
     }
 
-    logger.info(`Generating proof for withdrawal ${index + 1}/${withdrawals.length}`, { uuid });
+    logger.info(`Generating proof for claim ${index + 1}/${claims.length}`, { uuid });
 
     try {
-      const prevWithdrawalProof = index > 0 ? withdrawalProofs[index - 1].proof : null;
-      await createWithdrawalProof(uuid, bytesToBase64(singleWithdrawalProof), prevWithdrawalProof);
+      const prevClaimProof = index > 0 ? claimProofs[index - 1].proof : null;
+      await createClaimProof(uuid, bytesToBase64(singleClaimProof), prevClaimProof);
 
-      const result = await pollWithdrawalProof(uuid);
+      const result = await pollClaimProof(uuid);
       if (!result.proof) {
-        throw new Error(`Failed to generate proof for withdrawal ${uuid}`);
+        throw new Error(`Failed to generate proof for claim ${uuid}`);
       }
 
-      logger.debug(`Successfully generated proof for withdrawal ${uuid}`);
+      logger.debug(`Successfully generated proof for claim ${uuid}`);
 
-      withdrawalProofs.push(result.proof);
+      claimProofs.push(result.proof);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      logger.error(`Failed to generate proof for withdrawal ${uuid} - ${message}`);
+      logger.error(`Failed to generate proof for claim ${uuid} - ${message}`);
       throw error;
     }
   }
 
-  return withdrawalProofs;
+  return claimProofs;
 };
 
 export const generateWrappedProof = async (
-  withdrawalProofs: WithdrawalProof[],
+  claimProofs: ClaimProof[],
   walletClientData: ReturnType<typeof getWalletClient>,
 ) => {
-  if (withdrawalProofs.length === 0) {
-    throw new Error("No withdrawal proofs available to generate Wrapped proof");
+  if (claimProofs.length === 0) {
+    throw new Error("No claim proofs available to generate Wrapped proof");
   }
 
-  const lastWithdrawalProof = withdrawalProofs[withdrawalProofs.length - 1].proof;
+  const lastClaimProof = claimProofs[claimProofs.length - 1].proof;
   const wrapperId = getRandomString(DEFAULT_ID_LENGTH);
 
   try {
     logger.info("Generating wrapped proof", { wrapperId });
 
-    await createWrappedProof(wrapperId, walletClientData.account.address, lastWithdrawalProof);
+    await createWrappedProof(wrapperId, walletClientData.account.address, lastClaimProof);
 
-    const wrappedResult = await pollWithdrawalWrapperProof(wrapperId, {
+    const wrappedResult = await pollClaimWrapperProof(wrapperId, {
       maxAttempts: 30,
       intervalMs: 10_000,
     });

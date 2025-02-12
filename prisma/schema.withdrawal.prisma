@@ -47,6 +47,8 @@ model Claim {
   contractWithdrawal Json?       @map("contract_withdrawal")
   createdAt          DateTime    @default(now()) @db.Timestamptz(6) @map("created_at")
 
+  @@index([withdrawalHash], map: "idx_withdrawals_withdrawal_hash")
+
   @@map("claims")
 }
 

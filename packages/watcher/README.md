@@ -1,6 +1,6 @@
 # watcher
 
-The Watcher monitors events, specifically pending withdrawal processes, collects them, and updates their status accordingly.
+The Watcher monitors events, specifically pending claim processes, collects them, and updates their status accordingly.
 
 ## Usage
 

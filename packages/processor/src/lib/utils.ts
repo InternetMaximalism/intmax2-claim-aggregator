@@ -1,9 +1,9 @@
 import { encodePacked, keccak256, zeroHash } from "viem";
-import type { WithdrawalProof } from "../types";
+import type { ClaimProof } from "../types";
 
-export const getLastWithdrawalHashFromWithdrawalProofs = (withdrawalProofs: WithdrawalProof[]) => {
+export const getLastClaimHashFromClaimProofs = (claimProofs: ClaimProof[]) => {
   let lastWithdrawalHash = zeroHash as `0x${string}`;
-  for (const { withdrawal } of withdrawalProofs) {
+  for (const { withdrawal } of claimProofs) {
     lastWithdrawalHash = keccak256(
       encodePacked(
         ["bytes32", "address", "uint32", "uint256", "bytes32", "bytes32", "uint32"],
@@ -23,7 +23,7 @@ export const getLastWithdrawalHashFromWithdrawalProofs = (withdrawalProofs: With
   return lastWithdrawalHash;
 };
 
-export const formatContractWithdrawal = (withdrawalProof: WithdrawalProof) => {
+export const formatContractWithdrawal = (withdrawalProof: ClaimProof) => {
   return {
     recipient: withdrawalProof.withdrawal.recipient,
     tokenIndex: BigInt(withdrawalProof.withdrawal.tokenIndex),

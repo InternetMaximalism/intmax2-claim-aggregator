@@ -1,15 +1,15 @@
 import { config } from "@intmax2-claim-aggregator/shared";
 import axios, { type AxiosError, type AxiosRequestConfig } from "axios";
 import type {
+  ClaimProof,
   CreateGnarkProofResponse,
   CreateProofResponse,
   GetZKProofResponse,
   GnarkProof,
   ProverRequestParams,
-  WithdrawalProof,
 } from "../types";
 
-export const createWithdrawalProof = async (
+export const createClaimProof = async (
   id: string,
   singleWithdrawalProof: string,
   prevWithdrawalProof: string | null,
@@ -51,14 +51,14 @@ export const createGnarkProof = async (wrappedProof: string) => {
   });
 };
 
-export const getWithdrawalProof = async (proofId: string) => {
-  return makeProverRequest<GetZKProofResponse<WithdrawalProof>>({
+export const getClaimProof = async (proofId: string) => {
+  return makeProverRequest<GetZKProofResponse<ClaimProof>>({
     method: "get",
     path: `aggregator-prover/proof/claim/${proofId}`,
   });
 };
 
-export const getWithdrawalWrapperProof = async (proofId: string) => {
+export const getClaimWrapperProof = async (proofId: string) => {
   return makeProverRequest<GetZKProofResponse<string>>({
     method: "get",
     path: `aggregator-prover/proof/wrapper/claim/${proofId}`,
