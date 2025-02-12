@@ -7,30 +7,19 @@ export interface BaseEvent {
   blockTimestamp: string;
 }
 
-export interface DirectWithdrawalSuccessedEvent extends BaseEvent {
-  args: DirectWithdrawalSuccessedEventLog;
+export interface DirectWithdrawalQueuedEvent extends BaseEvent {
+  args: DirectWithdrawalQueuedEventLog;
 }
 
-export interface WithdrawalEventLog {
+export interface DirectWithdrawalQueuedEventLog {
   withdrawalHash: string;
-}
-
-export interface DirectWithdrawalSuccessedEventLog extends WithdrawalEventLog {
   recipient: string;
-}
-
-export interface WithdrawalClaimableEvent extends BaseEvent {
-  args: WithdrawalClaimableEventLog;
-}
-
-export interface WithdrawalClaimableEventLog extends WithdrawalEventLog {}
-
-export interface ClaimedWithdrawalEvent extends BaseEvent {
-  args: ClaimedWithdrawalEventLog;
-}
-
-export interface ClaimedWithdrawalEventLog extends WithdrawalEventLog {
-  recipient: string;
+  withdrawal: {
+    recipient: string;
+    tokenIndex: number;
+    amount: bigint;
+    nullifier: string;
+  };
 }
 
 export interface ContractCallParameters {

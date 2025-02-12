@@ -1,16 +1,8 @@
 import { type AbiEvent, parseAbiItem } from "abitype";
 import type { PublicClient } from "viem";
 
-export const directWithdrawalSuccessedEvent = parseAbiItem(
-  "event DirectWithdrawalSuccessed(bytes32 indexed withdrawalHash, address indexed recipient)",
-);
-
-export const withdrawalClaimableEvent = parseAbiItem(
-  "event WithdrawalClaimable(bytes32 indexed withdrawalHash)",
-);
-
-export const claimedWithdrawalEvent = parseAbiItem(
-  "event ClaimedWithdrawal(address indexed recipient, bytes32 indexed withdrawalHash)",
+export const directWithdrawalQueuedEvent = parseAbiItem(
+  "event DirectWithdrawalQueued(bytes32 indexed withdrawalHash, address indexed recipient, (address recipient, uint32 tokenIndex, uint256 amount, bytes32 nullifier) withdrawal)",
 );
 
 export const getEventLogs = async (

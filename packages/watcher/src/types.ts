@@ -1,7 +1,7 @@
 export const ClaimEvents = {
-  CLAIM_DIRECT_WITHDRAWAL_SUCCESSED: "ClaimDirectWithdrawalSuccessed",
+  DIRECT_WITHDRAWAL_QUEUED: "DirectWithdrawalQueued",
 } as const;
 
-export type WithdrawalEventType = (typeof ClaimEvents)[keyof typeof ClaimEvents];
+export type ClaimEventType = (typeof ClaimEvents)[keyof typeof ClaimEvents];
 
-export const WITHDRAWAL_EVENT_NAMES = Object.values(ClaimEvents);
+export const CLAIM_EVENT_NAMES = Object.values(ClaimEvents);

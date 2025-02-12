@@ -1,7 +1,7 @@
 import { createNetworkClient, eventPrisma } from "@intmax2-claim-aggregator/shared";
-import { WITHDRAWAL_EVENT_NAMES } from "../types";
+import { CLAIM_EVENT_NAMES } from "../types";
 import { handleAllWithdrawalEvents } from "./event.service";
-import { batchUpdateWithdrawalStatusTransactions } from "./withdrawal.service";
+import { batchUpdateClaimStatusTransactions } from "./claim.service";
 
 export const performJob = async (): Promise<void> => {
   const ethereumClient = createNetworkClient("scroll");
@@ -10,23 +10,23 @@ export const performJob = async (): Promise<void> => {
     eventPrisma.event.findMany({
       where: {
         name: {
-          in: WITHDRAWAL_EVENT_NAMES,
+          in: CLAIM_EVENT_NAMES,
         },
       },
     }),
     ethereumClient.getBlockNumber(),
   ]);
 
-  const { claimDirectWithdrawals } = await handleAllWithdrawalEvents(
+  const { directWithdrawalQueues } = await handleAllWithdrawalEvents(
     ethereumClient,
     currentBlockNumber,
     events,
   );
 
-  await batchUpdateWithdrawalStatusTransactions(claimDirectWithdrawals);
+  await batchUpdateClaimStatusTransactions(directWithdrawalQueues);
 
   await eventPrisma.$transaction(
-    WITHDRAWAL_EVENT_NAMES.map((eventName) =>
+    CLAIM_EVENT_NAMES.map((eventName) =>
       eventPrisma.event.upsert({
         where: {
           name: eventName,
