@@ -1,6 +1,6 @@
 # processor
 
-The processor generates ZKP proofs based on the grouped withdrawals and executes transactions on the contract.
+The processor generates ZKP proofs based on the grouped claims and executes transactions on the contract.
 
 ## Usage
 

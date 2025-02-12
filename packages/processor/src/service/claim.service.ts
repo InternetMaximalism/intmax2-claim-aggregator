@@ -28,10 +28,10 @@ export const processClaimGroup = async (requestingClaims: RequestingClaim[]) => 
 const fetchWithdrawalsWithProofs = async (requestingWithdrawals: RequestingClaim[]) => {
   const requestingWithdrawalUUIDs = requestingWithdrawals.map((withdrawal) => withdrawal.uuid);
 
-  const withdrawals = await withdrawalPrisma.withdrawal.findMany({
+  const claims = await withdrawalPrisma.claim.findMany({
     select: {
       uuid: true,
-      singleWithdrawalProof: true,
+      singleClaimProof: true,
       withdrawalHash: true,
     },
     where: {
@@ -42,13 +42,13 @@ const fetchWithdrawalsWithProofs = async (requestingWithdrawals: RequestingClaim
     },
   });
 
-  if (withdrawals.length !== requestingWithdrawalUUIDs.length) {
+  if (claims.length !== requestingWithdrawalUUIDs.length) {
     logger.warn(
-      `Some requested withdrawals were not found or not in REQUESTED status requested: ${requestingWithdrawalUUIDs.length} found: ${withdrawals.length}`,
+      `Some requested withdrawals were not found or not in REQUESTED status requested: ${requestingWithdrawalUUIDs.length} found: ${claims.length}`,
     );
   }
 
-  return withdrawals as unknown as WithdrawalWithProof[];
+  return claims as unknown as WithdrawalWithProof[];
 };
 
 const submitWithdrawalProofToScroll = async (

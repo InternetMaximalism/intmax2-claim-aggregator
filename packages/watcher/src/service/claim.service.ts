@@ -43,7 +43,7 @@ const batchUpdateClaimStatus = (
   const data = {
     status: nextStatus,
     ...(type === "DirectWithdrawalQueued" && {
-      singleWithdrawalProof: null,
+      singleClaimProof: null,
     }),
   };
 
