@@ -1,6 +1,6 @@
 import { DEFAULT_POLL_OPTIONS } from "../constants";
-import type { GnarkProof, PollOptions, PollResult, WithdrawalProof } from "../types";
-import { getGnarkProof, getWithdrawalProof, getWithdrawalWrapperProof } from "./zkp";
+import type { GnarkProof, PollOptions, PollResult, ClaimProof } from "../types";
+import { getGnarkProof, getClaimProof, getClaimWrapperProof } from "./zkp";
 
 const poll = async <T>(pollFn: () => Promise<PollResult<T>>, options?: PollOptions) => {
   const pollOptions = { ...DEFAULT_POLL_OPTIONS, ...options };
@@ -39,16 +39,16 @@ const poll = async <T>(pollFn: () => Promise<PollResult<T>>, options?: PollOptio
   throw new Error(`Maximum polling attempts (${pollOptions.maxAttempts}) exceeded`);
 };
 
-export const pollWithdrawalProof = (proofId: string, options?: PollOptions) => {
-  return poll<WithdrawalProof>(async () => {
-    const proof = await getWithdrawalProof(proofId);
+export const pollClaimProof = (proofId: string, options?: PollOptions) => {
+  return poll<ClaimProof>(async () => {
+    const proof = await getClaimProof(proofId);
     return proof;
   }, options);
 };
 
-export const pollWithdrawalWrapperProof = (proofId: string, options?: PollOptions) => {
+export const pollClaimWrapperProof = (proofId: string, options?: PollOptions) => {
   return poll<string>(async () => {
-    const proof = await getWithdrawalWrapperProof(proofId);
+    const proof = await getClaimWrapperProof(proofId);
     return proof;
   }, options);
 };

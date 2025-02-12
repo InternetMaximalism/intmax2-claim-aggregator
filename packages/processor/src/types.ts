@@ -40,13 +40,13 @@ export interface SubmitContractWithdrawal {
   blockNumber: bigint;
 }
 
-export interface WithdrawalWithProof {
+export interface ClaimWithProof {
   uuid: string;
-  singleWithdrawalProof: Uint8Array | null;
+  singleClaimProof: Uint8Array | null;
   withdrawalHash: string;
 }
 
-export interface WithdrawalProof {
+export interface ClaimProof {
   proof: string;
   withdrawal: {
     recipient: string;
@@ -65,11 +65,11 @@ export interface ProverRequestParams {
   params?: Record<string, string>;
 }
 
-export interface SubmitWithdrawalParams {
+export interface SubmitClaimParams {
   contractWithdrawals: SubmitContractWithdrawal[];
   publicInputs: {
-    lastWithdrawalHash: string;
-    withdrawalAggregator: string;
+    lastClaimHash: string;
+    claimAggregator: string;
   };
   proof: GnarkProof["proof"];
 }

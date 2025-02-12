@@ -27,10 +27,10 @@ import {
   TRANSACTION_REPLACEMENT_FEE_TOO_LOW,
   WAIT_TRANSACTION_TIMEOUT,
 } from "../constants";
-import type { SubmitWithdrawalParams } from "../types";
+import type { SubmitClaimParams } from "../types";
 
-export const submitWithdrawalProof = async (
-  params: SubmitWithdrawalParams,
+export const submitClaimProof = async (
+  params: SubmitClaimParams,
   walletClientData: ReturnType<typeof getWalletClient>,
 ) => {
   const ethereumClient = createNetworkClient("scroll");
@@ -43,7 +43,7 @@ export const submitWithdrawalProof = async (
     try {
       const multiplier = calculateGasMultiplier(attempt);
 
-      const { transactionHash } = await submitWithdrawalProofWithRetry(
+      const { transactionHash } = await submitClaimProofWithRetry(
         ethereumClient,
         walletClientData,
         params,
@@ -54,7 +54,7 @@ export const submitWithdrawalProof = async (
       const receipt = await ethersWaitForTransactionConfirmation(
         ethereumClient,
         transactionHash,
-        "submitWithdrawalProof",
+        "submitClaimProof",
         {
           confirms: ETHERS_CONFIRMATIONS,
           timeout: WAIT_TRANSACTION_TIMEOUT,
@@ -86,17 +86,17 @@ export const submitWithdrawalProof = async (
   throw new Error("Unexpected end of transaction");
 };
 
-export const submitWithdrawalProofWithRetry = async (
+export const submitClaimProofWithRetry = async (
   ethereumClient: PublicClient,
   walletClientData: ReturnType<typeof getWalletClient>,
-  params: SubmitWithdrawalParams,
+  params: SubmitClaimParams,
   multiplier: number,
   retryOptions: RetryOptionsEthers,
 ) => {
   const contractCallParams: ContractCallParameters = {
     contractAddress: config.WITHDRAWAL_CONTRACT_ADDRESS as `0x${string}`,
     abi: WithdrawalAbi as Abi,
-    functionName: "submitWithdrawalProof",
+    functionName: "submitClaimProof",
     account: walletClientData.account,
     args: [params.contractWithdrawals, params.publicInputs, params.proof],
   };
