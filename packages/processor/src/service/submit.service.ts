@@ -15,22 +15,20 @@ import {
   getWalletClient,
   logger,
   replacedEthersTransaction,
-} from "@intmax2-claim-aggregator/shared";
-import { ethers } from "ethers";
-import { type PublicClient, toHex } from "viem";
-import {
   ETHERS_CONFIRMATIONS,
   ETHERS_WAIT_TRANSACTION_TIMEOUT_MESSAGE,
   TRANSACTION_MAX_RETRIES,
   TRANSACTION_MISSING_REVERT_DATA,
   TRANSACTION_REPLACEMENT_FEE_TOO_LOW,
   WAIT_TRANSACTION_TIMEOUT,
-} from "../constants";
+} from "@intmax2-claim-aggregator/shared";
+import { ethers } from "ethers";
+import { type PublicClient, toHex } from "viem";
 import type { SubmitClaimParams } from "../types";
 
 export const submitClaimProof = async (
-  params: SubmitClaimParams,
   walletClientData: ReturnType<typeof getWalletClient>,
+  params: SubmitClaimParams,
 ) => {
   const ethereumClient = createNetworkClient("scroll");
 

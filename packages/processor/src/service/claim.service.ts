@@ -22,7 +22,7 @@ export const processClaimGroup = async (requestingClaims: RequestingClaim[]) => 
   const claimWrappedProof = await generateClaimWrappedProof(claimProofs, walletClientData);
   const claimGnarkProof = await generateClaimGnarkProof(claimWrappedProof);
 
-  await submitClaimProofToScroll(claimProofs, claimGnarkProof, walletClientData);
+  await submitClaimProofToScroll(walletClientData, claimProofs, claimGnarkProof);
 };
 
 const fetchClaimsWithProofs = async (requestingClaims: RequestingClaim[]) => {
@@ -52,9 +52,9 @@ const fetchClaimsWithProofs = async (requestingClaims: RequestingClaim[]) => {
 };
 
 const submitClaimProofToScroll = async (
+  walletClientData: ReturnType<typeof getWalletClient>,
   claimProofs: ClaimProof[],
   claimGnarkProof: GnarkProof,
-  walletClientData: ReturnType<typeof getWalletClient>,
 ) => {
   const lastClaimHash = getLastClaimHashFromClaimProofs(claimProofs);
   const claimAggregator = walletClientData.account.address;
@@ -68,5 +68,5 @@ const submitClaimProofToScroll = async (
     proof: `0x${claimGnarkProof.proof}`,
   };
 
-  await submitClaimProof(params, walletClientData);
+  await submitClaimProof(walletClientData, params);
 };
