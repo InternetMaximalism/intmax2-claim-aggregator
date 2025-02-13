@@ -2,7 +2,13 @@ import {
   Claim__factory,
   type ContractCallOptionsEthers,
   type ContractCallParameters,
+  ETHERS_CONFIRMATIONS,
+  ETHERS_WAIT_TRANSACTION_TIMEOUT_MESSAGE,
   type RetryOptionsEthers,
+  TRANSACTION_MAX_RETRIES,
+  TRANSACTION_MISSING_REVERT_DATA,
+  TRANSACTION_REPLACEMENT_FEE_TOO_LOW,
+  WAIT_TRANSACTION_TIMEOUT,
   calculateEthersIncreasedGasPrice,
   calculateGasMultiplier,
   config,
@@ -18,19 +24,11 @@ import {
 } from "@intmax2-claim-aggregator/shared";
 import { ethers } from "ethers";
 import { type PublicClient, toHex } from "viem";
-import {
-  ETHERS_CONFIRMATIONS,
-  ETHERS_WAIT_TRANSACTION_TIMEOUT_MESSAGE,
-  TRANSACTION_MAX_RETRIES,
-  TRANSACTION_MISSING_REVERT_DATA,
-  TRANSACTION_REPLACEMENT_FEE_TOO_LOW,
-  WAIT_TRANSACTION_TIMEOUT,
-} from "../constants";
 import type { SubmitClaimParams } from "../types";
 
 export const submitClaimProof = async (
-  params: SubmitClaimParams,
   walletClientData: ReturnType<typeof getWalletClient>,
+  params: SubmitClaimParams,
 ) => {
   const ethereumClient = createNetworkClient("scroll");
 

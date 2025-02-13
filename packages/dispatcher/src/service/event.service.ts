@@ -1,5 +1,7 @@
 import {
   BLOCK_RANGE_MINIMUM,
+  CLAIM_CONTRACT_ADDRESS,
+  CLAIM_CONTRACT_DEPLOYED_BLOCK,
   type ContributionRecordedEvent,
   type Event,
   contributionRecordedEvent,
@@ -9,7 +11,6 @@ import {
   validateBlockRange,
 } from "@intmax2-claim-aggregator/shared";
 import type { PublicClient } from "viem";
-import { CLAIM_CONTRACT_ADDRESS, CLAIM_CONTRACT_DEPLOYED_BLOCK } from "../constants";
 
 export const getContributionRecordedEvents = async (
   ethereumClient: PublicClient,

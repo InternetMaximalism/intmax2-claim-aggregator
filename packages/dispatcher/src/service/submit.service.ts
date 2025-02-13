@@ -1,11 +1,17 @@
 import {
+  CLAIM_CONTRACT_ADDRESS,
   Claim__factory,
   type ContractCallOptionsEthers,
   type ContractCallParameters,
+  ETHERS_CONFIRMATIONS,
+  ETHERS_WAIT_TRANSACTION_TIMEOUT_MESSAGE,
   type RetryOptionsEthers,
+  TRANSACTION_MAX_RETRIES,
+  TRANSACTION_MISSING_REVERT_DATA,
+  TRANSACTION_REPLACEMENT_FEE_TOO_LOW,
+  WAIT_TRANSACTION_TIMEOUT,
   calculateEthersIncreasedGasPrice,
   calculateGasMultiplier,
-  config,
   createNetworkClient,
   ethersWaitForTransactionConfirmation,
   executeEthersTransaction,
@@ -18,14 +24,6 @@ import {
 } from "@intmax2-claim-aggregator/shared";
 import { ethers } from "ethers";
 import { type PublicClient, toHex } from "viem";
-import {
-  ETHERS_CONFIRMATIONS,
-  ETHERS_WAIT_TRANSACTION_TIMEOUT_MESSAGE,
-  TRANSACTION_MAX_RETRIES,
-  TRANSACTION_MISSING_REVERT_DATA,
-  TRANSACTION_REPLACEMENT_FEE_TOO_LOW,
-  WAIT_TRANSACTION_TIMEOUT,
-} from "../constants";
 import type { ContributionParams } from "../types";
 
 export const relayClaims = async (
@@ -92,7 +90,7 @@ export const relayClaimsWithRetry = async (
   retryOptions: RetryOptionsEthers,
 ) => {
   const contractCallParams: ContractCallParameters = {
-    contractAddress: config.CLAIM_CONTRACT_ADDRESS as `0x${string}`,
+    contractAddress: CLAIM_CONTRACT_ADDRESS,
     functionName: "submitClaimProof",
     account: walletClientData.account,
     args: [params.period, params.users],

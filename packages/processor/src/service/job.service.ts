@@ -2,12 +2,12 @@ import {
   ClaimGroupStatus,
   ClaimManager,
   ClaimStatus,
+  EXECUTION_REVERTED_ERROR_MESSAGE,
   type QueueJobData,
   logger,
   timeOperation,
   withdrawalPrisma,
 } from "@intmax2-claim-aggregator/shared";
-import { EXECUTION_REVERTED_ERROR_MESSAGE } from "../constants";
 import { processClaimGroup } from "./claim.service";
 
 export const processQueueJob = async (jobData: QueueJobData) => {

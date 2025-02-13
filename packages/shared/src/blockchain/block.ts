@@ -2,9 +2,9 @@ import type { Event } from "../db";
 
 export const getStartBlockNumber = (
   lastProcessedEvent: Event | null,
-  deployedBlockNumber: number,
+  deployedBlockNumber: bigint,
 ) => {
   return lastProcessedEvent?.lastBlockNumber
     ? lastProcessedEvent.lastBlockNumber + BigInt(1)
-    : BigInt(deployedBlockNumber);
+    : deployedBlockNumber;
 };
