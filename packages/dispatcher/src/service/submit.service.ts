@@ -26,14 +26,13 @@ import {
   TRANSACTION_REPLACEMENT_FEE_TOO_LOW,
   WAIT_TRANSACTION_TIMEOUT,
 } from "../constants";
-import type { SubmitClaimParams } from "../types";
+import type { ContributionParams } from "../types";
 
-export const submitClaimProof = async (
-  params: SubmitClaimParams,
-  walletClientData: ReturnType<typeof getWalletClient>,
+export const relayClaims = async (
+  ethereumClient: ReturnType<typeof createNetworkClient>,
+  params: ContributionParams,
 ) => {
-  const ethereumClient = createNetworkClient("scroll");
-
+  const walletClientData = getWalletClient("withdrawal", "scroll");
   const retryOptions: RetryOptionsEthers = {
     gasPrice: null,
   };
@@ -42,7 +41,7 @@ export const submitClaimProof = async (
     try {
       const multiplier = calculateGasMultiplier(attempt);
 
-      const { transactionHash } = await submitClaimProofWithRetry(
+      const { transactionHash } = await relayClaimsWithRetry(
         ethereumClient,
         walletClientData,
         params,
@@ -85,10 +84,10 @@ export const submitClaimProof = async (
   throw new Error("Unexpected end of transaction");
 };
 
-export const submitClaimProofWithRetry = async (
+export const relayClaimsWithRetry = async (
   ethereumClient: PublicClient,
   walletClientData: ReturnType<typeof getWalletClient>,
-  params: SubmitClaimParams,
+  params: ContributionParams,
   multiplier: number,
   retryOptions: RetryOptionsEthers,
 ) => {
@@ -96,7 +95,7 @@ export const submitClaimProofWithRetry = async (
     contractAddress: config.CLAIM_CONTRACT_ADDRESS as `0x${string}`,
     functionName: "submitClaimProof",
     account: walletClientData.account,
-    args: [params.contractWithdrawals, params.publicInputs, params.proof],
+    args: [params.period, params.users],
   };
 
   const [{ pendingNonce, currentNonce }, gasPriceData] = await Promise.all([

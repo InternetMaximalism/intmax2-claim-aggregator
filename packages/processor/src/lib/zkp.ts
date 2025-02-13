@@ -25,7 +25,7 @@ export const createClaimProof = async (
   });
 };
 
-export const createWrappedProof = async (
+export const createClaimWrappedProof = async (
   id: string,
   claimAggregatorAddress: string,
   claimProof: string,
@@ -41,7 +41,7 @@ export const createWrappedProof = async (
   });
 };
 
-export const createGnarkProof = async (wrappedProof: string) => {
+export const createClaimGnarkProof = async (wrappedProof: string) => {
   return makeProverRequest<CreateGnarkProofResponse>({
     method: "post",
     path: "gnark-server/start-proof",
@@ -65,7 +65,7 @@ export const getClaimWrapperProof = async (proofId: string) => {
   });
 };
 
-export const getGnarkProof = async (jobId: string) => {
+export const getClaimGnarkProof = async (jobId: string) => {
   return makeProverRequest<GetZKProofResponse<GnarkProof>>({
     method: "get",
     path: `gnark-server/get-proof`,

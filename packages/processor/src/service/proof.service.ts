@@ -6,7 +6,7 @@ import {
 } from "@intmax2-claim-aggregator/shared";
 import { DEFAULT_ID_LENGTH } from "../constants";
 import { pollClaimProof, pollClaimWrapperProof, pollGnarkProof } from "../lib/poll";
-import { createClaimProof, createGnarkProof, createWrappedProof } from "../lib/zkp";
+import { createClaimGnarkProof, createClaimProof, createClaimWrappedProof } from "../lib/zkp";
 import type { ClaimProof, ClaimWithProof } from "../types";
 
 export const generateClaimProofs = async (claims: ClaimWithProof[]) => {
@@ -42,7 +42,7 @@ export const generateClaimProofs = async (claims: ClaimWithProof[]) => {
   return claimProofs;
 };
 
-export const generateWrappedProof = async (
+export const generateClaimWrappedProof = async (
   claimProofs: ClaimProof[],
   walletClientData: ReturnType<typeof getWalletClient>,
 ) => {
@@ -56,7 +56,7 @@ export const generateWrappedProof = async (
   try {
     logger.info("Generating wrapped proof", { wrapperId });
 
-    await createWrappedProof(wrapperId, walletClientData.account.address, lastClaimProof);
+    await createClaimWrappedProof(wrapperId, walletClientData.account.address, lastClaimProof);
 
     const wrappedResult = await pollClaimWrapperProof(wrapperId, {
       maxAttempts: 30,
@@ -76,12 +76,12 @@ export const generateWrappedProof = async (
   }
 };
 
-export const generateGnarkProof = async (wrappedProof: string) => {
+export const generateClaimGnarkProof = async (wrappedProof: string) => {
   let jobId: string;
   try {
     logger.info("Generating gnark proof");
 
-    const createGnarkResult = await createGnarkProof(wrappedProof);
+    const createGnarkResult = await createClaimGnarkProof(wrappedProof);
     if (!createGnarkResult.jobId) {
       throw new Error("Failed to create Gnark proof job");
     }

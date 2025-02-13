@@ -1,6 +1,6 @@
 # dispatcher
 
-The collector gathers pending claim processes and groups them.
+The dispatcher is an automated system for processing ITX claims.
 
 ## Usage
 
