@@ -5,8 +5,8 @@ import { handleAllWithdrawalEvents } from "./event.service";
 
 export const performJob = async (): Promise<void> => {
   const ethereumClient = createNetworkClient("scroll");
-
-  const [events, currentBlockNumber] = await Promise.all([
+  const [currentBlockNumber, events] = await Promise.all([
+    ethereumClient.getBlockNumber(),
     eventPrisma.event.findMany({
       where: {
         name: {
@@ -14,7 +14,6 @@ export const performJob = async (): Promise<void> => {
         },
       },
     }),
-    ethereumClient.getBlockNumber(),
   ]);
 
   const { directWithdrawalQueues } = await handleAllWithdrawalEvents(

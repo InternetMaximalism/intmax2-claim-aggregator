@@ -1,4 +1,4 @@
-import type { Abi, Account } from "viem";
+import type { Account } from "viem";
 
 export interface BaseEvent {
   name: string;
@@ -22,9 +22,19 @@ export interface DirectWithdrawalQueuedEventLog {
   };
 }
 
+export interface ContributionRecordedEvent extends BaseEvent {
+  args: ContributionRecordedEventLog;
+}
+
+export interface ContributionRecordedEventLog {
+  period: bigint;
+  recipient: string;
+  depositAmount: bigint;
+  contribution: bigint;
+}
+
 export interface ContractCallParameters {
   contractAddress: `0x${string}`;
-  abi: Abi;
   functionName: string;
   account: Account;
   args: any[];

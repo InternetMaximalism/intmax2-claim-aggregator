@@ -7,7 +7,11 @@ import {
 } from "@intmax2-claim-aggregator/shared";
 import { formatContractWithdrawal, getLastClaimHashFromClaimProofs } from "../lib/utils";
 import type { ClaimProof, ClaimWithProof, GnarkProof } from "../types";
-import { generateClaimProofs, generateGnarkProof, generateWrappedProof } from "./proof.service";
+import {
+  generateClaimGnarkProof,
+  generateClaimProofs,
+  generateClaimWrappedProof,
+} from "./proof.service";
 import { submitClaimProof } from "./submit.service";
 
 export const processClaimGroup = async (requestingClaims: RequestingClaim[]) => {
@@ -15,10 +19,10 @@ export const processClaimGroup = async (requestingClaims: RequestingClaim[]) => 
 
   const claims = await fetchClaimsWithProofs(requestingClaims);
   const claimProofs = await generateClaimProofs(claims);
-  const wrappedProof = await generateWrappedProof(claimProofs, walletClientData);
-  const gnarkProof = await generateGnarkProof(wrappedProof);
+  const claimWrappedProof = await generateClaimWrappedProof(claimProofs, walletClientData);
+  const claimGnarkProof = await generateClaimGnarkProof(claimWrappedProof);
 
-  await submitClaimProofToScroll(claimProofs, gnarkProof, walletClientData);
+  await submitClaimProofToScroll(claimProofs, claimGnarkProof, walletClientData);
 };
 
 const fetchClaimsWithProofs = async (requestingClaims: RequestingClaim[]) => {
@@ -49,7 +53,7 @@ const fetchClaimsWithProofs = async (requestingClaims: RequestingClaim[]) => {
 
 const submitClaimProofToScroll = async (
   claimProofs: ClaimProof[],
-  gnarkProof: GnarkProof,
+  claimGnarkProof: GnarkProof,
   walletClientData: ReturnType<typeof getWalletClient>,
 ) => {
   const lastClaimHash = getLastClaimHashFromClaimProofs(claimProofs);
@@ -61,7 +65,7 @@ const submitClaimProofToScroll = async (
       lastClaimHash,
       claimAggregator,
     },
-    proof: `0x${gnarkProof.proof}`,
+    proof: `0x${claimGnarkProof.proof}`,
   };
 
   await submitClaimProof(params, walletClientData);
