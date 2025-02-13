@@ -25,8 +25,8 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@prisma/client": "6.3.0",
-    "prisma": "^6.3.0"
+    "@prisma/client": "6.3.1",
+    "prisma": "^6.3.1"
   },
   "prisma": {
     "seed": "tsx --env-file=./.env prisma/seed.ts"
