@@ -40,7 +40,7 @@ const fetchClaimsWithProofs = async (requestingClaims: RequestingClaim[]) => {
 
   if (claims.length !== requestingClaimUUIDs.length) {
     logger.warn(
-      `Some requested claims were not found or not in REQUESTED status requested: ${requestingClaimUUIDs.length} found: ${claims.length}`,
+      `Some requested claims were not found or not in requested status requested: ${requestingClaimUUIDs.length} found: ${claims.length}`,
     );
   }
 

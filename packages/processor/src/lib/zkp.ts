@@ -11,32 +11,32 @@ import type {
 
 export const createClaimProof = async (
   id: string,
-  singleWithdrawalProof: string,
-  prevWithdrawalProof: string | null,
+  singleClaimProof: string,
+  prevClaimProof: string | null,
 ) => {
   return makeProverRequest<CreateProofResponse>({
     method: "post",
     path: "aggregator-prover/proof/claim",
     data: {
       id,
-      singleWithdrawalProof,
-      prevWithdrawalProof,
+      singleClaimProof,
+      prevClaimProof,
     },
   });
 };
 
 export const createWrappedProof = async (
   id: string,
-  withdrawalAggregatorAddress: string,
-  withdrawalProof: string,
+  claimAggregatorAddress: string,
+  claimProof: string,
 ) => {
   return makeProverRequest<CreateProofResponse>({
     method: "post",
     path: "aggregator-prover/proof/wrapper/claim",
     data: {
       id,
-      withdrawalAggregator: withdrawalAggregatorAddress,
-      withdrawalProof,
+      claimAggregator: claimAggregatorAddress,
+      claimProof,
     },
   });
 };
