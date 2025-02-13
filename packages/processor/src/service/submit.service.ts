@@ -1,9 +1,9 @@
 import {
+  ClaimAbi,
+  Claim__factory,
   type ContractCallOptionsEthers,
   type ContractCallParameters,
   type RetryOptionsEthers,
-  WithdrawalAbi,
-  Withdrawal__factory,
   calculateEthersIncreasedGasPrice,
   calculateGasMultiplier,
   config,
@@ -95,7 +95,7 @@ export const submitClaimProofWithRetry = async (
 ) => {
   const contractCallParams: ContractCallParameters = {
     contractAddress: config.WITHDRAWAL_CONTRACT_ADDRESS as `0x${string}`,
-    abi: WithdrawalAbi as Abi,
+    abi: ClaimAbi as Abi,
     functionName: "submitClaimProof",
     account: walletClientData.account,
     args: [params.contractWithdrawals, params.publicInputs, params.proof],
@@ -127,7 +127,7 @@ export const submitClaimProofWithRetry = async (
     toHex(walletClientData.account.getHdKey().privateKey!),
     provider,
   );
-  const contract = Withdrawal__factory.connect(contractCallParams.contractAddress, signer);
+  const contract = Claim__factory.connect(contractCallParams.contractAddress, signer);
 
   const ethersTxOptions = getEthersTxOptions(contractCallParams, contractCallOptions ?? {});
   const callArgs = [
