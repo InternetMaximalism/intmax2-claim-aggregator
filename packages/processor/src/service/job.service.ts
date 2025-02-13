@@ -2,11 +2,11 @@ import {
   ClaimGroupStatus,
   ClaimManager,
   ClaimStatus,
+  EXECUTION_REVERTED_ERROR_MESSAGE,
   type QueueJobData,
   logger,
   timeOperation,
   withdrawalPrisma,
-  EXECUTION_REVERTED_ERROR_MESSAGE,
 } from "@intmax2-claim-aggregator/shared";
 import { processClaimGroup } from "./claim.service";
 

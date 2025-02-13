@@ -1,6 +1,10 @@
-import { ClaimAbi, createNetworkClient, logger } from "@intmax2-claim-aggregator/shared";
+import {
+  CLAIM_CONTRACT_ADDRESS,
+  ClaimAbi,
+  createNetworkClient,
+  logger,
+} from "@intmax2-claim-aggregator/shared";
 import { getContract } from "viem";
-import { CLAIM_CONTRACT_ADDRESS } from "../constants";
 
 export const getCurrentPeriod = async (ethereumClient: ReturnType<typeof createNetworkClient>) => {
   const contract = getContract({
