@@ -17,7 +17,7 @@ export const performJob = async (): Promise<void> => {
     return;
   }
 
-  const claimGroups = chunkArray<RequestingClaim>(requestingClaims, config.WITHDRAWAL_GROUP_SIZE);
+  const claimGroups = chunkArray<RequestingClaim>(requestingClaims, config.CLAIM_GROUP_SIZE);
 
   const groupIds = await Promise.all(claimGroups.map(createClaimGroup));
 
@@ -29,8 +29,8 @@ export const performJob = async (): Promise<void> => {
 const shouldProcessClaims = (requestingClaims: Array<RequestingClaim & { createdAt: Date }>) => {
   const oldestClaim = requestingClaims[0];
   const minutesSinceOldestClaim = differenceInMinutes(new Date(), new Date(oldestClaim.createdAt));
-  const hasEnoughClaims = requestingClaims.length >= config.WITHDRAWAL_MIN_BATCH_SIZE;
-  const isOldEnough = minutesSinceOldestClaim >= config.WITHDRAWAL_MIN_WAIT_MINUTES;
+  const hasEnoughClaims = requestingClaims.length >= config.CLAIM_MIN_BATCH_SIZE;
+  const isOldEnough = minutesSinceOldestClaim >= config.CLAIM_MIN_WAIT_MINUTES;
 
   logger.info(
     `shouldProcessClaims hasEnoughClaims: ${hasEnoughClaims} isOldEnough: ${isOldEnough}`,

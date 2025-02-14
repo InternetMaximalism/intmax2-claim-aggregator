@@ -37,10 +37,10 @@ export const config = cleanEnv(process.env, {
   ZKP_PROVER_URL: str({ default: "http://localhost:3001" }),
   // queue
   QUEUE_CONCURRENCY: num({ default: 2 }),
-  // group
-  WITHDRAWAL_GROUP_SIZE: num({ default: 50 }),
-  WITHDRAWAL_MIN_BATCH_SIZE: num({ default: 5 }),
-  WITHDRAWAL_MIN_WAIT_MINUTES: num({ default: 5 }), // 5 minutes
+  // claim group
+  CLAIM_GROUP_SIZE: num({ default: 50 }),
+  CLAIM_MIN_BATCH_SIZE: num({ default: 5 }),
+  CLAIM_MIN_WAIT_MINUTES: num({ default: 5 }), // 5 minutes
   // scroll
   SCROLL_GAS_MULTIPLIER: num({ default: 2 }), // for l1 fee
 });
