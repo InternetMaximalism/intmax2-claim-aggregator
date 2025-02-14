@@ -5,7 +5,7 @@ import {
   logger,
 } from "@intmax2-claim-aggregator/shared";
 import { DEFAULT_ID_LENGTH } from "../constants";
-import { pollClaimProof, pollClaimWrapperProof, pollGnarkProof } from "../lib/poll";
+import { pollClaimGnarkProof, pollClaimProof, pollClaimWrapperProof } from "../lib/poll";
 import { createClaimGnarkProof, createClaimProof, createClaimWrappedProof } from "../lib/zkp";
 import type { ClaimProof, ClaimWithProof } from "../types";
 
@@ -87,7 +87,7 @@ export const generateClaimGnarkProof = async (wrappedProof: string) => {
     }
     jobId = createGnarkResult.jobId;
 
-    const gnarkResult = await pollGnarkProof(jobId, {
+    const gnarkResult = await pollClaimGnarkProof(jobId, {
       maxAttempts: 30,
       intervalMs: 10_000,
     });

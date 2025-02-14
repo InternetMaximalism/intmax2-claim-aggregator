@@ -68,7 +68,7 @@ export const getClaimWrapperProof = async (proofId: string) => {
 export const getClaimGnarkProof = async (jobId: string) => {
   return makeProverRequest<GetZKProofResponse<GnarkProof>>({
     method: "get",
-    path: `gnark-server/get-proof`,
+    path: `claim-gnark-server/get-proof`,
     params: {
       jobId,
     },

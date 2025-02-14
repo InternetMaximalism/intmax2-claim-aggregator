@@ -53,7 +53,7 @@ export const pollClaimWrapperProof = (proofId: string, options?: PollOptions) =>
   }, options);
 };
 
-export const pollGnarkProof = (proofId: string, options?: PollOptions) => {
+export const pollClaimGnarkProof = (proofId: string, options?: PollOptions) => {
   return poll<GnarkProof>(async () => {
     const proof = await getClaimGnarkProof(proofId);
     return proof;
