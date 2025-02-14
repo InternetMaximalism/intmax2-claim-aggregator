@@ -44,7 +44,7 @@ export const createClaimWrappedProof = async (
 export const createClaimGnarkProof = async (wrappedProof: string) => {
   return makeProverRequest<CreateGnarkProofResponse>({
     method: "post",
-    path: "gnark-server/start-proof",
+    path: "claim-gnark-server/start-proof",
     data: {
       proof: wrappedProof,
     },
