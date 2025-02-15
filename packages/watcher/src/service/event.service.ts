@@ -4,13 +4,15 @@ import {
   CLAIM_CONTRACT_DEPLOYED_BLOCK,
   type DirectWithdrawalQueuedEvent,
   type Event,
+  LIQUIDITY_CONTRACT_ADDRESS,
+  LIQUIDITY_CONTRACT_DEPLOYED_BLOCK,
   directWithdrawalQueuedEvent,
   fetchEvents,
   validateBlockRange,
 } from "@intmax2-claim-aggregator/shared";
 import { parseAbiItem } from "abitype";
 import type { PublicClient } from "viem";
-import type { ClaimEventType } from "../types";
+import type { NetworkState, WatcherEventType } from "../types";
 
 const handleWithdrawalEvent = async <T extends { args: { withdrawalHash: string } }>(
   ethereumClient: PublicClient,
@@ -18,10 +20,11 @@ const handleWithdrawalEvent = async <T extends { args: { withdrawalHash: string 
     startBlockNumber: bigint;
     endBlockNumber: bigint;
     eventInterface: ReturnType<typeof parseAbiItem>;
-    eventName: ClaimEventType;
+    eventName: WatcherEventType;
+    contractAddress: `0x${string}`;
   },
 ) => {
-  const { eventName, eventInterface, startBlockNumber, endBlockNumber } = params;
+  const { startBlockNumber, endBlockNumber, eventName, eventInterface, contractAddress } = params;
 
   validateBlockRange(eventName, startBlockNumber, endBlockNumber);
 
@@ -29,39 +32,57 @@ const handleWithdrawalEvent = async <T extends { args: { withdrawalHash: string 
     startBlockNumber,
     endBlockNumber,
     blockRange: BLOCK_RANGE_MINIMUM,
-    contractAddress: CLAIM_CONTRACT_ADDRESS,
     eventInterface,
+    contractAddress,
   });
 
-  return events.map(({ args }) => args) as T["args"][];
+  return {
+    eventLogs: events.map(({ args }) => args) as T["args"][],
+    eventName: eventName,
+    currentBlockNumber: endBlockNumber,
+  };
 };
 
-export const handleAllWithdrawalEvents = async (
-  ethereumClient: PublicClient,
-  currentBlockNumber: bigint,
-  events: Event[],
-) => {
-  const [directWithdrawalQueues] = await Promise.all([
-    handleWithdrawalEvent<DirectWithdrawalQueuedEvent>(ethereumClient, {
-      startBlockNumber: getLastProcessedBlockNumberByEventName(events, "DirectWithdrawalQueued"),
-      endBlockNumber: currentBlockNumber,
+export const handleAllWithdrawalEvents = async (networkState: NetworkState, events: Event[]) => {
+  const { ethereumClient, scrollClient, currentBlockNumber, scrollCurrentBlockNumber } =
+    networkState;
+
+  const [directWithdrawalQueueState, directWithdrawalSuccessState] = await Promise.all([
+    handleWithdrawalEvent<DirectWithdrawalQueuedEvent>(scrollClient, {
+      startBlockNumber: getLastProcessedBlockNumberByEventName(
+        events,
+        "DirectWithdrawalQueued",
+        CLAIM_CONTRACT_DEPLOYED_BLOCK,
+      ),
+      endBlockNumber: scrollCurrentBlockNumber,
       eventInterface: directWithdrawalQueuedEvent,
       eventName: "DirectWithdrawalQueued",
+      contractAddress: CLAIM_CONTRACT_ADDRESS,
+    }),
+    handleWithdrawalEvent<DirectWithdrawalQueuedEvent>(ethereumClient, {
+      startBlockNumber: getLastProcessedBlockNumberByEventName(
+        events,
+        "DirectWithdrawalSuccessed",
+        LIQUIDITY_CONTRACT_DEPLOYED_BLOCK,
+      ),
+      endBlockNumber: currentBlockNumber,
+      eventInterface: directWithdrawalQueuedEvent,
+      eventName: "DirectWithdrawalSuccessed",
+      contractAddress: LIQUIDITY_CONTRACT_ADDRESS,
     }),
   ]);
 
-  return {
-    directWithdrawalQueues,
-  };
+  return [directWithdrawalQueueState, directWithdrawalSuccessState];
 };
 
 export const getLastProcessedBlockNumberByEventName = (
   events: Event[],
-  eventName: ClaimEventType,
+  eventName: WatcherEventType,
+  deployedBlock: bigint,
 ) => {
   const filteredEvents = events.filter((event) => event.name === eventName);
   if (filteredEvents.length === 0) {
-    return CLAIM_CONTRACT_DEPLOYED_BLOCK;
+    return deployedBlock;
   }
 
   const lastEvent = filteredEvents.reduce((prev, current) => {
