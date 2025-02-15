@@ -7,12 +7,15 @@ export interface BaseEvent {
   blockTimestamp: string;
 }
 
+export interface WithdrawalEventLog {
+  withdrawalHash: string;
+}
+
 export interface DirectWithdrawalQueuedEvent extends BaseEvent {
   args: DirectWithdrawalQueuedEventLog;
 }
 
-export interface DirectWithdrawalQueuedEventLog {
-  withdrawalHash: string;
+export interface DirectWithdrawalQueuedEventLog extends WithdrawalEventLog {
   recipient: string;
   withdrawal: {
     recipient: string;
@@ -20,6 +23,14 @@ export interface DirectWithdrawalQueuedEventLog {
     amount: bigint;
     nullifier: string;
   };
+}
+
+export interface DirectWithdrawalSuccessedEvent extends BaseEvent {
+  args: DirectWithdrawalSuccessedEventLog;
+}
+
+export interface DirectWithdrawalSuccessedEventLog extends WithdrawalEventLog {
+  recipient: string;
 }
 
 export interface ContributionRecordedEvent extends BaseEvent {

@@ -4,9 +4,8 @@ import { batchUpdateClaimStatusTransactions } from "./claim.service";
 import { handleAllWithdrawalEvents } from "./event.service";
 
 export const performJob = async (): Promise<void> => {
-  const ethereumClient = createNetworkClient("scroll");
-  const [currentBlockNumber, events] = await Promise.all([
-    ethereumClient.getBlockNumber(),
+  const [networkState, events] = await Promise.all([
+    getEthereumAndScrollBlockNumbers(),
     eventPrisma.event.findMany({
       where: {
         name: {
@@ -16,28 +15,46 @@ export const performJob = async (): Promise<void> => {
     }),
   ]);
 
-  const { directWithdrawalQueues } = await handleAllWithdrawalEvents(
-    ethereumClient,
-    currentBlockNumber,
-    events,
-  );
+  const [directWithdrawalQueueState, directWithdrawalSuccessState] =
+    await handleAllWithdrawalEvents(networkState, events);
 
-  await batchUpdateClaimStatusTransactions(directWithdrawalQueues);
+  await batchUpdateClaimStatusTransactions(
+    directWithdrawalQueueState.eventLogs,
+    directWithdrawalSuccessState.eventLogs,
+  );
 
   await eventPrisma.$transaction(
-    WATCHER_EVENT_NAMES.map((eventName) =>
-      eventPrisma.event.upsert({
-        where: {
-          name: eventName,
-        },
-        create: {
-          name: eventName,
-          lastBlockNumber: currentBlockNumber,
-        },
-        update: {
-          lastBlockNumber: currentBlockNumber,
-        },
-      }),
+    [directWithdrawalQueueState, directWithdrawalSuccessState].map(
+      ({ eventName, currentBlockNumber }) =>
+        eventPrisma.event.upsert({
+          where: {
+            name: eventName,
+          },
+          create: {
+            name: eventName,
+            lastBlockNumber: currentBlockNumber,
+          },
+          update: {
+            lastBlockNumber: currentBlockNumber,
+          },
+        }),
     ),
   );
+};
+
+const getEthereumAndScrollBlockNumbers = async () => {
+  const ethereumClient = createNetworkClient("ethereum");
+  const scrollClient = createNetworkClient("scroll");
+
+  const [currentBlockNumber, scrollCurrentBlockNumber] = await Promise.all([
+    ethereumClient.getBlockNumber(),
+    scrollClient.getBlockNumber(),
+  ]);
+
+  return {
+    ethereumClient,
+    scrollClient,
+    currentBlockNumber,
+    scrollCurrentBlockNumber,
+  };
 };
