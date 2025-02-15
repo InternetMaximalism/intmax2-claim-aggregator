@@ -7,6 +7,7 @@ import {
   LIQUIDITY_CONTRACT_ADDRESS,
   LIQUIDITY_CONTRACT_DEPLOYED_BLOCK,
   directWithdrawalQueuedEvent,
+  directWithdrawalSuccessedEvent,
   fetchEvents,
   validateBlockRange,
 } from "@intmax2-claim-aggregator/shared";
@@ -66,7 +67,7 @@ export const handleAllWithdrawalEvents = async (networkState: NetworkState, even
         LIQUIDITY_CONTRACT_DEPLOYED_BLOCK,
       ),
       endBlockNumber: currentBlockNumber,
-      eventInterface: directWithdrawalQueuedEvent,
+      eventInterface: directWithdrawalSuccessedEvent,
       eventName: "DirectWithdrawalSuccessed",
       contractAddress: LIQUIDITY_CONTRACT_ADDRESS,
     }),

@@ -50,6 +50,7 @@ const createUpdateTransactions = ({
   nextStatus,
   eventType,
 }: UpdateClaimStatusParams) => {
+  // NOTE: DirectWithdrawalSuccess is applied to the data that was stored in the claim table.
   logger.info(`Batch update claim status: ${nextStatus} for ${events.length} ${eventType} claims`);
 
   return events.map((event) => {
