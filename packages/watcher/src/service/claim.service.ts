@@ -4,7 +4,7 @@ import {
   logger,
   withdrawalPrisma,
 } from "@intmax2-claim-aggregator/shared";
-import type { ClaimEventType } from "../types";
+import type { WatcherEventType } from "../types";
 
 export const batchUpdateClaimStatusTransactions = async (
   directWithdrawalQueues: DirectWithdrawalQueuedEventLog[],
@@ -35,7 +35,7 @@ const batchUpdateClaimStatus = (
   directWithdrawalQueues: DirectWithdrawalQueuedEventLog[],
   previousStatus: ClaimStatus,
   nextStatus: ClaimStatus,
-  type: ClaimEventType,
+  type: WatcherEventType,
 ) => {
   logger.info(
     `Batch update claim status: ${nextStatus} for ${directWithdrawalQueues.length} ${type} claims`,

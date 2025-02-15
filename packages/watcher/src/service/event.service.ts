@@ -10,7 +10,7 @@ import {
 } from "@intmax2-claim-aggregator/shared";
 import { parseAbiItem } from "abitype";
 import type { PublicClient } from "viem";
-import type { ClaimEventType } from "../types";
+import type { WatcherEventType } from "../types";
 
 const handleWithdrawalEvent = async <T extends { args: { withdrawalHash: string } }>(
   ethereumClient: PublicClient,
@@ -18,7 +18,7 @@ const handleWithdrawalEvent = async <T extends { args: { withdrawalHash: string 
     startBlockNumber: bigint;
     endBlockNumber: bigint;
     eventInterface: ReturnType<typeof parseAbiItem>;
-    eventName: ClaimEventType;
+    eventName: WatcherEventType;
   },
 ) => {
   const { eventName, eventInterface, startBlockNumber, endBlockNumber } = params;
@@ -57,7 +57,7 @@ export const handleAllWithdrawalEvents = async (
 
 export const getLastProcessedBlockNumberByEventName = (
   events: Event[],
-  eventName: ClaimEventType,
+  eventName: WatcherEventType,
 ) => {
   const filteredEvents = events.filter((event) => event.name === eventName);
   if (filteredEvents.length === 0) {
