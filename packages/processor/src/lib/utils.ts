@@ -3,17 +3,17 @@ import type { ClaimProof } from "../types";
 
 export const getLastClaimHashFromClaimProofs = (claimProofs: ClaimProof[]) => {
   let lastWithdrawalHash = zeroHash as `0x${string}`;
-  for (const { withdrawal } of claimProofs) {
+  for (const { claim } of claimProofs) {
     lastWithdrawalHash = keccak256(
       encodePacked(
         ["bytes32", "address", "uint256", "bytes32", "bytes32", "uint32"],
         [
           lastWithdrawalHash,
-          withdrawal.recipient as `0x${string}`,
-          BigInt(withdrawal.amount) as bigint,
-          withdrawal.nullifier as `0x${string}`,
-          withdrawal.blockHash as `0x${string}`,
-          BigInt(withdrawal.blockNumber) as unknown as number,
+          claim.recipient as `0x${string}`,
+          BigInt(claim.amount) as bigint,
+          claim.nullifier as `0x${string}`,
+          claim.blockHash as `0x${string}`,
+          BigInt(claim.blockNumber) as unknown as number,
         ],
       ),
     );
@@ -22,12 +22,12 @@ export const getLastClaimHashFromClaimProofs = (claimProofs: ClaimProof[]) => {
   return lastWithdrawalHash;
 };
 
-export const formatContractClaim = (withdrawalProof: ClaimProof) => {
+export const formatContractClaim = (claimProof: ClaimProof) => {
   return {
-    recipient: withdrawalProof.withdrawal.recipient,
-    amount: BigInt(withdrawalProof.withdrawal.amount),
-    nullifier: withdrawalProof.withdrawal.nullifier,
-    blockHash: withdrawalProof.withdrawal.blockHash,
-    blockNumber: BigInt(withdrawalProof.withdrawal.blockNumber),
+    recipient: claimProof.claim.recipient,
+    amount: BigInt(claimProof.claim.amount),
+    nullifier: claimProof.claim.nullifier,
+    blockHash: claimProof.claim.blockHash,
+    blockNumber: BigInt(claimProof.claim.blockNumber),
   };
 };

@@ -47,7 +47,7 @@ export interface ClaimWithProof {
 
 export interface ClaimProof {
   proof: string;
-  withdrawal: {
+  claim: {
     recipient: string;
     amount: string;
     nullifier: string;
