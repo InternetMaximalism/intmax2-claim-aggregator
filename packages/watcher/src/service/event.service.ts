@@ -1,9 +1,9 @@
 import {
   BLOCK_RANGE_MINIMUM,
+  CLAIM_CONTRACT_ADDRESS,
+  CLAIM_CONTRACT_DEPLOYED_BLOCK,
   type DirectWithdrawalQueuedEvent,
   type Event,
-  LIQUIDITY_CONTRACT_ADDRESS,
-  LIQUIDITY_CONTRACT_DEPLOYED_BLOCK,
   directWithdrawalQueuedEvent,
   fetchEvents,
   validateBlockRange,
@@ -29,7 +29,7 @@ const handleWithdrawalEvent = async <T extends { args: { withdrawalHash: string 
     startBlockNumber,
     endBlockNumber,
     blockRange: BLOCK_RANGE_MINIMUM,
-    contractAddress: LIQUIDITY_CONTRACT_ADDRESS,
+    contractAddress: CLAIM_CONTRACT_ADDRESS,
     eventInterface,
   });
 
@@ -61,7 +61,7 @@ export const getLastProcessedBlockNumberByEventName = (
 ) => {
   const filteredEvents = events.filter((event) => event.name === eventName);
   if (filteredEvents.length === 0) {
-    return LIQUIDITY_CONTRACT_DEPLOYED_BLOCK;
+    return CLAIM_CONTRACT_DEPLOYED_BLOCK;
   }
 
   const lastEvent = filteredEvents.reduce((prev, current) => {

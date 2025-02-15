@@ -15,8 +15,8 @@ export const batchUpdateClaimStatusTransactions = async (
     transactions.push(
       ...batchUpdateClaimStatus(
         directWithdrawalQueues,
+        ClaimStatus.verified,
         ClaimStatus.relayed,
-        ClaimStatus.success,
         "DirectWithdrawalQueued",
       ),
     );
@@ -47,14 +47,15 @@ const batchUpdateClaimStatus = (
     }),
   };
 
-  return directWithdrawalQueues.map(({ withdrawalHash, withdrawal }) => {
+  return directWithdrawalQueues.map(({ recipient, withdrawalHash, withdrawal }) => {
     return withdrawalPrisma.claim.updateMany({
       where: {
-        withdrawalHash,
+        recipient: recipient.toLowerCase(),
         status: previousStatus,
       },
       data: {
         ...data,
+        withdrawalHash,
         contractWithdrawal: formatWithdrawal(withdrawal),
       },
     });
@@ -63,7 +64,7 @@ const batchUpdateClaimStatus = (
 
 const formatWithdrawal = (withdrawal: DirectWithdrawalQueuedEventLog["withdrawal"]) => {
   return {
-    recipient: withdrawal.recipient,
+    recipient: withdrawal.recipient.toLowerCase(),
     tokenIndex: withdrawal.tokenIndex,
     amount: withdrawal.amount.toString(),
     nullifier: withdrawal.nullifier,
