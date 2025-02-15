@@ -31,9 +31,8 @@ export interface PollResult<T> {
   errorMessage: string | null;
 }
 
-export interface SubmitContractWithdrawal {
+export interface SubmitContractClaim {
   recipient: string;
-  tokenIndex: bigint;
   amount: bigint;
   nullifier: string;
   blockHash: string;
@@ -50,7 +49,6 @@ export interface ClaimProof {
   proof: string;
   withdrawal: {
     recipient: string;
-    tokenIndex: number;
     amount: string;
     nullifier: string;
     blockHash: string;
@@ -66,7 +64,7 @@ export interface ProverRequestParams {
 }
 
 export interface SubmitClaimParams {
-  contractWithdrawals: SubmitContractWithdrawal[];
+  contractClaims: SubmitContractClaim[];
   publicInputs: {
     lastClaimHash: string;
     claimAggregator: string;
