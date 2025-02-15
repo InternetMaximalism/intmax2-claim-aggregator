@@ -30,6 +30,7 @@ export const relayClaims = async (
   ethereumClient: ReturnType<typeof createNetworkClient>,
   params: ContributionParams,
 ) => {
+  console.log("parmas", params);
   const walletClientData = getWalletClient("withdrawal", "scroll");
   const retryOptions: RetryOptionsEthers = {
     gasPrice: null,
@@ -93,7 +94,7 @@ export const relayClaimsWithRetry = async (
     contractAddress: CLAIM_CONTRACT_ADDRESS,
     functionName: "submitClaimProof",
     account: walletClientData.account,
-    args: [params.period, params.users],
+    args: [params.period, params.recipients],
   };
 
   const [{ pendingNonce, currentNonce }, gasPriceData] = await Promise.all([

@@ -6,3 +6,4 @@ export * from "./wallet";
 export * from "./ethersTransaction";
 export * from "./calculate";
 export * from "./block";
+export * from "./etherscan";

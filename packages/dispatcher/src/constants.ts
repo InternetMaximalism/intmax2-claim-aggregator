@@ -1,0 +1,1 @@
+export const MAX_RECIPIENT_BATCH_SIZE = 100;

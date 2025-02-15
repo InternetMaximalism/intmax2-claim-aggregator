@@ -1,59 +1,72 @@
-import {
-  type Event,
-  createNetworkClient,
-  eventPrisma,
-  logger,
-} from "@intmax2-claim-aggregator/shared";
+import { createNetworkClient, eventPrisma, logger } from "@intmax2-claim-aggregator/shared";
+import { PeriodBlockInterval } from "../types";
 import { getContributionParams, getContributionRecordedEvents } from "./event.service";
+import { getPeriodBlockIntervals } from "./period.service";
 import { relayClaims } from "./submit.service";
 
 export const performJob = async () => {
   const ethereumClient = createNetworkClient("scroll");
-  const [currentBlockNumber, lastProcessedEvent] = await Promise.all([
-    ethereumClient.getBlockNumber(),
-    eventPrisma.event.findFirst({
-      where: {
-        name: "ContributionRecorded",
-      },
-    }),
-  ]);
+  const lastProcessedPeriod = await eventPrisma.claimPeriod.findFirst({
+    orderBy: {
+      period: "desc",
+    },
+  });
 
-  await processDispatcher(ethereumClient, currentBlockNumber, lastProcessedEvent);
-  await updateEventState(currentBlockNumber);
+  const periodBlockIntervals = await getPeriodBlockIntervals(ethereumClient, lastProcessedPeriod);
+
+  for (const periodBlockInterval of periodBlockIntervals) {
+    const recipientCount = await processDispatcher(ethereumClient, periodBlockInterval);
+    await saveClaimPeriod(periodBlockInterval, recipientCount);
+    logger.info(
+      `Processed period ${periodBlockInterval.periodInfo.period} recipientCount: ${recipientCount} successfully.`,
+    );
+  }
 };
 
 const processDispatcher = async (
   ethereumClient: ReturnType<typeof createNetworkClient>,
-  currentBlockNumber: bigint,
-  lastProcessedEvent: Event | null,
+  periodBlockInterval: PeriodBlockInterval,
 ) => {
   const contributionRecordedEvents = await getContributionRecordedEvents(
     ethereumClient,
-    currentBlockNumber,
-    lastProcessedEvent,
+    periodBlockInterval,
   );
 
   if (contributionRecordedEvents.length === 0) {
     logger.info("No new contribution found.");
-    return;
+    return 0;
   }
 
   const contributionParams = getContributionParams(contributionRecordedEvents);
 
-  await relayClaims(ethereumClient, contributionParams);
+  if (contributionParams.period !== periodBlockInterval.periodInfo.period) {
+    throw new Error(
+      `Period mismatch: ${contributionParams.period} !== ${periodBlockInterval.periodInfo.period}`,
+    );
+  }
+
+  for (const batchRecipients of contributionParams.batchRecipients) {
+    await relayClaims(ethereumClient, {
+      period: contributionParams.period,
+      recipients: batchRecipients,
+    });
+  }
+
+  return contributionParams.batchRecipients
+    .map((batchRecipient) => batchRecipient.length)
+    .reduce((a, b) => a + b, 0);
 };
 
-const updateEventState = async (currentBlockNumber: bigint) => {
-  await eventPrisma.event.upsert({
-    where: {
-      name: "ContributionRecorded",
-    },
-    create: {
-      name: "ContributionRecorded",
-      lastBlockNumber: currentBlockNumber,
-    },
-    update: {
-      lastBlockNumber: currentBlockNumber,
+const saveClaimPeriod = async (
+  { periodInfo: { period }, startBlockNumber, endBlockNumber }: PeriodBlockInterval,
+  recipientCount: number,
+) => {
+  return eventPrisma.claimPeriod.create({
+    data: {
+      period,
+      startBlockNumber,
+      endBlockNumber,
+      recipientCount,
     },
   });
 };

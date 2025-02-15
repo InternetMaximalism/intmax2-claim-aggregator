@@ -1,31 +1,29 @@
 import {
   BLOCK_RANGE_MINIMUM,
   CLAIM_CONTRACT_ADDRESS,
-  CLAIM_CONTRACT_DEPLOYED_BLOCK,
   type ContributionRecordedEvent,
-  type Event,
   contributionRecordedEvent,
   fetchEvents,
-  getStartBlockNumber,
   logger,
   validateBlockRange,
 } from "@intmax2-claim-aggregator/shared";
 import type { PublicClient } from "viem";
+import { MAX_RECIPIENT_BATCH_SIZE } from "../constants";
+import { PeriodBlockInterval } from "../types";
 
 export const getContributionRecordedEvents = async (
   ethereumClient: PublicClient,
-  currentBlockNumber: bigint,
-  lastProcessedEvent: Event | null,
+  periodBlockInterval: PeriodBlockInterval,
 ) => {
   try {
-    const startBlockNumber = getStartBlockNumber(lastProcessedEvent, CLAIM_CONTRACT_DEPLOYED_BLOCK);
-    validateBlockRange("contributionRecordedEvent", startBlockNumber, currentBlockNumber);
+    const { startBlockNumber, endBlockNumber } = periodBlockInterval;
+    validateBlockRange("contributionRecordedEvent", startBlockNumber, endBlockNumber);
 
     const contributionRecordedEvents = await fetchEvents<ContributionRecordedEvent>(
       ethereumClient,
       {
         startBlockNumber,
-        endBlockNumber: currentBlockNumber,
+        endBlockNumber,
         blockRange: BLOCK_RANGE_MINIMUM,
         contractAddress: CLAIM_CONTRACT_ADDRESS,
         eventInterface: contributionRecordedEvent,
@@ -56,8 +54,14 @@ export const getContributionParams = (contributionRecordedEvents: ContributionRe
     );
   }
 
+  const recipients = Array.from(recipientSet);
+  const batchRecipients = [];
+  for (let i = 0; i < recipients.length; i += MAX_RECIPIENT_BATCH_SIZE) {
+    batchRecipients.push(recipients.slice(i, i + MAX_RECIPIENT_BATCH_SIZE));
+  }
+
   return {
     period: Array.from(periodSet)[0],
-    users: Array.from(recipientSet),
+    batchRecipients,
   };
 };

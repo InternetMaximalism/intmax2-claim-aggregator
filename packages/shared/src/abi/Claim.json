@@ -266,32 +266,45 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "period",
-          "type": "uint256"
-        }
-      ],
-      "name": "getAllocationPerPeriod",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [],
-      "name": "getCurrentPeriod",
+      "name": "getAllocationConstants",
       "outputs": [
         {
-          "internalType": "uint256",
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "startTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "periodInterval",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "genesisTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "phase0RewardPerDay",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "numPhases",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "phase0Period",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct AllocationLib.AllocationConstants",
           "name": "",
-          "type": "uint256"
+          "type": "tuple"
         }
       ],
       "stateMutability": "view",
@@ -301,7 +314,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "period",
+          "name": "periodNumber",
           "type": "uint256"
         },
         {
@@ -310,7 +323,42 @@
           "type": "address"
         }
       ],
-      "name": "getUserAllocation",
+      "name": "getAllocationInfo",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "totalContribution",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "allocationPerPeriod",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userContribution",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "userAllocation",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct AllocationLib.AllocationInfo",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getCurrentPeriod",
       "outputs": [
         {
           "internalType": "uint256",

@@ -11,6 +11,7 @@ export const getBlockNumberByTimestamp = async (
     const url =
       ETHERSCAN_URL_MAPS[`${networkType}-${config.NETWORK_ENVIRONMENT}`] ||
       ETHERSCAN_URL_MAPS["ethereum-sepolia"];
+
     const response = await axios.get(url, {
       params: {
         module: "block",
@@ -40,15 +41,4 @@ export const getBlockNumberByTimestamp = async (
     }
     throw error;
   }
-};
-
-export const getBlockNumbers = async (
-  networkType: "ethereum" | "scroll",
-  previousMondayTimestamp: number,
-  currentMondayTimestamp: number,
-) => {
-  return Promise.all([
-    getBlockNumberByTimestamp(networkType, Math.floor(previousMondayTimestamp / 1000)),
-    getBlockNumberByTimestamp(networkType, Math.floor(currentMondayTimestamp / 1000)),
-  ]);
 };
