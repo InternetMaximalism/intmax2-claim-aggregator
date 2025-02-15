@@ -3,4 +3,3 @@
 /* eslint-disable */
 import type * as claim from "./claim";
 export type { claim };
-

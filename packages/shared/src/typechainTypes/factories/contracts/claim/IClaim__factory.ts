@@ -88,6 +88,52 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
+        name: "periodNumber",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "getAllocationInfo",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "totalContribution",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "allocationPerPeriod",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "userContribution",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "userAllocation",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct AllocationLib.AllocationInfo",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
         name: "period",
         type: "uint256",
       },
