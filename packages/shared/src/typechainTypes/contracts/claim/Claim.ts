@@ -44,6 +44,52 @@ export declare namespace WithdrawalLib {
   };
 }
 
+export declare namespace AllocationLib {
+  export type AllocationConstantsStruct = {
+    startTimestamp: BigNumberish;
+    periodInterval: BigNumberish;
+    genesisTimestamp: BigNumberish;
+    phase0RewardPerDay: BigNumberish;
+    numPhases: BigNumberish;
+    phase0Period: BigNumberish;
+  };
+
+  export type AllocationConstantsStructOutput = [
+    startTimestamp: bigint,
+    periodInterval: bigint,
+    genesisTimestamp: bigint,
+    phase0RewardPerDay: bigint,
+    numPhases: bigint,
+    phase0Period: bigint
+  ] & {
+    startTimestamp: bigint;
+    periodInterval: bigint;
+    genesisTimestamp: bigint;
+    phase0RewardPerDay: bigint;
+    numPhases: bigint;
+    phase0Period: bigint;
+  };
+
+  export type AllocationInfoStruct = {
+    totalContribution: BigNumberish;
+    allocationPerPeriod: BigNumberish;
+    userContribution: BigNumberish;
+    userAllocation: BigNumberish;
+  };
+
+  export type AllocationInfoStructOutput = [
+    totalContribution: bigint,
+    allocationPerPeriod: bigint,
+    userContribution: bigint,
+    userAllocation: bigint
+  ] & {
+    totalContribution: bigint;
+    allocationPerPeriod: bigint;
+    userContribution: bigint;
+    userAllocation: bigint;
+  };
+}
+
 export declare namespace ChainedClaimLib {
   export type ChainedClaimStruct = {
     recipient: AddressLike;
@@ -84,9 +130,9 @@ export interface ClaimInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "UPGRADE_INTERFACE_VERSION"
-      | "getAllocationPerPeriod"
+      | "getAllocationConstants"
+      | "getAllocationInfo"
       | "getCurrentPeriod"
-      | "getUserAllocation"
       | "initialize"
       | "owner"
       | "proxiableUUID"
@@ -111,16 +157,16 @@ export interface ClaimInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getAllocationPerPeriod",
-    values: [BigNumberish]
+    functionFragment: "getAllocationConstants",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getAllocationInfo",
+    values: [BigNumberish, AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getCurrentPeriod",
     values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getUserAllocation",
-    values: [BigNumberish, AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
@@ -168,15 +214,15 @@ export interface ClaimInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getAllocationPerPeriod",
+    functionFragment: "getAllocationConstants",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getAllocationInfo",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "getCurrentPeriod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getUserAllocation",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
@@ -336,19 +382,19 @@ export interface Claim extends BaseContract {
 
   UPGRADE_INTERFACE_VERSION: TypedContractMethod<[], [string], "view">;
 
-  getAllocationPerPeriod: TypedContractMethod<
-    [period: BigNumberish],
-    [bigint],
+  getAllocationConstants: TypedContractMethod<
+    [],
+    [AllocationLib.AllocationConstantsStructOutput],
+    "view"
+  >;
+
+  getAllocationInfo: TypedContractMethod<
+    [periodNumber: BigNumberish, user: AddressLike],
+    [AllocationLib.AllocationInfoStructOutput],
     "view"
   >;
 
   getCurrentPeriod: TypedContractMethod<[], [bigint], "view">;
-
-  getUserAllocation: TypedContractMethod<
-    [period: BigNumberish, user: AddressLike],
-    [bigint],
-    "view"
-  >;
 
   initialize: TypedContractMethod<
     [
@@ -405,18 +451,22 @@ export interface Claim extends BaseContract {
     nameOrSignature: "UPGRADE_INTERFACE_VERSION"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "getAllocationPerPeriod"
-  ): TypedContractMethod<[period: BigNumberish], [bigint], "view">;
+    nameOrSignature: "getAllocationConstants"
+  ): TypedContractMethod<
+    [],
+    [AllocationLib.AllocationConstantsStructOutput],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getAllocationInfo"
+  ): TypedContractMethod<
+    [periodNumber: BigNumberish, user: AddressLike],
+    [AllocationLib.AllocationInfoStructOutput],
+    "view"
+  >;
   getFunction(
     nameOrSignature: "getCurrentPeriod"
   ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "getUserAllocation"
-  ): TypedContractMethod<
-    [period: BigNumberish, user: AddressLike],
-    [bigint],
-    "view"
-  >;
   getFunction(
     nameOrSignature: "initialize"
   ): TypedContractMethod<

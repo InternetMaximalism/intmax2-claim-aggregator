@@ -50,7 +50,7 @@ export const relayClaims = async (
       const receipt = await ethersWaitForTransactionConfirmation(
         ethereumClient,
         transactionHash,
-        "submitClaimProof",
+        "relayClaims",
         {
           confirms: ETHERS_CONFIRMATIONS,
           timeout: WAIT_TRANSACTION_TIMEOUT,
@@ -91,9 +91,9 @@ export const relayClaimsWithRetry = async (
 ) => {
   const contractCallParams: ContractCallParameters = {
     contractAddress: CLAIM_CONTRACT_ADDRESS,
-    functionName: "submitClaimProof",
+    functionName: "relayClaims",
     account: walletClientData.account,
-    args: [params.period, params.users],
+    args: [params.period, params.recipients],
   };
 
   const [{ pendingNonce, currentNonce }, gasPriceData] = await Promise.all([
@@ -125,12 +125,7 @@ export const relayClaimsWithRetry = async (
   const contract = Claim__factory.connect(contractCallParams.contractAddress, signer);
 
   const ethersTxOptions = getEthersTxOptions(contractCallParams, contractCallOptions ?? {});
-  const callArgs = [
-    contractCallParams.args[0],
-    contractCallParams.args[1],
-    contractCallParams.args[2],
-    ethersTxOptions,
-  ];
+  const callArgs = [contractCallParams.args[0], contractCallParams.args[1], ethersTxOptions];
 
   if (pendingNonce > currentNonce) {
     return await replacedEthersTransaction({

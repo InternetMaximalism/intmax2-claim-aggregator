@@ -20,12 +20,13 @@ model Event {
 }
 
 model ClaimPeriod {
-  id              String   @id @default(uuid())
-  period          BigInt   @unique
-  lastBlockNumber BigInt   @map("last_block_number")
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
-  metadata        Json?
+  id               String   @id @default(uuid())
+  period           BigInt   @unique
+  startBlockNumber BigInt   @map("start_block_number")
+  endBlockNumber   BigInt   @map("end_block_number")
+  recipientCount   Int      @default(0) @map("recipient_count")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
 
   @@map("claim_periods")
 }

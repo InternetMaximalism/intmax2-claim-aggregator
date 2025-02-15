@@ -44,6 +44,27 @@ export declare namespace WithdrawalLib {
   };
 }
 
+export declare namespace AllocationLib {
+  export type AllocationInfoStruct = {
+    totalContribution: BigNumberish;
+    allocationPerPeriod: BigNumberish;
+    userContribution: BigNumberish;
+    userAllocation: BigNumberish;
+  };
+
+  export type AllocationInfoStructOutput = [
+    totalContribution: bigint,
+    allocationPerPeriod: bigint,
+    userContribution: bigint,
+    userAllocation: bigint
+  ] & {
+    totalContribution: bigint;
+    allocationPerPeriod: bigint;
+    userContribution: bigint;
+    userAllocation: bigint;
+  };
+}
+
 export declare namespace ChainedClaimLib {
   export type ChainedClaimStruct = {
     recipient: AddressLike;
@@ -82,11 +103,15 @@ export declare namespace ClaimProofPublicInputsLib {
 
 export interface IClaimInterface extends Interface {
   getFunction(
-    nameOrSignature: "relayClaims" | "submitClaimProof"
+    nameOrSignature: "getAllocationInfo" | "relayClaims" | "submitClaimProof"
   ): FunctionFragment;
 
   getEvent(nameOrSignatureOrTopic: "DirectWithdrawalQueued"): EventFragment;
 
+  encodeFunctionData(
+    functionFragment: "getAllocationInfo",
+    values: [BigNumberish, AddressLike]
+  ): string;
   encodeFunctionData(
     functionFragment: "relayClaims",
     values: [BigNumberish, AddressLike[]]
@@ -100,6 +125,10 @@ export interface IClaimInterface extends Interface {
     ]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "getAllocationInfo",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "relayClaims",
     data: BytesLike
@@ -175,6 +204,12 @@ export interface IClaim extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  getAllocationInfo: TypedContractMethod<
+    [periodNumber: BigNumberish, user: AddressLike],
+    [AllocationLib.AllocationInfoStructOutput],
+    "view"
+  >;
+
   relayClaims: TypedContractMethod<
     [period: BigNumberish, users: AddressLike[]],
     [void],
@@ -195,6 +230,13 @@ export interface IClaim extends BaseContract {
     key: string | FunctionFragment
   ): T;
 
+  getFunction(
+    nameOrSignature: "getAllocationInfo"
+  ): TypedContractMethod<
+    [periodNumber: BigNumberish, user: AddressLike],
+    [AllocationLib.AllocationInfoStructOutput],
+    "view"
+  >;
   getFunction(
     nameOrSignature: "relayClaims"
   ): TypedContractMethod<

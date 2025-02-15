@@ -15,8 +15,8 @@ export const CLAIM_CONTRACT_DEPLOYED_BLOCK = BigInt(config.CLAIM_CONTRACT_DEPLOY
 export const ETHERSCAN_URL_MAPS = {
   "ethereum-mainnet": "https://api.etherscan.io/api",
   "ethereum-sepolia": "https://api-sepolia.etherscan.io/api",
-  "scroll-mainnet": "https://api.scrollscan.org/api",
-  "scroll-sepolia": "https://api-sepolia.scrollscan.org/api",
+  "scroll-mainnet": "https://api.scrollscan.com/api",
+  "scroll-sepolia": "https://api-sepolia.scrollscan.com/api",
 };
 
 // transaction
