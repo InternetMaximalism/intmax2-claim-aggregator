@@ -5,7 +5,7 @@ import {
   logger,
   withdrawalPrisma,
 } from "@intmax2-claim-aggregator/shared";
-import { formatContractWithdrawal, getLastClaimHashFromClaimProofs } from "../lib/utils";
+import { formatContractClaim, getLastClaimHashFromClaimProofs } from "../lib/utils";
 import type { ClaimProof, ClaimWithProof, GnarkProof } from "../types";
 import {
   generateClaimGnarkProof,
@@ -60,7 +60,7 @@ const submitClaimProofToScroll = async (
   const claimAggregator = walletClientData.account.address;
 
   const params = {
-    contractWithdrawals: claimProofs.map(formatContractWithdrawal),
+    contractClaims: claimProofs.map(formatContractClaim),
     publicInputs: {
       lastClaimHash,
       claimAggregator,

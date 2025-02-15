@@ -94,7 +94,7 @@ export const submitClaimProofWithRetry = async (
     contractAddress: config.CLAIM_CONTRACT_ADDRESS as `0x${string}`,
     functionName: "submitClaimProof",
     account: walletClientData.account,
-    args: [params.contractWithdrawals, params.publicInputs, params.proof],
+    args: [params.contractClaims, params.publicInputs, params.proof],
   };
 
   const [{ pendingNonce, currentNonce }, gasPriceData] = await Promise.all([

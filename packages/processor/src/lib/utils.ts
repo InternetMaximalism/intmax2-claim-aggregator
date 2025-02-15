@@ -6,11 +6,10 @@ export const getLastClaimHashFromClaimProofs = (claimProofs: ClaimProof[]) => {
   for (const { withdrawal } of claimProofs) {
     lastWithdrawalHash = keccak256(
       encodePacked(
-        ["bytes32", "address", "uint32", "uint256", "bytes32", "bytes32", "uint32"],
+        ["bytes32", "address", "uint256", "bytes32", "bytes32", "uint32"],
         [
           lastWithdrawalHash,
           withdrawal.recipient as `0x${string}`,
-          BigInt(withdrawal.tokenIndex) as unknown as number,
           BigInt(withdrawal.amount) as bigint,
           withdrawal.nullifier as `0x${string}`,
           withdrawal.blockHash as `0x${string}`,
@@ -23,10 +22,9 @@ export const getLastClaimHashFromClaimProofs = (claimProofs: ClaimProof[]) => {
   return lastWithdrawalHash;
 };
 
-export const formatContractWithdrawal = (withdrawalProof: ClaimProof) => {
+export const formatContractClaim = (withdrawalProof: ClaimProof) => {
   return {
     recipient: withdrawalProof.withdrawal.recipient,
-    tokenIndex: BigInt(withdrawalProof.withdrawal.tokenIndex),
     amount: BigInt(withdrawalProof.withdrawal.amount),
     nullifier: withdrawalProof.withdrawal.nullifier,
     blockHash: withdrawalProof.withdrawal.blockHash,
