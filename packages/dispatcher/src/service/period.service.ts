@@ -8,10 +8,8 @@ import {
   sleep,
 } from "@intmax2-claim-aggregator/shared";
 import { getContract } from "viem";
+import { PERIOD_BATCH_DELAY, PERIOD_BATCH_SIZE } from "../constants";
 import type { AllocationConstants, PeriodBlockInterval, PeriodInfo } from "../types";
-
-const BATCH_SIZE = 2;
-const BATCH_DELAY = 1000;
 
 export const getPeriodBlockIntervals = async (
   ethereumClient: ReturnType<typeof createNetworkClient>,
@@ -101,13 +99,13 @@ const getBlockNumberRange = async (periodInfo: PeriodInfo) => {
 const processPeriodsInBatches = async (periods: PeriodInfo[]) => {
   const results: PeriodBlockInterval[] = [];
 
-  for (let i = 0; i < periods.length; i += BATCH_SIZE) {
-    const batch = periods.slice(i, i + BATCH_SIZE);
+  for (let i = 0; i < periods.length; i += PERIOD_BATCH_SIZE) {
+    const batch = periods.slice(i, i + PERIOD_BATCH_SIZE);
     const batchResults = await Promise.all(batch.map((period) => getBlockNumberRange(period)));
     results.push(...batchResults);
 
-    if (i + BATCH_SIZE < periods.length) {
-      await sleep(BATCH_DELAY);
+    if (i + PERIOD_BATCH_SIZE < periods.length) {
+      await sleep(PERIOD_BATCH_DELAY);
     }
   }
 
