@@ -45,16 +45,16 @@ const processDispatcher = async (
     );
   }
 
+  let totalRecipients = 0;
   for (const batchRecipients of contributionParams.batchRecipients) {
     await relayClaims(ethereumClient, {
       period: contributionParams.period,
       recipients: batchRecipients,
     });
+    totalRecipients += batchRecipients.length;
   }
 
-  return contributionParams.batchRecipients
-    .map((batchRecipient) => batchRecipient.length)
-    .reduce((a, b) => a + b, 0);
+  return totalRecipients;
 };
 
 const saveClaimPeriod = async (
