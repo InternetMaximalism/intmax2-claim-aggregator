@@ -29,8 +29,8 @@ export const config = cleanEnv(process.env, {
   // contracts
   LIQUIDITY_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
   LIQUIDITY_CONTRACT_DEPLOYED_BLOCK: num({ devDefault: 0 }),
-  CLAIM_CONTRACT_ADDRESS: str(),
-  CLAIM_CONTRACT_DEPLOYED_BLOCK: num({ default: 0 }),
+  CLAIM_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
+  CLAIM_CONTRACT_DEPLOYED_BLOCK: num({ devDefault: 0 }),
   // private key
   INTMAX2_OWNER_MNEMONIC: str(),
   // zkp

@@ -1,8 +1,8 @@
 import {
   ClaimStatus,
   type DirectWithdrawalQueuedEventLog,
-  DirectWithdrawalSuccessedEventLog,
-  WithdrawalEventLog,
+  type DirectWithdrawalSuccessedEventLog,
+  type WithdrawalEventLog,
   logger,
   withdrawalPrisma,
 } from "@intmax2-claim-aggregator/shared";

@@ -1,5 +1,5 @@
 import { createNetworkClient, eventPrisma, logger } from "@intmax2-claim-aggregator/shared";
-import { PeriodBlockInterval } from "../types";
+import type { PeriodBlockInterval } from "../types";
 import { getContributionParams, getContributionRecordedEvents } from "./event.service";
 import { getPeriodBlockIntervals } from "./period.service";
 import { relayClaims } from "./submit.service";

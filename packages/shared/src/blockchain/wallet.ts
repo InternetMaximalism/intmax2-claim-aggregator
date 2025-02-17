@@ -8,7 +8,7 @@ type WalletType = "builder" | "depositAnalyzer" | "withdrawal";
 const walletConfigs: Record<WalletType, number> = {
   builder: 0,
   depositAnalyzer: 1,
-  withdrawal: 3, // NOTE: 2 is unused
+  withdrawal: 2,
 };
 
 export const getWalletClient = (
