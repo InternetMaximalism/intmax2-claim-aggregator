@@ -1,4 +1,4 @@
-import { randomBytes } from "crypto";
+import { randomBytes } from "node:crypto";
 
 export const sleep = (ms = 1000) => {
   return new Promise((resolve) => setTimeout(resolve, ms));

@@ -79,16 +79,10 @@ const calculatePeriodInfos = (periods: bigint[], allocationConstants: Allocation
 };
 
 const getBlockNumberRange = async (periodInfo: PeriodInfo) => {
-  const startBlockNumber = await getBlockNumberByTimestamp(
-    "scroll",
-    Number(periodInfo.startTime),
-    "after",
-  );
-  const endBlockNumber = await getBlockNumberByTimestamp(
-    "scroll",
-    Number(periodInfo.endTime),
-    "before",
-  );
+  const [startBlockNumber, endBlockNumber] = await Promise.all([
+    getBlockNumberByTimestamp("scroll", Number(periodInfo.startTime), "after"),
+    getBlockNumberByTimestamp("scroll", Number(periodInfo.endTime), "before"),
+  ]);
   return {
     periodInfo,
     startBlockNumber,

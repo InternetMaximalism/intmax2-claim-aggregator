@@ -9,7 +9,7 @@ import {
 } from "@intmax2-claim-aggregator/shared";
 import type { PublicClient } from "viem";
 import { MAX_RECIPIENT_BATCH_SIZE } from "../constants";
-import { PeriodBlockInterval } from "../types";
+import type { PeriodBlockInterval } from "../types";
 
 export const getContributionRecordedEvents = async (
   ethereumClient: PublicClient,
