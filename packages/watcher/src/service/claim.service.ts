@@ -53,15 +53,28 @@ const createUpdateTransactions = ({
   // NOTE: DirectWithdrawalSuccess is applied to the data that was stored in the claim table.
   logger.info(`Batch update claim status: ${nextStatus} for ${events.length} ${eventType} claims`);
 
-  return events.map((event) => {
-    const baseData = { status: nextStatus };
-    const whereClause = getWhereClause(event, previousStatus);
-    const updateData = getUpdateData(event, baseData, eventType);
+  const baseData = { status: nextStatus };
 
-    return withdrawalPrisma.claim.updateMany({
-      where: whereClause,
-      data: updateData,
+  if (eventType === "DirectWithdrawalQueued") {
+    return events.map((event) => {
+      const whereClause = getWhereClause(event, previousStatus);
+      const updateData = getUpdateData(event, baseData, eventType);
+
+      return withdrawalPrisma.claim.updateMany({
+        where: whereClause,
+        data: updateData,
+      });
     });
+  }
+
+  return withdrawalPrisma.claim.updateMany({
+    where: {
+      withdrawalHash: {
+        in: events.map((event) => event.withdrawalHash.toLowerCase()),
+      },
+      status: previousStatus,
+    },
+    data: baseData,
   });
 };
 
@@ -90,7 +103,7 @@ const getWhereClause = (
 
   if (isDirectWithdrawalSuccessedEventLog(event)) {
     return {
-      withdrawalHash: event.withdrawalHash,
+      withdrawalHash: event.withdrawalHash.toLocaleLowerCase(),
       status: previousStatus,
     };
   }
