@@ -52,23 +52,23 @@ export const handleAllWithdrawalEvents = async (networkState: NetworkState, even
     handleWithdrawalEvent<DirectWithdrawalQueuedEvent>(scrollClient, {
       startBlockNumber: getLastProcessedBlockNumberByEventName(
         events,
-        "DirectWithdrawalQueued",
+        "ClaimWatcherDirectWithdrawalQueued",
         CLAIM_CONTRACT_DEPLOYED_BLOCK,
       ),
       endBlockNumber: scrollCurrentBlockNumber,
       eventInterface: directWithdrawalQueuedEvent,
-      eventName: "DirectWithdrawalQueued",
+      eventName: "ClaimWatcherDirectWithdrawalQueued",
       contractAddress: CLAIM_CONTRACT_ADDRESS,
     }),
     handleWithdrawalEvent<DirectWithdrawalQueuedEvent>(ethereumClient, {
       startBlockNumber: getLastProcessedBlockNumberByEventName(
         events,
-        "DirectWithdrawalSuccessed",
+        "ClaimWatcherDirectWithdrawalSuccessed",
         LIQUIDITY_CONTRACT_DEPLOYED_BLOCK,
       ),
       endBlockNumber: currentBlockNumber,
       eventInterface: directWithdrawalSuccessedEvent,
-      eventName: "DirectWithdrawalSuccessed",
+      eventName: "ClaimWatcherDirectWithdrawalSuccessed",
       contractAddress: LIQUIDITY_CONTRACT_ADDRESS,
     }),
   ]);

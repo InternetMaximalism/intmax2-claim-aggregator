@@ -24,13 +24,13 @@ export const batchUpdateClaimStatusTransactions = async (
       events: directWithdrawalQueues,
       previousStatus: ClaimStatus.verified,
       nextStatus: ClaimStatus.relayed,
-      eventType: "DirectWithdrawalQueued" as const,
+      eventType: "ClaimWatcherDirectWithdrawalQueued" as const,
     },
     {
       events: directWithdrawalSuccesses,
       previousStatus: ClaimStatus.relayed,
       nextStatus: ClaimStatus.success,
-      eventType: "DirectWithdrawalSuccessed" as const,
+      eventType: "ClaimWatcherDirectWithdrawalSuccessed" as const,
     },
   ].filter(({ events }) => events.length > 0);
 
@@ -55,7 +55,7 @@ const createUpdateTransactions = ({
 
   const baseData = { status: nextStatus };
 
-  if (eventType === "DirectWithdrawalQueued") {
+  if (eventType === "ClaimWatcherDirectWithdrawalQueued") {
     return events.map((event) => {
       const whereClause = getWhereClause(event, previousStatus);
       const updateData = getUpdateData(event, baseData, eventType);
@@ -116,7 +116,7 @@ const getUpdateData = (
   baseData: { status: ClaimStatus },
   eventType: WatcherEventType,
 ) => {
-  if (eventType === "DirectWithdrawalQueued" && "withdrawal" in event) {
+  if (eventType === "ClaimWatcherDirectWithdrawalQueued" && "withdrawal" in event) {
     return {
       ...baseData,
       singleClaimProof: null,
