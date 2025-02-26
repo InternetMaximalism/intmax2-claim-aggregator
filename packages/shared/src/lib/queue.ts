@@ -28,8 +28,9 @@ export class QueueManager {
   };
 
   constructor(queueName: QueueNameType, options?: QueueOptions) {
+    const redisURL = this.getRedisURL();
     const defaultOptions: QueueOptions = {};
-    this.queue = new Queue<QueueJobData>(queueName, config.REDIS_URL, {
+    this.queue = new Queue<QueueJobData>(queueName, redisURL, {
       ...defaultOptions,
       ...options,
     });
@@ -52,6 +53,16 @@ export class QueueManager {
       QueueManager.instance = new QueueManager(queueName);
     }
     return QueueManager.instance;
+  }
+
+  private getRedisURL(): string {
+    const hasQueryParams = config.REDIS_URL.includes("?");
+
+    if (config.REDIS_URL.includes("rediss")) {
+      return hasQueryParams ? `${config.REDIS_URL}&tls=true` : `${config.REDIS_URL}?tls=true`;
+    }
+
+    return config.REDIS_URL;
   }
 
   registerProcessor(processor: (job: Job<QueueJobData>) => Promise<any>) {
