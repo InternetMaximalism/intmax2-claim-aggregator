@@ -11,7 +11,9 @@ export class RedisClient {
       return;
     }
 
-    this.client = new Redis(config.REDIS_URL, {
+    const redisUrl = this.getRedisURL();
+
+    this.client = new Redis(redisUrl, {
       reconnectOnError: (err) => {
         const targetError = "READONLY";
         if (err.message.includes(targetError)) {
@@ -28,6 +30,16 @@ export class RedisClient {
     this.client.on("connect", () => {
       logger.info(`Redis Client Connected`);
     });
+  }
+
+  private getRedisURL(): string {
+    const hasQueryParams = config.REDIS_URL.includes("?");
+
+    if (config.REDIS_URL.includes("rediss")) {
+      return hasQueryParams ? `${config.REDIS_URL}&tls=true` : `${config.REDIS_URL}?tls=true`;
+    }
+
+    return config.REDIS_URL;
   }
 
   public static getInstance(): RedisClient {
