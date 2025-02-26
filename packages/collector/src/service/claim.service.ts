@@ -10,7 +10,9 @@ import {
 } from "@intmax2-claim-aggregator/shared";
 
 export const fetchRequestingClaims = async () => {
+  logger.info(`Fetching requesting claims`);
   const processedUUIDs = await ClaimManager.getInstance("claim-aggregator").getAllProcessedUUIDs();
+  logger.info(`Fetched ${processedUUIDs.length} processed UUIDs`);
 
   const requestingClaims = await withdrawalPrisma.claim.findMany({
     select: {
@@ -27,6 +29,7 @@ export const fetchRequestingClaims = async () => {
       createdAt: WithdrawalPrisma.SortOrder.asc,
     },
   });
+  logger.info(`Fetched ${requestingClaims.length} requesting claims`);
 
   return requestingClaims;
 };
