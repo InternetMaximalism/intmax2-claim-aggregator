@@ -79,7 +79,7 @@ const makeProverRequest = async <T>({ method, path, data, params }: ProverReques
   try {
     const requestConfig: AxiosRequestConfig = {
       method,
-      url: `${config.ZKP_PROVER_URL}/v1/beta/${path}`,
+      url: `${config.ZKP_PROVER_URL}/${path}`,
       headers: {
         contentType: "application/json",
       },
