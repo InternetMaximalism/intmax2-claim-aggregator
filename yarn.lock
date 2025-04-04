@@ -850,6 +850,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"contribution@workspace:packages/contribution":
+  version: 0.0.0-use.local
+  resolution: "contribution@workspace:packages/contribution"
+  dependencies:
+    "@intmax2-claim-aggregator/shared": "workspace:*"
+    tsx: "npm:^4.19.3"
+    typescript: "npm:^5.8.2"
+  languageName: unknown
+  linkType: soft
+
 "cron-parser@npm:^4.2.1, cron-parser@npm:^4.9.0":
   version: 4.9.0
   resolution: "cron-parser@npm:4.9.0"
