@@ -1,6 +1,6 @@
 # intmax2-claim-aggregator
 
-The withdrawal aggregator is responsible for consolidating withdrawals and managing requests to the ZKP (Zero-Knowledge Proof).
+The claim aggregator is responsible for consolidating claims and managing requests to the ZKP (Zero-Knowledge Proof).
 
 ## Development
 
@@ -25,6 +25,9 @@ yarn workspace processor dev
 
 # watcher
 yarn workspace watcher dev
+
+# dispatcher
+yarn workspace dispatcher dev
 ```
 
 ## Migration
