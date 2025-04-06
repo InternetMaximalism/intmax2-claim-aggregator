@@ -296,8 +296,8 @@ __metadata:
     ethers: "npm:^6.13.5"
     pino: "npm:^9.6.0"
     pino-pretty: "npm:^13.0.0"
-    typescript: "npm:^5.8.2"
-    viem: "npm:^2.24.2"
+    typescript: "npm:^5.8.3"
+    viem: "npm:^2.25.0"
   languageName: unknown
   linkType: soft
 
@@ -593,12 +593,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.13.14":
-  version: 22.13.14
-  resolution: "@types/node@npm:22.13.14"
+"@types/node@npm:^22.14.0":
+  version: 22.14.0
+  resolution: "@types/node@npm:22.14.0"
   dependencies:
-    undici-types: "npm:~6.20.0"
-  checksum: 10c0/fa2ab5b8277bfbcc86c42e46a3ea9871b0d559894cc9d955685d17178c9499f0b1bf03d1d1ea8d92ef2dda818988f4035acb8abf9dc15423a998fa56173ab804
+    undici-types: "npm:~6.21.0"
+  checksum: 10c0/9d79f3fa1af9c2c869514f419c4a4905b34c10e12915582fd1784868ac4e74c6d306cf5eb47ef889b6750ab85a31be96618227b86739c4a3e0b1c15063f384c6
   languageName: node
   linkType: hard
 
@@ -814,7 +814,7 @@ __metadata:
     "@intmax2-claim-aggregator/shared": "workspace:*"
     date-fns: "npm:^4.1.0"
     tsx: "npm:^4.19.3"
-    typescript: "npm:^5.8.2"
+    typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
@@ -856,7 +856,7 @@ __metadata:
   dependencies:
     "@intmax2-claim-aggregator/shared": "workspace:*"
     tsx: "npm:^4.19.3"
-    typescript: "npm:^5.8.2"
+    typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
@@ -933,8 +933,8 @@ __metadata:
   dependencies:
     "@intmax2-claim-aggregator/shared": "workspace:*"
     tsx: "npm:^4.19.3"
-    typescript: "npm:^5.8.2"
-    viem: "npm:^2.24.2"
+    typescript: "npm:^5.8.3"
+    viem: "npm:^2.25.0"
   languageName: unknown
   linkType: soft
 
@@ -1317,10 +1317,10 @@ __metadata:
   dependencies:
     "@biomejs/biome": "npm:1.9.4"
     "@prisma/client": "npm:6.5.0"
-    "@types/node": "npm:^22.13.14"
+    "@types/node": "npm:^22.14.0"
     prisma: "npm:^6.5.0"
     tsx: "npm:^4.19.3"
-    typescript: "npm:^5.8.2"
+    typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
@@ -1868,7 +1868,7 @@ __metadata:
     axios: "npm:^1.8.4"
     ethers: "npm:^6.13.5"
     tsx: "npm:^4.19.3"
-    typescript: "npm:^5.8.2"
+    typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
@@ -2163,23 +2163,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.8.2":
-  version: 5.8.2
-  resolution: "typescript@npm:5.8.2"
+"typescript@npm:^5.8.3":
+  version: 5.8.3
+  resolution: "typescript@npm:5.8.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/5c4f6fbf1c6389b6928fe7b8fcd5dc73bb2d58cd4e3883f1d774ed5bd83b151cbac6b7ecf11723de56d4676daeba8713894b1e9af56174f2f9780ae7848ec3c6
+  checksum: 10c0/5f8bb01196e542e64d44db3d16ee0e4063ce4f3e3966df6005f2588e86d91c03e1fb131c2581baf0fb65ee79669eea6e161cd448178986587e9f6844446dbb48
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.8.2#optional!builtin<compat/typescript>":
-  version: 5.8.2
-  resolution: "typescript@patch:typescript@npm%3A5.8.2#optional!builtin<compat/typescript>::version=5.8.2&hash=5786d5"
+"typescript@patch:typescript@npm%3A^5.8.3#optional!builtin<compat/typescript>":
+  version: 5.8.3
+  resolution: "typescript@patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/5448a08e595cc558ab321e49d4cac64fb43d1fa106584f6ff9a8d8e592111b373a995a1d5c7f3046211c8a37201eb6d0f1566f15cdb7a62a5e3be01d087848e2
+  checksum: 10c0/39117e346ff8ebd87ae1510b3a77d5d92dae5a89bde588c747d25da5c146603a99c8ee588c7ef80faaf123d89ed46f6dbd918d534d641083177d5fac38b8a1cb
   languageName: node
   linkType: hard
 
@@ -2190,10 +2190,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.20.0":
-  version: 6.20.0
-  resolution: "undici-types@npm:6.20.0"
-  checksum: 10c0/68e659a98898d6a836a9a59e6adf14a5d799707f5ea629433e025ac90d239f75e408e2e5ff086afc3cace26f8b26ee52155293564593fbb4a2f666af57fc59bf
+"undici-types@npm:~6.21.0":
+  version: 6.21.0
+  resolution: "undici-types@npm:6.21.0"
+  checksum: 10c0/c01ed51829b10aa72fc3ce64b747f8e74ae9b60eafa19a7b46ef624403508a54c526ffab06a14a26b3120d055e1104d7abe7c9017e83ced038ea5cf52f8d5e04
   languageName: node
   linkType: hard
 
@@ -2224,9 +2224,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.24.2":
-  version: 2.24.2
-  resolution: "viem@npm:2.24.2"
+"viem@npm:^2.25.0":
+  version: 2.25.0
+  resolution: "viem@npm:2.25.0"
   dependencies:
     "@noble/curves": "npm:1.8.1"
     "@noble/hashes": "npm:1.7.1"
@@ -2241,7 +2241,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/f6f91ce3c447e79828ed03771d68f7cb00a4d6780b2f29f907777083d3b384a736b62743873a380b9279796eaf6dca49d4c92a64ed9cc59ea2802b9bdd393d18
+  checksum: 10c0/fe62971ea32a907afca1d8e31c5cec4ce99229b0c8fe910e77c7753a3bd84de49ab4aad56fb32757511334e856672ad0736120897b1dd33bdbf28e359a019f16
   languageName: node
   linkType: hard
 
@@ -2252,8 +2252,8 @@ __metadata:
     "@intmax2-claim-aggregator/shared": "workspace:*"
     abitype: "npm:^1.0.8"
     tsx: "npm:^4.19.3"
-    typescript: "npm:^5.8.2"
-    viem: "npm:^2.24.2"
+    typescript: "npm:^5.8.3"
+    viem: "npm:^2.25.0"
   languageName: unknown
   linkType: soft
 
