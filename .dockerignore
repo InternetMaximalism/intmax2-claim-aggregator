@@ -14,6 +14,7 @@ out
 !README.md
 *.log
 *.local
+.vscode
 
 # Environment files
 .env*

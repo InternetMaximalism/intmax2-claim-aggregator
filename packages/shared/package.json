@@ -9,7 +9,7 @@
     "ethers": "^6.13.5",
     "pino": "^9.6.0",
     "pino-pretty": "^13.0.0",
-    "viem": "^2.24.2"
+    "viem": "^2.25.0"
   },
   "scripts": {
     "build": "rm -rf dist tsconfig.tsbuildinfo && tsc",
@@ -17,6 +17,6 @@
   },
   "devDependencies": {
     "@types/bull": "^4.10.4",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   }
 }
