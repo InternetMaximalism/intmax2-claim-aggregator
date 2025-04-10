@@ -32,9 +32,7 @@ export const config = cleanEnv(process.env, {
   CLAIM_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
   CLAIM_CONTRACT_DEPLOYED_BLOCK: num({ devDefault: 0 }),
   L2_CONTRIBUTION_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
-  L2_CONTRIBUTION_CONTRACT_DEPLOYED_BLOCK: num({ devDefault: 0 }),
   BLOCK_BUILDER_REWARD_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
-  BLOCK_BUILDER_REWARD_CONTRACT_DEPLOYED_BLOCK: num({ devDefault: 0 }),
   // private key
   INTMAX2_OWNER_MNEMONIC: str(),
   // zkp
