@@ -1,5 +1,5 @@
 import {
-  CLAIM_CONTRACT_ADDRESS,
+  BLOCK_BUILDER_REWARD_CONTRACT_ADDRESS,
   Claim__factory,
   type ContractCallOptionsEthers,
   type ContractCallParameters,
@@ -24,11 +24,11 @@ import {
 } from "@intmax2-claim-aggregator/shared";
 import { ethers } from "ethers";
 import { type PublicClient, toHex } from "viem";
-import type { ContributionParams } from "../types";
+import type { SetRewardParams } from "../types";
 
-export const relayContribution = async (
+export const setReward = async (
   ethereumClient: ReturnType<typeof createNetworkClient>,
-  params: ContributionParams,
+  params: SetRewardParams,
 ) => {
   const walletClientData = getWalletClient("withdrawal", "scroll");
   const retryOptions: RetryOptionsEthers = {
@@ -39,7 +39,7 @@ export const relayContribution = async (
     try {
       const multiplier = calculateGasMultiplier(attempt);
 
-      const { transactionHash } = await relayContributionWithRetry(
+      const { transactionHash } = await setRewardWithRetry(
         ethereumClient,
         walletClientData,
         params,
@@ -50,7 +50,7 @@ export const relayContribution = async (
       const receipt = await ethersWaitForTransactionConfirmation(
         ethereumClient,
         transactionHash,
-        "relayContribution",
+        "setReward",
         {
           confirms: ETHERS_CONFIRMATIONS,
           timeout: WAIT_TRANSACTION_TIMEOUT,
@@ -82,18 +82,18 @@ export const relayContribution = async (
   throw new Error("Unexpected end of transaction");
 };
 
-export const relayContributionWithRetry = async (
+export const setRewardWithRetry = async (
   ethereumClient: PublicClient,
   walletClientData: ReturnType<typeof getWalletClient>,
-  params: ContributionParams,
+  params: SetRewardParams,
   multiplier: number,
   retryOptions: RetryOptionsEthers,
 ) => {
   const contractCallParams: ContractCallParameters = {
-    contractAddress: CLAIM_CONTRACT_ADDRESS,
-    functionName: "relayContribution",
+    contractAddress: BLOCK_BUILDER_REWARD_CONTRACT_ADDRESS,
+    functionName: "setReward",
     account: walletClientData.account,
-    args: [params.period, params.recipients],
+    args: [params.periodNumber, params.amount],
   };
 
   const [{ pendingNonce, currentNonce }, gasPriceData] = await Promise.all([

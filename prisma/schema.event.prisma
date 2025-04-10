@@ -30,3 +30,13 @@ model ClaimPeriod {
 
   @@map("claim_periods")
 }
+
+model RewardPeriod {
+  id               String   @id @default(uuid())
+  period           BigInt   @unique
+  totalReward      Int
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@map("reward_periods")
+}

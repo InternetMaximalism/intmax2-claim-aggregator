@@ -1,5 +1,5 @@
 {
-  "name": "contribution",
+  "name": "reward",
   "version": "1.0.0",
   "dependencies": {
     "@intmax2-claim-aggregator/shared": "workspace:*"

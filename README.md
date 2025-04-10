@@ -28,6 +28,9 @@ yarn workspace watcher dev
 
 # dispatcher
 yarn workspace dispatcher dev
+
+# reward
+yarn workspace reward dev
 ```
 
 ## Migration
