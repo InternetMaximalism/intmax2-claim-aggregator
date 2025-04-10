@@ -31,6 +31,8 @@ export const config = cleanEnv(process.env, {
   LIQUIDITY_CONTRACT_DEPLOYED_BLOCK: num({ devDefault: 0 }),
   CLAIM_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
   CLAIM_CONTRACT_DEPLOYED_BLOCK: num({ devDefault: 0 }),
+  L2_CONTRIBUTION_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
+  BLOCK_BUILDER_REWARD_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
   // private key
   INTMAX2_OWNER_MNEMONIC: str(),
   // zkp
@@ -41,6 +43,11 @@ export const config = cleanEnv(process.env, {
   CLAIM_GROUP_SIZE: num({ default: 50 }),
   CLAIM_MIN_BATCH_SIZE: num({ default: 5 }),
   CLAIM_MIN_WAIT_MINUTES: num({ default: 5 }), // 5 minutes
+  // block builder
+  BLOCK_BUILDER_REWARD_TYPE: str({
+    choices: ["development", "production"],
+    default: "development",
+  }),
   // scroll
   SCROLL_GAS_MULTIPLIER: num({ default: 2 }), // for l1 fee
 });

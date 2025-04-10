@@ -1,6 +1,6 @@
 import {
-  CLAIM_CONTRACT_ADDRESS,
-  Claim__factory,
+  BLOCK_BUILDER_REWARD_CONTRACT_ADDRESS,
+  BlockBuilderReward__factory,
   type ContractCallOptionsEthers,
   type ContractCallParameters,
   ETHERS_CONFIRMATIONS,
@@ -24,11 +24,11 @@ import {
 } from "@intmax2-claim-aggregator/shared";
 import { ethers } from "ethers";
 import { type PublicClient, toHex } from "viem";
-import type { ContributionParams } from "../types";
+import type { AllowClaimParams } from "../types";
 
-export const relayContribution = async (
+export const allowClaim = async (
   ethereumClient: ReturnType<typeof createNetworkClient>,
-  params: ContributionParams,
+  params: AllowClaimParams,
 ) => {
   const walletClientData = getWalletClient("withdrawal", "scroll");
   const retryOptions: RetryOptionsEthers = {
@@ -39,7 +39,7 @@ export const relayContribution = async (
     try {
       const multiplier = calculateGasMultiplier(attempt);
 
-      const { transactionHash } = await relayContributionWithRetry(
+      const { transactionHash } = await allowClaimWithRetry(
         ethereumClient,
         walletClientData,
         params,
@@ -50,7 +50,7 @@ export const relayContribution = async (
       const receipt = await ethersWaitForTransactionConfirmation(
         ethereumClient,
         transactionHash,
-        "relayContribution",
+        "allowClaim",
         {
           confirms: ETHERS_CONFIRMATIONS,
           timeout: WAIT_TRANSACTION_TIMEOUT,
@@ -82,18 +82,18 @@ export const relayContribution = async (
   throw new Error("Unexpected end of transaction");
 };
 
-export const relayContributionWithRetry = async (
+export const allowClaimWithRetry = async (
   ethereumClient: PublicClient,
   walletClientData: ReturnType<typeof getWalletClient>,
-  params: ContributionParams,
+  params: AllowClaimParams,
   multiplier: number,
   retryOptions: RetryOptionsEthers,
 ) => {
   const contractCallParams: ContractCallParameters = {
-    contractAddress: CLAIM_CONTRACT_ADDRESS,
-    functionName: "relayContribution",
+    contractAddress: BLOCK_BUILDER_REWARD_CONTRACT_ADDRESS,
+    functionName: "allowClaim",
     account: walletClientData.account,
-    args: [params.period, params.recipients],
+    args: [params.periodNumber],
   };
 
   const [{ pendingNonce, currentNonce }, gasPriceData] = await Promise.all([
@@ -122,7 +122,7 @@ export const relayContributionWithRetry = async (
     toHex(walletClientData.account.getHdKey().privateKey!),
     provider,
   );
-  const contract = Claim__factory.connect(contractCallParams.contractAddress, signer);
+  const contract = BlockBuilderReward__factory.connect(contractCallParams.contractAddress, signer);
 
   const ethersTxOptions = getEthersTxOptions(contractCallParams, contractCallOptions ?? {});
   const callArgs = [contractCallParams.args[0], contractCallParams.args[1], ethersTxOptions];
