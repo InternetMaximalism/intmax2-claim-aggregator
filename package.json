@@ -16,12 +16,15 @@
     "generate:withdrawal": "prisma generate --schema=./prisma/schema.withdrawal.prisma",
     "generate:event": "prisma generate --schema=./prisma/schema.event.prisma",
     "generate": "yarn generate:withdrawal && yarn generate:event",
-    "reset": "prisma migrate reset --schema=./prisma/schema.event.prisma"
+    "reset": "prisma migrate reset --schema=./prisma/schema.event.prisma",
+    "typechain": "npx typechain --target ethers-v6 --out-dir packages/shared/src/typechainTypes './abi/**/*.json'"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@typechain/ethers-v6": "^0.5.1",
     "@types/node": "^22.14.0",
     "tsx": "^4.19.3",
+    "typechain": "^8.3.2",
     "typescript": "^5.8.3"
   },
   "dependencies": {

@@ -1,6 +1,6 @@
 import {
   BLOCK_BUILDER_REWARD_CONTRACT_ADDRESS,
-  Claim__factory,
+  BlockBuilderReward__factory,
   type ContractCallOptionsEthers,
   type ContractCallParameters,
   ETHERS_CONFIRMATIONS,
@@ -122,7 +122,7 @@ export const allowClaimWithRetry = async (
     toHex(walletClientData.account.getHdKey().privateKey!),
     provider,
   );
-  const contract = Claim__factory.connect(contractCallParams.contractAddress, signer);
+  const contract = BlockBuilderReward__factory.connect(contractCallParams.contractAddress, signer);
 
   const ethersTxOptions = getEthersTxOptions(contractCallParams, contractCallOptions ?? {});
   const callArgs = [contractCallParams.args[0], contractCallParams.args[1], ethersTxOptions];
