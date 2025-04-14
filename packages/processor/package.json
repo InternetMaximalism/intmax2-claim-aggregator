@@ -4,7 +4,7 @@
   "dependencies": {
     "@intmax2-claim-aggregator/shared": "workspace:*",
     "axios": "^1.8.4",
-    "ethers": "^6.13.5"
+    "ethers": "6.13.5"
   },
   "scripts": {
     "start": "node dist/index.js",

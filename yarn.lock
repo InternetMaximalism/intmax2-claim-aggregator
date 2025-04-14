@@ -291,9 +291,11 @@ __metadata:
   dependencies:
     "@types/bull": "npm:^4.10.4"
     abitype: "npm:^1.0.8"
+    axios: "npm:^1.8.4"
     bull: "npm:^4.16.5"
     envalid: "npm:^8.0.0"
-    ethers: "npm:^6.13.5"
+    ethers: "npm:6.13.5"
+    ioredis: "npm:^5.6.1"
     pino: "npm:^9.6.0"
     pino-pretty: "npm:^13.0.0"
     typescript: "npm:^5.8.3"
@@ -961,6 +963,7 @@ __metadata:
   resolution: "dispatcher@workspace:packages/dispatcher"
   dependencies:
     "@intmax2-claim-aggregator/shared": "workspace:*"
+    ethers: "npm:6.13.5"
     tsx: "npm:^4.19.3"
     typescript: "npm:^5.8.3"
     viem: "npm:^2.26.3"
@@ -1179,9 +1182,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^6.13.5":
-  version: 6.13.6
-  resolution: "ethers@npm:6.13.6"
+"ethers@npm:6.13.5":
+  version: 6.13.5
+  resolution: "ethers@npm:6.13.5"
   dependencies:
     "@adraffy/ens-normalize": "npm:1.10.1"
     "@noble/curves": "npm:1.2.0"
@@ -1190,7 +1193,7 @@ __metadata:
     aes-js: "npm:4.0.0-beta.5"
     tslib: "npm:2.7.0"
     ws: "npm:8.17.1"
-  checksum: 10c0/e757b2995e1298396d120e9cb92a07c4308e93ea28eedb577d4e7a43b0b1cdf4be2460a6722294e42c1da9a9b1dddd9f2c885c9e6120fa845ccdd1b706e0ec04
+  checksum: 10c0/64bc7b8907de199392b8a88c15c9a085892919cff7efa2e5326abc7fe5c426001726c51d91e10c74e5fc5e2547188297ce4127f6e52ea42a97ade0b2ae474677
   languageName: node
   linkType: hard
 
@@ -1536,13 +1539,14 @@ __metadata:
     "@biomejs/biome": "npm:1.9.4"
     "@prisma/client": "npm:6.6.0"
     "@typechain/ethers-v6": "npm:^0.5.1"
+    ethers: "npm:6.13.5"
     prisma: "npm:^6.6.0"
     typechain: "npm:^8.3.2"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
 
-"ioredis@npm:^5.3.2":
+"ioredis@npm:^5.3.2, ioredis@npm:^5.6.1":
   version: 5.6.1
   resolution: "ioredis@npm:5.6.1"
   dependencies:
@@ -2140,7 +2144,7 @@ __metadata:
   dependencies:
     "@intmax2-claim-aggregator/shared": "workspace:*"
     axios: "npm:^1.8.4"
-    ethers: "npm:^6.13.5"
+    ethers: "npm:6.13.5"
     tsx: "npm:^4.19.3"
     typescript: "npm:^5.8.3"
   languageName: unknown
@@ -2622,8 +2626,8 @@ __metadata:
   linkType: hard
 
 "viem@npm:^2.26.3":
-  version: 2.26.3
-  resolution: "viem@npm:2.26.3"
+  version: 2.26.4
+  resolution: "viem@npm:2.26.4"
   dependencies:
     "@noble/curves": "npm:1.8.1"
     "@noble/hashes": "npm:1.7.1"
@@ -2638,7 +2642,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/c808c0fb066bd55b6b726e546c3eb809ac3d1d8c163b197927c042579c65966686072607e5baf5a7667050248f332de8c7a44caa321954682ca8576dc1c152c3
+  checksum: 10c0/18bb3917e4c6793f4d760a05918f7f63d2c4a80a78a9c9f88948e2dee6cc3db9e5f5f421be93fdc892294a6645bc2a914b4a2c029e6b95993b9510e74f1e2afe
   languageName: node
   linkType: hard
 
