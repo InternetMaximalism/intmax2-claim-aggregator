@@ -8,6 +8,9 @@ on:
     paths-ignore:
       - '**.md'
 
+permissions:
+  contents: read
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -28,7 +31,7 @@ jobs:
       run: corepack enable
 
     - name: Set Yarn version
-      run: corepack prepare yarn@4.6.0 --activate
+      run: corepack prepare yarn@4.9.1 --activate
 
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
@@ -46,10 +49,7 @@ jobs:
           ${{ runner.os }}-yarn-
 
     - name: Install dependencies
-      run: yarn
-
-    - name: Generate prisma
-      run: yarn generate
+      run: yarn install --immutable
 
     - name: Lint
       run: yarn lint
@@ -59,3 +59,6 @@ jobs:
 
     - name: Build
       run: yarn build
+
+    - name: Check for security vulnerabilities
+      run: yarn npm audit
