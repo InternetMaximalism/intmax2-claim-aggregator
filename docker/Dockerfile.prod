@@ -1,0 +1,78 @@
+FROM node:22.14.0-bookworm-slim AS builder
+
+RUN corepack enable && \
+    corepack prepare yarn@4.9.1 --activate && \
+    yarn set version 4.9.1
+
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /usr/src/app
+
+COPY package.json yarn.lock ./
+COPY packages ./packages/
+
+RUN yarn install --immutable
+
+COPY ./tsconfig.json ./
+
+RUN yarn build
+
+RUN mkdir -p /tmp/packages && \
+    for pkg in packages/*/; do \
+      pkg_name=$(basename $pkg) && \
+      mkdir -p /tmp/packages/$pkg_name && \
+      if [ -d "$pkg/dist" ]; then cp -r $pkg/dist /tmp/packages/$pkg_name/; fi && \
+      if [ -f "$pkg/package.json" ]; then cp $pkg/package.json /tmp/packages/$pkg_name/; fi && \
+      find /tmp/packages/$pkg_name -type f -not -path "*/dist/*" -not -name "package.json" -delete && \
+      find /tmp/packages/$pkg_name -type d -empty -delete; \
+    done
+
+FROM node:22.14.0-bookworm-slim AS production
+
+ENV NODE_ENV=production
+ENV YARN_CACHE_FOLDER=/home/app/.yarn-cache
+ENV NODE_OPTIONS="\
+  --max-http-header-size=8192 \
+  --max-old-space-size=512 \
+  --disable-proto=throw \
+  --zero-fill-buffers"
+
+RUN corepack enable && \
+    corepack prepare yarn@4.9.1 --activate && \
+    yarn set version 4.9.1
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    ca-certificates \
+    python3 \
+    make \
+    g++ && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN useradd --create-home --shell /bin/bash app && \
+    mkdir -p /home/app/.yarn-cache && \
+    chown -R app:app /home/app
+
+WORKDIR /usr/src/app
+RUN chown -R app:app /usr/src/app
+
+COPY --chown=app:app --from=builder /usr/src/app/package.json /usr/src/app/yarn.lock ./
+COPY --chown=app:app --from=builder /tmp/packages ./packages/
+
+RUN find /usr/src/app -type d -exec chmod 755 {} \; && \
+    find /usr/src/app -type f -exec chmod 644 {} \;
+
+USER app
+
+RUN yarn workspaces focus --all --production && \
+    rm -rf .yarn/cache && \
+    rm -rf /home/app/tmp/*
+
+EXPOSE 3000
+
+ENTRYPOINT ["yarn"]
