@@ -297,7 +297,7 @@ __metadata:
     pino: "npm:^9.6.0"
     pino-pretty: "npm:^13.0.0"
     typescript: "npm:^5.8.3"
-    viem: "npm:^2.25.0"
+    viem: "npm:^2.26.3"
   languageName: unknown
   linkType: soft
 
@@ -963,7 +963,7 @@ __metadata:
     "@intmax2-claim-aggregator/shared": "workspace:*"
     tsx: "npm:^4.19.3"
     typescript: "npm:^5.8.3"
-    viem: "npm:^2.25.0"
+    viem: "npm:^2.26.3"
   languageName: unknown
   linkType: soft
 
@@ -2621,7 +2621,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.25.0":
+"viem@npm:^2.26.3":
   version: 2.26.3
   resolution: "viem@npm:2.26.3"
   dependencies:
@@ -2650,7 +2650,7 @@ __metadata:
     abitype: "npm:^1.0.8"
     tsx: "npm:^4.19.3"
     typescript: "npm:^5.8.3"
-    viem: "npm:^2.25.0"
+    viem: "npm:^2.26.3"
   languageName: unknown
   linkType: soft
 
