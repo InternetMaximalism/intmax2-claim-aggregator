@@ -2147,6 +2147,7 @@ __metadata:
     ethers: "npm:6.13.5"
     tsx: "npm:^4.19.3"
     typescript: "npm:^5.8.3"
+    viem: "npm:^2.26.4"
   languageName: unknown
   linkType: soft
 
@@ -2625,7 +2626,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.26.3":
+"viem@npm:^2.26.3, viem@npm:^2.26.4":
   version: 2.26.4
   resolution: "viem@npm:2.26.4"
   dependencies:
