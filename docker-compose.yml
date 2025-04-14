@@ -14,7 +14,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   redis:
-    image: redis:7.4.2
+    image: redis:7.2.7
     container_name: intmax2-claim-aggregator-redis
     hostname: redis
     restart: unless-stopped

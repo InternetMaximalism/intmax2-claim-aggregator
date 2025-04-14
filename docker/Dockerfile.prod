@@ -12,13 +12,15 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /usr/src/app
 
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock .yarnrc.yml ./
 COPY packages ./packages/
 
 RUN yarn install --immutable
 
-COPY ./tsconfig.json ./
+COPY tsconfig.json ./
+COPY prisma ./prisma
 
+RUN yarn generate
 RUN yarn build
 
 RUN mkdir -p /tmp/packages && \
@@ -62,7 +64,9 @@ WORKDIR /usr/src/app
 RUN chown -R app:app /usr/src/app
 
 COPY --chown=app:app --from=builder /usr/src/app/package.json /usr/src/app/yarn.lock ./
+COPY --chown=app:app --from=builder /usr/src/app/prisma ./prisma
 COPY --chown=app:app --from=builder /tmp/packages ./packages/
+COPY --chown=app:app --from=builder /usr/src/app/node_modules/.prisma ./node_modules/.prisma
 
 RUN find /usr/src/app -type d -exec chmod 755 {} \; && \
     find /usr/src/app -type f -exec chmod 644 {} \;

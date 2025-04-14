@@ -22,6 +22,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@typechain/ethers-v6": "^0.5.1",
+    "ethers": "6.13.5",
     "prisma": "^6.6.0",
     "typechain": "^8.3.2",
     "typescript": "^5.8.3"
