@@ -4,7 +4,7 @@
   "dependencies": {
     "@intmax2-claim-aggregator/shared": "workspace:*",
     "abitype": "^1.0.8",
-    "viem": "^2.26.3"
+    "viem": "^2.27.0"
   },
   "scripts": {
     "start": "node dist/index.js",

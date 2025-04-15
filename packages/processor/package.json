@@ -5,7 +5,7 @@
     "@intmax2-claim-aggregator/shared": "workspace:*",
     "axios": "^1.8.4",
     "ethers": "6.13.5",
-    "viem": "^2.26.4"
+    "viem": "^2.27.0"
   },
   "scripts": {
     "start": "node dist/index.js",
