@@ -44,7 +44,7 @@ export const createClaimWrappedProof = async (
 export const createClaimGnarkProof = async (wrappedProof: string) => {
   return makeProverRequest<CreateGnarkProofResponse>({
     method: "post",
-    path: "claim-gnark-server/start-proof",
+    path: getClaimGnarkPath("start-proof"),
     data: {
       proof: wrappedProof,
     },
@@ -68,7 +68,7 @@ export const getClaimWrapperProof = async (proofId: string) => {
 export const getClaimGnarkProof = async (jobId: string) => {
   return makeProverRequest<GetZKProofResponse<GnarkProof>>({
     method: "get",
-    path: `claim-gnark-server/get-proof`,
+    path: getClaimGnarkPath("get-proof"),
     params: {
       jobId,
     },
@@ -123,4 +123,10 @@ const handleAxiosError = (error: unknown) => {
       throw new Error(`Request error: ${axiosError.message}`);
     }
   }
+};
+
+const getClaimGnarkPath = (endpoint: string) => {
+  const basePath =
+    config.CLAIM_MODE === "faster" ? "faster-claim-gnark-server" : "claim-gnark-server";
+  return `${basePath}/${endpoint}`;
 };
