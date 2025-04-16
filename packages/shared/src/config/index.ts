@@ -43,6 +43,10 @@ export const config = cleanEnv(process.env, {
   CLAIM_GROUP_SIZE: num({ default: 50 }),
   CLAIM_MIN_BATCH_SIZE: num({ default: 5 }),
   CLAIM_MIN_WAIT_MINUTES: num({ default: 5 }), // 5 minutes
+  CLAIM_MODE: str({
+    choices: ["faster", "standard"],
+    default: "faster",
+  }),
   // block builder
   BLOCK_BUILDER_REWARD_TYPE: str({
     choices: ["development", "production"],
