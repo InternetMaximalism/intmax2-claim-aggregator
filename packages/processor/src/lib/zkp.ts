@@ -16,7 +16,7 @@ export const createClaimProof = async (
 ) => {
   return makeProverRequest<CreateProofResponse>({
     method: "post",
-    path: "aggregator-prover/proof/claim",
+    path: getProverPath("proof/claim"),
     data: {
       id,
       singleClaimProof,
@@ -32,7 +32,7 @@ export const createClaimWrappedProof = async (
 ) => {
   return makeProverRequest<CreateProofResponse>({
     method: "post",
-    path: "aggregator-prover/proof/wrapper/claim",
+    path: getProverPath("proof/wrapper/claim"),
     data: {
       id,
       claimAggregator: claimAggregatorAddress,
@@ -54,14 +54,14 @@ export const createClaimGnarkProof = async (wrappedProof: string) => {
 export const getClaimProof = async (proofId: string) => {
   return makeProverRequest<GetZKProofResponse<ClaimProof>>({
     method: "get",
-    path: `aggregator-prover/proof/claim/${proofId}`,
+    path: getProverPath(`proof/claim/${proofId}`),
   });
 };
 
 export const getClaimWrapperProof = async (proofId: string) => {
   return makeProverRequest<GetZKProofResponse<string>>({
     method: "get",
-    path: `aggregator-prover/proof/wrapper/claim/${proofId}`,
+    path: getProverPath(`proof/wrapper/claim/${proofId}`),
   });
 };
 
@@ -128,5 +128,11 @@ const handleAxiosError = (error: unknown) => {
 const getClaimGnarkPath = (endpoint: string) => {
   const basePath =
     config.CLAIM_MODE === "faster" ? "faster-claim-gnark-server" : "claim-gnark-server";
+  return `${basePath}/${endpoint}`;
+};
+
+const getProverPath = (endpoint: string) => {
+  const basePath =
+    config.CLAIM_MODE === "faster" ? "faster-aggregator-prover" : "aggregator-prover";
   return `${basePath}/${endpoint}`;
 };
