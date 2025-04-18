@@ -1,4 +1,5 @@
 import { bool, cleanEnv, num, str } from "envalid";
+import { version } from "../../../../package.json";
 
 export const config = cleanEnv(process.env, {
   // app
@@ -12,7 +13,7 @@ export const config = cleanEnv(process.env, {
     default: "debug",
   }),
   SERVICE_NAME: str({ default: "intmax2-claim-aggregator" }),
-  SERVICE_VERSION: str({ default: "v0.0.0" }),
+  SERVICE_VERSION: str({ default: version }),
   // db
   EVENT_DATABASE_URL: str(),
   WITHDRAWAL_DATABASE_URL: str(),
