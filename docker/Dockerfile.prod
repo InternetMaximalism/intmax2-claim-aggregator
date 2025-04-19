@@ -12,10 +12,10 @@ RUN apt-get update && apt-get install -y \
 
 RUN addgroup --system --gid 1001 builduser && \
     adduser --system --disabled-password --home /home/builduser --uid 1001 --gid 1001 builduser && \
-    mkdir -p /usr/src/app && \
-    chown builduser:builduser /usr/src/app
+    mkdir -p /app && \
+    chown builduser:builduser /app
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY --chown=builduser:builduser package.json yarn.lock .yarnrc.yml ./
 COPY --chown=builduser:builduser packages ./packages/
@@ -30,22 +30,22 @@ RUN yarn build
 
 RUN mkdir -p /tmp/packages && \
     for pkg in packages/*/; do \
-      pkg_name=$(basename $pkg) && \
-      mkdir -p /tmp/packages/$pkg_name && \
-      if [ -d "$pkg/dist" ]; then cp -r $pkg/dist /tmp/packages/$pkg_name/; fi && \
-      if [ -f "$pkg/package.json" ]; then cp $pkg/package.json /tmp/packages/$pkg_name/; fi && \
-      find /tmp/packages/$pkg_name -type f -not -path "*/dist/*" -not -name "package.json" -delete && \
-      find /tmp/packages/$pkg_name -type d -empty -delete; \
+    pkg_name=$(basename $pkg) && \
+    mkdir -p /tmp/packages/$pkg_name && \
+    if [ -d "$pkg/dist" ]; then cp -r $pkg/dist /tmp/packages/$pkg_name/; fi && \
+    if [ -f "$pkg/package.json" ]; then cp $pkg/package.json /tmp/packages/$pkg_name/; fi && \
+    find /tmp/packages/$pkg_name -type f -not -path "*/dist/*" -not -name "package.json" -delete && \
+    find /tmp/packages/$pkg_name -type d -empty -delete; \
     done
 
 FROM node:22.14.0-bookworm-slim AS production
 
 ENV NODE_ENV=production
 ENV NODE_OPTIONS="\
-  --max-http-header-size=8192 \
-  --max-old-space-size=512 \
-  --disable-proto=throw \
-  --zero-fill-buffers"
+    --max-http-header-size=8192 \
+    --max-old-space-size=512 \
+    --disable-proto=throw \
+    --zero-fill-buffers"
 
 RUN corepack enable && \
     corepack prepare yarn@4.9.1 --activate && \
@@ -62,18 +62,18 @@ RUN apt-get update && \
 
 RUN addgroup --system --gid 1001 appuser && \
     adduser --system --disabled-password --home /home/appuser --uid 1001 --gid 1001 appuser && \
-    mkdir -p /usr/src/app && \
-    chown appuser:appuser /usr/src/app
+    mkdir -p /app && \
+    chown appuser:appuser /app
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY --chown=appuser:appuser --from=builder /usr/src/app/package.json /usr/src/app/yarn.lock ./
-COPY --chown=appuser:appuser --from=builder /usr/src/app/prisma ./prisma
-COPY --chown=appuser:appuser --from=builder /usr/src/app/packages ./packages/
-COPY --chown=appuser:appuser --from=builder /usr/src/app/node_modules/.prisma ./node_modules/.prisma
+COPY --chown=appuser:appuser --from=builder /app/package.json /app/yarn.lock ./
+COPY --chown=appuser:appuser --from=builder /app/prisma ./prisma
+COPY --chown=appuser:appuser --from=builder /app/packages ./packages/
+COPY --chown=appuser:appuser --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
-RUN find /usr/src/app -type d -exec chmod 755 {} \; && \
-    find /usr/src/app -type f -exec chmod 644 {} \;
+RUN find /app -type d -exec chmod 755 {} \; && \
+    find /app -type f -exec chmod 644 {} \;
 
 USER appuser:appuser
 
