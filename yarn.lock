@@ -2234,8 +2234,10 @@ __metadata:
   resolution: "reward@workspace:packages/reward"
   dependencies:
     "@intmax2-claim-aggregator/shared": "workspace:*"
+    ethers: "npm:6.13.5"
     tsx: "npm:^4.19.3"
     typescript: "npm:^5.8.3"
+    viem: "npm:^2.27.0"
   languageName: unknown
   linkType: soft
 
