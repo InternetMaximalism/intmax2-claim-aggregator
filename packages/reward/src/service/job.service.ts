@@ -28,7 +28,7 @@ const processReward = async (
   periodData: PeriodInfo,
 ) => {
   const rewardContract = BlockBuilderRewardContract.getInstance();
-  const rewardAlreadySet = await rewardContract.isAlreadySetReward(periodData.period);
+  const [rewardAlreadySet] = await rewardContract.getReward(periodData.period);
 
   if (!rewardAlreadySet) {
     await setReward(scrollClient, {
