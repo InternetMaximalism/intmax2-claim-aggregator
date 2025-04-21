@@ -1,7 +1,6 @@
 import { createNetworkClient, eventPrisma, logger } from "@intmax2-claim-aggregator/shared";
 import { BlockBuilderRewardContract } from "../lib/blockBuilderRewardContract";
 import type { PeriodInfo } from "../types";
-import { allowClaim } from "./allow.service";
 import { fetchPendingPeriods } from "./period.service";
 import { setReward } from "./reward.service";
 
@@ -37,10 +36,6 @@ const processReward = async (
       amount: BigInt(periodData.totalReward),
     });
   }
-
-  await allowClaim(scrollClient, {
-    periodNumber: periodData.period,
-  });
 };
 
 const saveRewardPeriod = async ({ period, totalReward }: PeriodInfo) => {
