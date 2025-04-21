@@ -30,7 +30,7 @@ export const setReward = async (
   ethereumClient: ReturnType<typeof createNetworkClient>,
   params: SetRewardParams,
 ) => {
-  const walletClientData = getWalletClient("withdrawal", "scroll");
+  const walletClientData = getWalletClient("blockBuilderReward", "scroll");
   const retryOptions: RetryOptionsEthers = {
     gasPrice: null,
   };
