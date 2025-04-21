@@ -28,7 +28,7 @@ export class BlockBuilderRewardContract {
     return BlockBuilderRewardContract.instance;
   }
 
-  async isAlreadySetReward(period: bigint) {
-    return this.contract.read.alreadySetReward([period]);
+  async getReward(period: bigint) {
+    return this.contract.read.getReward([period]) as Promise<[boolean, number]>;
   }
 }
