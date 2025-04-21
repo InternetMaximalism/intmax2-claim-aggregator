@@ -3,12 +3,13 @@ import { mnemonicToAccount } from "viem/accounts";
 import { config } from "../config";
 import { networkConfig } from "./network";
 
-type WalletType = "builder" | "depositAnalyzer" | "withdrawal";
+type WalletType = "builder" | "depositAnalyzer" | "withdrawal" | "blockBuilderReward";
 
 const walletConfigs: Record<WalletType, number> = {
   builder: 0,
   depositAnalyzer: 1,
   withdrawal: 2,
+  blockBuilderReward: 3,
 };
 
 export const getWalletClient = (
