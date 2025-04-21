@@ -1,4 +1,5 @@
 import { createNetworkClient, eventPrisma, logger } from "@intmax2-claim-aggregator/shared";
+import { parseEther } from "ethers";
 import { BlockBuilderRewardContract } from "../lib/blockBuilderRewardContract";
 import type { PeriodInfo } from "../types";
 import { fetchPendingPeriods } from "./period.service";
@@ -33,7 +34,7 @@ const processReward = async (
   if (!rewardAlreadySet) {
     await setReward(scrollClient, {
       periodNumber: periodData.period,
-      amount: BigInt(periodData.totalReward),
+      amount: parseEther(String(periodData.totalReward)),
     });
   }
 };
