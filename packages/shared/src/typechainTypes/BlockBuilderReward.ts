@@ -27,12 +27,12 @@ export interface BlockBuilderRewardInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "UPGRADE_INTERFACE_VERSION"
-      | "allowClaim"
-      | "alreadySetReward"
-      | "claimAllowed"
       | "claimReward"
       | "claimed"
+      | "contribution"
+      | "getClaimableReward"
       | "initialize"
+      | "intmaxToken"
       | "owner"
       | "proxiableUUID"
       | "renounceOwnership"
@@ -56,18 +56,6 @@ export interface BlockBuilderRewardInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "allowClaim",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "alreadySetReward",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claimAllowed",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "claimReward",
     values: [BigNumberish]
   ): string;
@@ -76,8 +64,20 @@ export interface BlockBuilderRewardInterface extends Interface {
     values: [BigNumberish, AddressLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "contribution",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getClaimableReward",
+    values: [BigNumberish, AddressLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "initialize",
     values: [AddressLike, AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "intmaxToken",
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -109,21 +109,24 @@ export interface BlockBuilderRewardInterface extends Interface {
     functionFragment: "UPGRADE_INTERFACE_VERSION",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "allowClaim", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "alreadySetReward",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "claimAllowed",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "claimReward",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "claimed", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "contribution",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getClaimableReward",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "intmaxToken",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "proxiableUUID",
@@ -265,20 +268,6 @@ export interface BlockBuilderReward extends BaseContract {
 
   UPGRADE_INTERFACE_VERSION: TypedContractMethod<[], [string], "view">;
 
-  allowClaim: TypedContractMethod<
-    [periodNumber: BigNumberish],
-    [void],
-    "nonpayable"
-  >;
-
-  alreadySetReward: TypedContractMethod<
-    [arg0: BigNumberish],
-    [boolean],
-    "view"
-  >;
-
-  claimAllowed: TypedContractMethod<[arg0: BigNumberish], [boolean], "view">;
-
   claimReward: TypedContractMethod<
     [periodNumber: BigNumberish],
     [void],
@@ -291,11 +280,21 @@ export interface BlockBuilderReward extends BaseContract {
     "view"
   >;
 
+  contribution: TypedContractMethod<[], [string], "view">;
+
+  getClaimableReward: TypedContractMethod<
+    [periodNumber: BigNumberish, user: AddressLike],
+    [bigint],
+    "view"
+  >;
+
   initialize: TypedContractMethod<
     [_contribution: AddressLike, _intmaxToken: AddressLike],
     [void],
     "nonpayable"
   >;
+
+  intmaxToken: TypedContractMethod<[], [string], "view">;
 
   owner: TypedContractMethod<[], [string], "view">;
 
@@ -309,7 +308,11 @@ export interface BlockBuilderReward extends BaseContract {
     "nonpayable"
   >;
 
-  totalRewards: TypedContractMethod<[arg0: BigNumberish], [bigint], "view">;
+  totalRewards: TypedContractMethod<
+    [arg0: BigNumberish],
+    [[boolean, bigint] & { isSet: boolean; amount: bigint }],
+    "view"
+  >;
 
   transferOwnership: TypedContractMethod<
     [newOwner: AddressLike],
@@ -331,15 +334,6 @@ export interface BlockBuilderReward extends BaseContract {
     nameOrSignature: "UPGRADE_INTERFACE_VERSION"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "allowClaim"
-  ): TypedContractMethod<[periodNumber: BigNumberish], [void], "nonpayable">;
-  getFunction(
-    nameOrSignature: "alreadySetReward"
-  ): TypedContractMethod<[arg0: BigNumberish], [boolean], "view">;
-  getFunction(
-    nameOrSignature: "claimAllowed"
-  ): TypedContractMethod<[arg0: BigNumberish], [boolean], "view">;
-  getFunction(
     nameOrSignature: "claimReward"
   ): TypedContractMethod<[periodNumber: BigNumberish], [void], "nonpayable">;
   getFunction(
@@ -350,12 +344,25 @@ export interface BlockBuilderReward extends BaseContract {
     "view"
   >;
   getFunction(
+    nameOrSignature: "contribution"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "getClaimableReward"
+  ): TypedContractMethod<
+    [periodNumber: BigNumberish, user: AddressLike],
+    [bigint],
+    "view"
+  >;
+  getFunction(
     nameOrSignature: "initialize"
   ): TypedContractMethod<
     [_contribution: AddressLike, _intmaxToken: AddressLike],
     [void],
     "nonpayable"
   >;
+  getFunction(
+    nameOrSignature: "intmaxToken"
+  ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "owner"
   ): TypedContractMethod<[], [string], "view">;
@@ -374,7 +381,11 @@ export interface BlockBuilderReward extends BaseContract {
   >;
   getFunction(
     nameOrSignature: "totalRewards"
-  ): TypedContractMethod<[arg0: BigNumberish], [bigint], "view">;
+  ): TypedContractMethod<
+    [arg0: BigNumberish],
+    [[boolean, bigint] & { isSet: boolean; amount: bigint }],
+    "view"
+  >;
   getFunction(
     nameOrSignature: "transferOwnership"
   ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
