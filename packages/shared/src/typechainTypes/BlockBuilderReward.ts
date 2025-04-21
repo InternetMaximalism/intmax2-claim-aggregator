@@ -31,6 +31,7 @@ export interface BlockBuilderRewardInterface extends Interface {
       | "claimed"
       | "contribution"
       | "getClaimableReward"
+      | "getReward"
       | "initialize"
       | "intmaxToken"
       | "owner"
@@ -70,6 +71,10 @@ export interface BlockBuilderRewardInterface extends Interface {
   encodeFunctionData(
     functionFragment: "getClaimableReward",
     values: [BigNumberish, AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getReward",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
@@ -122,6 +127,7 @@ export interface BlockBuilderRewardInterface extends Interface {
     functionFragment: "getClaimableReward",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getReward", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "intmaxToken",
@@ -288,6 +294,12 @@ export interface BlockBuilderReward extends BaseContract {
     "view"
   >;
 
+  getReward: TypedContractMethod<
+    [periodNumber: BigNumberish],
+    [[boolean, bigint]],
+    "view"
+  >;
+
   initialize: TypedContractMethod<
     [_contribution: AddressLike, _intmaxToken: AddressLike],
     [void],
@@ -351,6 +363,13 @@ export interface BlockBuilderReward extends BaseContract {
   ): TypedContractMethod<
     [periodNumber: BigNumberish, user: AddressLike],
     [bigint],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getReward"
+  ): TypedContractMethod<
+    [periodNumber: BigNumberish],
+    [[boolean, bigint]],
     "view"
   >;
   getFunction(
