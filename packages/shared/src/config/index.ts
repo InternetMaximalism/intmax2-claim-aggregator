@@ -29,9 +29,9 @@ export const config = cleanEnv(process.env, {
   ETHERSCAN_API_KEY: str(),
   // contracts
   LIQUIDITY_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
-  LIQUIDITY_CONTRACT_DEPLOYED_BLOCK: num({ devDefault: 0 }),
+  LIQUIDITY_CONTRACT_DEPLOYED_BLOCK_NUMBER: num({ devDefault: 0 }),
   CLAIM_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
-  CLAIM_CONTRACT_DEPLOYED_BLOCK: num({ devDefault: 0 }),
+  CLAIM_CONTRACT_DEPLOYED_BLOCK_NUMBER: num({ devDefault: 0 }),
   L2_CONTRIBUTION_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
   BLOCK_BUILDER_REWARD_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
   // private key
