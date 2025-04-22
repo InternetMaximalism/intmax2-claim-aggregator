@@ -39,6 +39,10 @@ const fetchContractData = async (ethereumClient: ReturnType<typeof createNetwork
     contract.read.getAllocationConstants(),
   ])) as [bigint, AllocationConstants];
 
+  logger.debug(
+    `currentPeriod: ${currentPeriod} periodInterval: ${allocationConstants.periodInterval} startTimestamp: ${allocationConstants.startTimestamp}`,
+  );
+
   return { currentPeriod, allocationConstants };
 };
 

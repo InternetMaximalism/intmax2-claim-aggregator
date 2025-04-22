@@ -1,11 +1,11 @@
 import {
   BLOCK_RANGE_MINIMUM,
   CLAIM_CONTRACT_ADDRESS,
-  CLAIM_CONTRACT_DEPLOYED_BLOCK,
+  CLAIM_CONTRACT_DEPLOYED_BLOCK_NUMBER,
   type DirectWithdrawalQueuedEvent,
   type Event,
   LIQUIDITY_CONTRACT_ADDRESS,
-  LIQUIDITY_CONTRACT_DEPLOYED_BLOCK,
+  LIQUIDITY_CONTRACT_DEPLOYED_BLOCK_NUMBER,
   directWithdrawalQueuedEvent,
   directWithdrawalSuccessedEvent,
   fetchEvents,
@@ -53,7 +53,7 @@ export const handleAllWithdrawalEvents = async (networkState: NetworkState, even
       startBlockNumber: getLastProcessedBlockNumberByEventName(
         events,
         "ClaimWatcherDirectWithdrawalQueued",
-        CLAIM_CONTRACT_DEPLOYED_BLOCK,
+        CLAIM_CONTRACT_DEPLOYED_BLOCK_NUMBER,
       ),
       endBlockNumber: scrollCurrentBlockNumber,
       eventInterface: directWithdrawalQueuedEvent,
@@ -64,7 +64,7 @@ export const handleAllWithdrawalEvents = async (networkState: NetworkState, even
       startBlockNumber: getLastProcessedBlockNumberByEventName(
         events,
         "ClaimWatcherDirectWithdrawalSuccessed",
-        LIQUIDITY_CONTRACT_DEPLOYED_BLOCK,
+        LIQUIDITY_CONTRACT_DEPLOYED_BLOCK_NUMBER,
       ),
       endBlockNumber: currentBlockNumber,
       eventInterface: directWithdrawalSuccessedEvent,

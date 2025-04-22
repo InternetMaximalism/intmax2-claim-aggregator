@@ -32,9 +32,7 @@ const shouldProcessClaims = (requestingClaims: Array<RequestingClaim & { created
   const hasEnoughClaims = requestingClaims.length >= config.CLAIM_MIN_BATCH_SIZE;
   const isOldEnough = minutesSinceOldestClaim >= config.CLAIM_MIN_WAIT_MINUTES;
 
-  logger.info(
-    `shouldProcessClaims hasEnoughClaims: ${hasEnoughClaims} isOldEnough: ${isOldEnough}`,
-  );
+  logger.info(`hasEnoughClaims: ${hasEnoughClaims} isOldEnough: ${isOldEnough}`);
 
   return hasEnoughClaims || isOldEnough;
 };
