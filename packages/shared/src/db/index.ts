@@ -1,2 +1,4 @@
-export { eventPrisma, withdrawalPrisma } from "./prisma";
-export * from "./types";
+export * from "./eventDB";
+export * from "./eventSchema";
+export * from "./withdrawalDB";
+export * from "./withdrawalSchema";

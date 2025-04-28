@@ -36,14 +36,8 @@ yarn workspace reward dev
 ## Migration
 
 ```sh
-# migrate dev
-yarn migrate
-
-# migrate prod
-yarn migrate:deploy
-
-# reset
-yarn reset
+yarn generate:event
+yarn migrate:event
 ```
 
 ## Docker

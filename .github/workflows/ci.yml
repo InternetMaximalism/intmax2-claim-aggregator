@@ -51,9 +51,6 @@ jobs:
     - name: Install dependencies
       run: yarn install --immutable
 
-    - name: Generate prisma
-      run: yarn generate
-
     - name: Lint
       run: yarn lint
 

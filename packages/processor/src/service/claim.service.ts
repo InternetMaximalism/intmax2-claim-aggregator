@@ -3,8 +3,10 @@ import {
   type RequestingClaim,
   getWalletClient,
   logger,
-  withdrawalPrisma,
+  claimSchema,
+  withdrawalDB,
 } from "@intmax2-claim-aggregator/shared";
+import { and, eq, inArray } from "drizzle-orm";
 import { formatContractClaim, getLastClaimHashFromClaimProofs } from "../lib/utils";
 import type { ClaimProof, ClaimWithProof, GnarkProof } from "../types";
 import {
@@ -28,20 +30,16 @@ export const processClaimGroup = async (requestingClaims: RequestingClaim[]) => 
 const fetchClaimsWithProofs = async (requestingClaims: RequestingClaim[]) => {
   const requestingClaimUUIDs = requestingClaims.map((claim) => claim.uuid);
 
-  const claims = await withdrawalPrisma.claim.findMany({
-    select: {
-      uuid: true,
-      singleClaimProof: true,
-      withdrawalHash: true,
-    },
-    where: {
-      uuid: {
-        in: requestingClaimUUIDs,
-      },
-      status: ClaimStatus.requested,
-    },
-  });
-
+  const claims = await withdrawalDB
+    .select({
+      uuid: claimSchema.uuid,
+      singleWithdrawalProof: claimSchema.singleClaimProof,
+      withdrawalHash: claimSchema.withdrawalHash,
+    })
+    .from(claimSchema)
+    .where(
+      and(inArray(claimSchema.uuid, requestingClaimUUIDs), eq(claimSchema.status, "requested")),
+    );
   if (claims.length !== requestingClaimUUIDs.length) {
     logger.warn(
       `Some requested claims were not found or not in requested status requested: ${requestingClaimUUIDs.length} found: ${claims.length}`,

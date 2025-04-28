@@ -1,18 +1,13 @@
-import { createNetworkClient, eventPrisma } from "@intmax2-claim-aggregator/shared";
+import { createNetworkClient, eventDB, eventSchema } from "@intmax2-claim-aggregator/shared";
+import { inArray } from "drizzle-orm";
 import { WATCHER_EVENT_NAMES } from "../types";
 import { batchUpdateClaimStatusTransactions } from "./claim.service";
 import { handleAllWithdrawalEvents } from "./event.service";
 
 export const performJob = async (): Promise<void> => {
-  const [networkState, events] = await Promise.all([
+  const [events, networkState] = await Promise.all([
+    eventDB.select().from(eventSchema).where(inArray(eventSchema.name, WATCHER_EVENT_NAMES)),
     getEthereumAndScrollBlockNumbers(),
-    eventPrisma.event.findMany({
-      where: {
-        name: {
-          in: WATCHER_EVENT_NAMES,
-        },
-      },
-    }),
   ]);
 
   const [directWithdrawalQueueState, directWithdrawalSuccessState] =

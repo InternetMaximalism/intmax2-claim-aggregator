@@ -1,7 +1,7 @@
-import type { Event } from "../db";
+import { eventSchema } from "../db";
 
 export const getStartBlockNumber = (
-  lastProcessedEvent: Event | null,
+  lastProcessedEvent: typeof eventSchema.$inferSelect | null,
   deployedBlockNumber: bigint,
 ) => {
   return lastProcessedEvent?.lastBlockNumber

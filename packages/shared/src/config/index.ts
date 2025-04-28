@@ -17,6 +17,7 @@ export const config = cleanEnv(process.env, {
   // db
   EVENT_DATABASE_URL: str(),
   WITHDRAWAL_DATABASE_URL: str(),
+  USE_DATABASE_SSL: bool({ default: false }),
   // redis
   REDIS_URL: str(),
   USE_REDIS: bool({ default: true }),

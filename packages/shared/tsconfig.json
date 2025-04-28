@@ -20,6 +20,6 @@
     "allowUnreachableCode": false,
     "incremental": true
   },
-  "include": ["src/**/*", "prisma"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts", "dist"]
 }

@@ -99,6 +99,3 @@ Thumbs.db
 # build
 dist
 tsconfig.tsbuildinfo
-
-# prisma
-generated
