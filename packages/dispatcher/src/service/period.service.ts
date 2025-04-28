@@ -1,7 +1,6 @@
 import {
   CLAIM_CONTRACT_ADDRESS,
   ClaimAbi,
-  type ClaimPeriod,
   createNetworkClient,
   getBlockNumberByTimestamp,
   logger,
@@ -13,7 +12,7 @@ import type { AllocationConstants, PeriodBlockInterval, PeriodInfo } from "../ty
 
 export const getPeriodBlockIntervals = async (
   ethereumClient: ReturnType<typeof createNetworkClient>,
-  lastClaimPeriod: ClaimPeriod | null,
+  lastClaimPeriod: { period: bigint } | null,
 ) => {
   const { currentPeriod, allocationConstants } = await fetchContractData(ethereumClient);
 
@@ -46,7 +45,10 @@ const fetchContractData = async (ethereumClient: ReturnType<typeof createNetwork
   return { currentPeriod, allocationConstants };
 };
 
-const shouldSkipProcessing = (currentPeriod: bigint, lastClaimPeriod: ClaimPeriod | null) => {
+const shouldSkipProcessing = (
+  currentPeriod: bigint,
+  lastClaimPeriod: { period: bigint } | null,
+) => {
   if (lastClaimPeriod?.period === currentPeriod) {
     logger.info("Current period is already processed.");
     return true;
@@ -63,7 +65,7 @@ const shouldSkipProcessing = (currentPeriod: bigint, lastClaimPeriod: ClaimPerio
 
 const getUnprocessedPeriods = (
   currentPeriod: bigint,
-  lastClaimPeriod: ClaimPeriod | null,
+  lastClaimPeriod: { period: bigint } | null,
 ): bigint[] => {
   const startPeriod = lastClaimPeriod?.period ? Number(lastClaimPeriod.period) + 1 : 0;
 

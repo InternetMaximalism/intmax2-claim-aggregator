@@ -62,9 +62,7 @@
         "claim_periods_period_unique": {
           "name": "claim_periods_period_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "period"
-          ]
+          "columns": ["period"]
         }
       },
       "policies": {},
@@ -122,9 +120,7 @@
         "events_name_unique": {
           "name": "events_name_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "name"
-          ]
+          "columns": ["name"]
         }
       },
       "policies": {},
@@ -176,9 +172,7 @@
         "reward_periods_period_unique": {
           "name": "reward_periods_period_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "period"
-          ]
+          "columns": ["period"]
         }
       },
       "policies": {},

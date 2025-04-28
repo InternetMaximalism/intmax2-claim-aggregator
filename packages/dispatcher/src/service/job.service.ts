@@ -1,4 +1,10 @@
-import { createNetworkClient, eventPrisma, logger } from "@intmax2-claim-aggregator/shared";
+import {
+  claimPeriodSchema,
+  createNetworkClient,
+  eventDB,
+  logger,
+} from "@intmax2-claim-aggregator/shared";
+import { desc } from "drizzle-orm";
 import type { PeriodBlockInterval } from "../types";
 import { getContributionParams, getContributionRecordedEvents } from "./event.service";
 import { getPeriodBlockIntervals } from "./period.service";
@@ -6,13 +12,18 @@ import { relayClaims } from "./submit.service";
 
 export const performJob = async () => {
   const ethereumClient = createNetworkClient("scroll");
-  const lastProcessedPeriod = await eventPrisma.claimPeriod.findFirst({
-    orderBy: {
-      period: "desc",
-    },
-  });
+  const lastProcessedPeriod = await eventDB
+    .select({
+      period: claimPeriodSchema.period,
+    })
+    .from(claimPeriodSchema)
+    .orderBy(desc(claimPeriodSchema.period))
+    .limit(1);
 
-  const periodBlockIntervals = await getPeriodBlockIntervals(ethereumClient, lastProcessedPeriod);
+  const periodBlockIntervals = await getPeriodBlockIntervals(
+    ethereumClient,
+    lastProcessedPeriod[0] ?? null,
+  );
 
   for (const periodBlockInterval of periodBlockIntervals) {
     const recipientCount = await processDispatcher(ethereumClient, periodBlockInterval);
@@ -61,12 +72,10 @@ const saveClaimPeriod = async (
   { periodInfo: { period }, startBlockNumber, endBlockNumber }: PeriodBlockInterval,
   recipientCount: number,
 ) => {
-  return eventPrisma.claimPeriod.create({
-    data: {
-      period,
-      startBlockNumber,
-      endBlockNumber,
-      recipientCount,
-    },
+  return eventDB.insert(claimPeriodSchema).values({
+    period,
+    startBlockNumber,
+    endBlockNumber,
+    recipientCount,
   });
 };

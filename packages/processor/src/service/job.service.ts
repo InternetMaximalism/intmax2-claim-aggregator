@@ -3,10 +3,10 @@ import {
   ClaimManager,
   EXECUTION_REVERTED_ERROR_MESSAGE,
   type QueueJobData,
+  claimSchema,
   logger,
   timeOperation,
   withdrawalDB,
-  claimSchema,
 } from "@intmax2-claim-aggregator/shared";
 import { inArray } from "drizzle-orm";
 import { processClaimGroup } from "./claim.service";

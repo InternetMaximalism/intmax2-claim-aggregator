@@ -3,8 +3,8 @@ import {
   ClaimManager,
   QueueManager,
   type RequestingClaim,
-  logger,
   claimSchema,
+  logger,
   withdrawalDB,
 } from "@intmax2-claim-aggregator/shared";
 import { and, asc, eq, notInArray } from "drizzle-orm";

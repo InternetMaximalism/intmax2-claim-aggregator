@@ -1,9 +1,8 @@
 import {
-  ClaimStatus,
   type RequestingClaim,
+  claimSchema,
   getWalletClient,
   logger,
-  claimSchema,
   withdrawalDB,
 } from "@intmax2-claim-aggregator/shared";
 import { and, eq, inArray } from "drizzle-orm";

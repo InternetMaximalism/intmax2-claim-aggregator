@@ -3,7 +3,6 @@ import {
   CLAIM_CONTRACT_ADDRESS,
   CLAIM_CONTRACT_DEPLOYED_BLOCK_NUMBER,
   type DirectWithdrawalQueuedEvent,
-  type Event,
   LIQUIDITY_CONTRACT_ADDRESS,
   LIQUIDITY_CONTRACT_DEPLOYED_BLOCK_NUMBER,
   directWithdrawalQueuedEvent,
@@ -44,7 +43,10 @@ const handleWithdrawalEvent = async <T extends { args: { withdrawalHash: string 
   };
 };
 
-export const handleAllWithdrawalEvents = async (networkState: NetworkState, events: Event[]) => {
+export const handleAllWithdrawalEvents = async (
+  networkState: NetworkState,
+  events: { name: string; lastBlockNumber: bigint }[],
+) => {
   const { ethereumClient, scrollClient, currentBlockNumber, scrollCurrentBlockNumber } =
     networkState;
 
@@ -77,7 +79,7 @@ export const handleAllWithdrawalEvents = async (networkState: NetworkState, even
 };
 
 export const getLastProcessedBlockNumberByEventName = (
-  events: Event[],
+  events: { name: string; lastBlockNumber: bigint }[],
   eventName: WatcherEventType,
   deployedBlock: bigint,
 ) => {

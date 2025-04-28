@@ -18,23 +18,25 @@ export const performJob = async (): Promise<void> => {
     directWithdrawalSuccessState.eventLogs,
   );
 
-  await eventPrisma.$transaction(
-    [directWithdrawalQueueState, directWithdrawalSuccessState].map(
-      ({ eventName, currentBlockNumber }) =>
-        eventPrisma.event.upsert({
-          where: {
-            name: eventName,
-          },
-          create: {
-            name: eventName,
+  await eventDB.transaction(async (tx) => {
+    for (const { eventName, currentBlockNumber } of [
+      directWithdrawalQueueState,
+      directWithdrawalSuccessState,
+    ]) {
+      await tx
+        .insert(eventSchema)
+        .values({
+          name: eventName,
+          lastBlockNumber: currentBlockNumber,
+        })
+        .onConflictDoUpdate({
+          target: eventSchema.name,
+          set: {
             lastBlockNumber: currentBlockNumber,
           },
-          update: {
-            lastBlockNumber: currentBlockNumber,
-          },
-        }),
-    ),
-  );
+        });
+    }
+  });
 };
 
 const getEthereumAndScrollBlockNumbers = async () => {
