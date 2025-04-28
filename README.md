@@ -36,14 +36,14 @@ yarn workspace reward dev
 ## Migration
 
 ```sh
-# migrate dev
-yarn migrate
+# create db
+docker exec -it intmax2-claim-aggregator-postgres psql -U postgres -d maindb
+CREATE DATABASE event;
+CREATE DATABASE withdrawal;
 
-# migrate prod
-yarn migrate:deploy
-
-# reset
-yarn reset
+# migration
+yarn generate:event
+yarn migrate:event
 ```
 
 ## Docker

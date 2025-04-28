@@ -11,24 +11,20 @@
     "lint": "biome lint .",
     "format": "biome check --write --unsafe .",
     "check": "biome check .",
-    "migrate": "prisma migrate dev --schema=./prisma/schema.event.prisma",
-    "migrate:deploy": "prisma migrate deploy --schema=./prisma/schema.event.prisma",
-    "generate:withdrawal": "prisma generate --schema=./prisma/schema.withdrawal.prisma",
-    "generate:event": "prisma generate --schema=./prisma/schema.event.prisma",
-    "generate": "yarn generate:withdrawal && yarn generate:event",
-    "reset": "prisma migrate reset --schema=./prisma/schema.event.prisma",
+    "generate:withdrawal": "npx drizzle-kit generate --config=./drizzle.config.withdrawal.ts",
+    "generate:event": "npx drizzle-kit generate --config=./drizzle.config.event.ts",
+    "migrate:withdrawal": "npx drizzle-kit migrate --config=./drizzle.config.withdrawal.ts",
+    "migrate:event": "npx drizzle-kit migrate --config=./drizzle.config.event.ts",
     "typechain": "npx typechain --target ethers-v6 --out-dir packages/shared/src/typechainTypes './abi/**/*.json'"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@typechain/ethers-v6": "^0.5.1",
+    "dotenv": "^16.5.0",
+    "drizzle-kit": "^0.31.0",
     "ethers": "6.13.5",
-    "prisma": "^6.6.0",
     "typechain": "^8.3.2",
     "typescript": "^5.8.3"
-  },
-  "dependencies": {
-    "@prisma/client": "6.6.0"
   },
   "packageManager": "yarn@4.9.1"
 }

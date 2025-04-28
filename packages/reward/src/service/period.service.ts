@@ -1,10 +1,10 @@
-import { RewardPeriod, config, logger } from "@intmax2-claim-aggregator/shared";
+import { config, logger } from "@intmax2-claim-aggregator/shared";
 import { PERIOD_INTERVAL } from "../constant";
 import { ContributionContract } from "../lib/contributionContract";
 import { calculateReward } from "../lib/reward";
 import type { ContractData } from "../types";
 
-export const fetchPendingPeriods = async (lastRewardPeriod: RewardPeriod | null) => {
+export const fetchPendingPeriods = async (lastRewardPeriod: { period: bigint } | null) => {
   const contractData = await ContributionContract.getInstance().fetchContractPeriodData();
   if (shouldSkipProcessing(contractData.currentPeriod, lastRewardPeriod)) {
     return [];
@@ -15,7 +15,10 @@ export const fetchPendingPeriods = async (lastRewardPeriod: RewardPeriod | null)
   return pendingPeriodInfos;
 };
 
-const shouldSkipProcessing = (currentPeriod: bigint, lastRewardPeriod: RewardPeriod | null) => {
+const shouldSkipProcessing = (
+  currentPeriod: bigint,
+  lastRewardPeriod: { period: bigint } | null,
+) => {
   if (lastRewardPeriod?.period === currentPeriod) {
     logger.info("Current period is already processed.");
     return true;
@@ -32,9 +35,9 @@ const shouldSkipProcessing = (currentPeriod: bigint, lastRewardPeriod: RewardPer
 
 const getPendingPeriods = (
   currentPeriod: bigint,
-  lastClaimPeriod: RewardPeriod | null,
+  lastRewardPeriod: { period: bigint } | null,
 ): bigint[] => {
-  const startPeriod = lastClaimPeriod?.period ? Number(lastClaimPeriod.period) + 1 : 0;
+  const startPeriod = lastRewardPeriod?.period ? Number(lastRewardPeriod.period) + 1 : 0;
 
   return Array.from({ length: Number(currentPeriod) - startPeriod }, (_, i) =>
     BigInt(i + startPeriod),

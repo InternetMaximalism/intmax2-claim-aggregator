@@ -1,13 +1,14 @@
 import {
   ClaimGroupStatus,
   ClaimManager,
-  ClaimStatus,
   EXECUTION_REVERTED_ERROR_MESSAGE,
   type QueueJobData,
+  claimSchema,
   logger,
   timeOperation,
-  withdrawalPrisma,
+  withdrawalDB,
 } from "@intmax2-claim-aggregator/shared";
+import { inArray } from "drizzle-orm";
 import { processClaimGroup } from "./claim.service";
 
 export const processQueueJob = async (jobData: QueueJobData) => {
@@ -31,16 +32,17 @@ const performJob = async (data: QueueJobData): Promise<void> => {
 
     await processClaimGroup(group.requestingClaims);
 
-    await withdrawalPrisma.claim.updateMany({
-      where: {
-        uuid: {
-          in: group.requestingClaims.map((claim) => claim.uuid),
-        },
-      },
-      data: {
-        status: ClaimStatus.verified, // NOTE: verified
-      },
-    });
+    await withdrawalDB
+      .update(claimSchema)
+      .set({
+        status: "verified",
+      })
+      .where(
+        inArray(
+          claimSchema.uuid,
+          group.requestingClaims.map((claim) => claim.uuid),
+        ),
+      );
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
 
@@ -50,16 +52,18 @@ const performJob = async (data: QueueJobData): Promise<void> => {
       logger.warn(`Marking all claims in group ${groupId} as failed`);
 
       const group = await claimManager.getGroup(groupId);
-      await withdrawalPrisma.claim.updateMany({
-        where: {
-          uuid: {
-            in: group!.requestingClaims.map((claim) => claim.uuid),
-          },
-        },
-        data: {
-          status: ClaimStatus.failed,
-        },
-      });
+
+      await withdrawalDB
+        .update(claimSchema)
+        .set({
+          status: "failed",
+        })
+        .where(
+          inArray(
+            claimSchema.uuid,
+            group!.requestingClaims.map((claim) => claim.uuid),
+          ),
+        );
     }
   } finally {
     await claimManager.deleteGroup(groupId);

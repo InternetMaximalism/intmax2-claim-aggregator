@@ -1,18 +1,13 @@
-import { createNetworkClient, eventPrisma } from "@intmax2-claim-aggregator/shared";
+import { createNetworkClient, eventDB, eventSchema } from "@intmax2-claim-aggregator/shared";
+import { inArray } from "drizzle-orm";
 import { WATCHER_EVENT_NAMES } from "../types";
 import { batchUpdateClaimStatusTransactions } from "./claim.service";
 import { handleAllWithdrawalEvents } from "./event.service";
 
 export const performJob = async (): Promise<void> => {
-  const [networkState, events] = await Promise.all([
+  const [events, networkState] = await Promise.all([
+    eventDB.select().from(eventSchema).where(inArray(eventSchema.name, WATCHER_EVENT_NAMES)),
     getEthereumAndScrollBlockNumbers(),
-    eventPrisma.event.findMany({
-      where: {
-        name: {
-          in: WATCHER_EVENT_NAMES,
-        },
-      },
-    }),
   ]);
 
   const [directWithdrawalQueueState, directWithdrawalSuccessState] =
@@ -23,23 +18,25 @@ export const performJob = async (): Promise<void> => {
     directWithdrawalSuccessState.eventLogs,
   );
 
-  await eventPrisma.$transaction(
-    [directWithdrawalQueueState, directWithdrawalSuccessState].map(
-      ({ eventName, currentBlockNumber }) =>
-        eventPrisma.event.upsert({
-          where: {
-            name: eventName,
-          },
-          create: {
-            name: eventName,
+  await eventDB.transaction(async (tx) => {
+    for (const { eventName, currentBlockNumber } of [
+      directWithdrawalQueueState,
+      directWithdrawalSuccessState,
+    ]) {
+      await tx
+        .insert(eventSchema)
+        .values({
+          name: eventName,
+          lastBlockNumber: currentBlockNumber,
+        })
+        .onConflictDoUpdate({
+          target: eventSchema.name,
+          set: {
             lastBlockNumber: currentBlockNumber,
           },
-          update: {
-            lastBlockNumber: currentBlockNumber,
-          },
-        }),
-    ),
-  );
+        });
+    }
+  });
 };
 
 const getEthereumAndScrollBlockNumbers = async () => {

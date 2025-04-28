@@ -3,10 +3,12 @@ import {
   type DirectWithdrawalQueuedEventLog,
   type DirectWithdrawalSuccessedEventLog,
   type WithdrawalEventLog,
+  claimSchema,
   logger,
-  withdrawalPrisma,
+  withdrawalDB,
 } from "@intmax2-claim-aggregator/shared";
-import type { WatcherEventType } from "../types";
+import { and, eq, inArray } from "drizzle-orm";
+import type { TransactionType, WatcherEventType } from "../types";
 
 interface UpdateClaimStatusParams {
   events: DirectWithdrawalQueuedEventLog[] | DirectWithdrawalSuccessedEventLog[];
@@ -22,14 +24,14 @@ export const batchUpdateClaimStatusTransactions = async (
   const updateOperations = [
     {
       events: directWithdrawalQueues,
-      previousStatus: ClaimStatus.verified,
-      nextStatus: ClaimStatus.relayed,
+      previousStatus: "verified" as const,
+      nextStatus: "relayed" as const,
       eventType: "ClaimWatcherDirectWithdrawalQueued" as const,
     },
     {
       events: directWithdrawalSuccesses,
-      previousStatus: ClaimStatus.relayed,
-      nextStatus: ClaimStatus.success,
+      previousStatus: "relayed" as const,
+      nextStatus: "success" as const,
       eventType: "ClaimWatcherDirectWithdrawalSuccessed" as const,
     },
   ].filter(({ events }) => events.length > 0);
@@ -41,7 +43,11 @@ export const batchUpdateClaimStatusTransactions = async (
     return;
   }
 
-  await withdrawalPrisma.$transaction(transactions);
+  await withdrawalDB.transaction(async (tx) => {
+    for (const transaction of transactions) {
+      await transaction(tx);
+    }
+  });
 };
 
 const createUpdateTransactions = ({
@@ -60,22 +66,26 @@ const createUpdateTransactions = ({
       const whereClause = getWhereClause(event, previousStatus);
       const updateData = getUpdateData(event, baseData, eventType);
 
-      return withdrawalPrisma.claim.updateMany({
-        where: whereClause,
-        data: updateData,
-      });
+      return async (tx: TransactionType) => {
+        await tx.update(claimSchema).set(updateData).where(whereClause).execute();
+      };
     });
   }
 
-  return withdrawalPrisma.claim.updateMany({
-    where: {
-      withdrawalHash: {
-        in: events.map((event) => event.withdrawalHash.toLowerCase()),
-      },
-      status: previousStatus,
-    },
-    data: baseData,
-  });
+  return async (tx: TransactionType) => {
+    await tx
+      .update(claimSchema)
+      .set(baseData)
+      .where(
+        and(
+          inArray(
+            claimSchema.withdrawalHash,
+            events.map((event) => event.withdrawalHash.toLowerCase()),
+          ),
+          eq(claimSchema.status, previousStatus),
+        ),
+      );
+  };
 };
 
 const isDirectWithdrawalQueuedEventLog = (
@@ -87,7 +97,7 @@ const isDirectWithdrawalQueuedEventLog = (
 const isDirectWithdrawalSuccessedEventLog = (
   event: WithdrawalEventLog,
 ): event is DirectWithdrawalSuccessedEventLog => {
-  return "withdrawalHash" in event && "recipient" in event;
+  return "recipient" in event && "withdrawalHash" in event;
 };
 
 const getWhereClause = (
@@ -95,17 +105,17 @@ const getWhereClause = (
   previousStatus: ClaimStatus,
 ) => {
   if (isDirectWithdrawalQueuedEventLog(event)) {
-    return {
-      recipient: event.recipient.toLowerCase(),
-      status: previousStatus,
-    };
+    return and(
+      eq(claimSchema.recipient, event.recipient.toLowerCase()),
+      eq(claimSchema.status, previousStatus),
+    );
   }
 
   if (isDirectWithdrawalSuccessedEventLog(event)) {
-    return {
-      withdrawalHash: event.withdrawalHash.toLocaleLowerCase(),
-      status: previousStatus,
-    };
+    return and(
+      eq(claimSchema.withdrawalHash, event.withdrawalHash.toLowerCase()),
+      eq(claimSchema.status, previousStatus),
+    );
   }
 
   throw new Error(`Unsupported event type: ${JSON.stringify(event)}`);

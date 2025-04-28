@@ -1,32 +1,25 @@
 import {
   ClaimGroupStatus,
   ClaimManager,
-  ClaimStatus,
   QueueManager,
   type RequestingClaim,
-  WithdrawalPrisma,
+  claimSchema,
   logger,
-  withdrawalPrisma,
+  withdrawalDB,
 } from "@intmax2-claim-aggregator/shared";
+import { and, asc, eq, notInArray } from "drizzle-orm";
 
 export const fetchRequestingClaims = async () => {
   const processedUUIDs = await ClaimManager.getInstance("claim-aggregator").getAllProcessedUUIDs();
 
-  const requestingClaims = await withdrawalPrisma.claim.findMany({
-    select: {
-      uuid: true,
-      createdAt: true,
-    },
-    where: {
-      status: ClaimStatus.requested,
-      uuid: {
-        notIn: processedUUIDs,
-      },
-    },
-    orderBy: {
-      createdAt: WithdrawalPrisma.SortOrder.asc,
-    },
-  });
+  const requestingClaims = await withdrawalDB
+    .select({
+      uuid: claimSchema.uuid,
+      createdAt: claimSchema.createdAt,
+    })
+    .from(claimSchema)
+    .where(and(eq(claimSchema.status, "requested"), notInArray(claimSchema.uuid, processedUUIDs)))
+    .orderBy(asc(claimSchema.createdAt));
 
   return requestingClaims;
 };

@@ -1,4 +1,10 @@
-import { createNetworkClient, eventPrisma, logger } from "@intmax2-claim-aggregator/shared";
+import {
+  createNetworkClient,
+  eventDB,
+  logger,
+  rewardPeriodSchema,
+} from "@intmax2-claim-aggregator/shared";
+import { desc } from "drizzle-orm";
 import { parseEther } from "ethers";
 import { BlockBuilderRewardContract } from "../lib/blockBuilderRewardContract";
 import type { PeriodInfo } from "../types";
@@ -7,12 +13,15 @@ import { setReward } from "./reward.service";
 
 export const performJob = async () => {
   const scrollClient = createNetworkClient("scroll");
-  const lastProcessedPeriod = await eventPrisma.rewardPeriod.findFirst({
-    orderBy: {
-      period: "desc",
-    },
-  });
-  const pendingPeriodInfos = await fetchPendingPeriods(lastProcessedPeriod);
+  const lastProcessedPeriod = await eventDB
+    .select({
+      period: rewardPeriodSchema.period,
+    })
+    .from(rewardPeriodSchema)
+    .orderBy(desc(rewardPeriodSchema.period))
+    .limit(1);
+
+  const pendingPeriodInfos = await fetchPendingPeriods(lastProcessedPeriod[0] ?? null);
 
   for (const periodData of pendingPeriodInfos) {
     await processReward(scrollClient, periodData);
@@ -40,10 +49,8 @@ const processReward = async (
 };
 
 const saveRewardPeriod = async ({ period, totalReward }: PeriodInfo) => {
-  return eventPrisma.rewardPeriod.create({
-    data: {
-      period,
-      totalReward,
-    },
+  return eventDB.insert(rewardPeriodSchema).values({
+    period,
+    totalReward,
   });
 };
