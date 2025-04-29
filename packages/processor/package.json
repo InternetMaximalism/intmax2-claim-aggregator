@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@intmax2-claim-aggregator/shared": "workspace:*",
-    "axios": "^1.8.4",
+    "axios": "^1.9.0",
     "drizzle-orm": "^0.43.1",
     "ethers": "6.13.5",
     "viem": "^2.28.0"
