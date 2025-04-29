@@ -4,11 +4,11 @@
   "main": "dist/index.js",
   "dependencies": {
     "abitype": "^1.0.8",
-    "axios": "^1.8.4",
+    "axios": "^1.9.0",
     "bull": "^4.16.5",
     "drizzle-orm": "^0.43.1",
     "envalid": "^8.0.0",
-    "ethers": "6.13.5",
+    "ethers": "6.13.7",
     "ioredis": "^5.6.1",
     "pg": "^8.15.6",
     "pino": "^9.6.0",
