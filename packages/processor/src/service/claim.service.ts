@@ -32,7 +32,7 @@ const fetchClaimsWithProofs = async (requestingClaims: RequestingClaim[]) => {
   const claims = await withdrawalDB
     .select({
       uuid: claimSchema.uuid,
-      singleWithdrawalProof: claimSchema.singleClaimProof,
+      singleClaimProof: claimSchema.singleClaimProof,
       withdrawalHash: claimSchema.withdrawalHash,
     })
     .from(claimSchema)
