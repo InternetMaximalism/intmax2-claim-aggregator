@@ -7,7 +7,7 @@ import {
   logger,
   withdrawalDB,
 } from "@intmax2-claim-aggregator/shared";
-import { and, eq, inArray } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import type { TransactionType, WatcherEventType } from "../types";
 
 interface UpdateClaimStatusParams {
@@ -59,33 +59,15 @@ const createUpdateTransactions = ({
   // NOTE: DirectWithdrawalSuccess is applied to the data that was stored in the claim table.
   logger.info(`Batch update claim status: ${nextStatus} for ${events.length} ${eventType} claims`);
 
-  const baseData = { status: nextStatus };
+  return events.map((event) => {
+    const baseData = { status: nextStatus, l1TxHash: event.transactionHash };
+    const whereClause = getWhereClause(event, previousStatus);
+    const updateData = getUpdateData(event, baseData, eventType);
 
-  if (eventType === "ClaimWatcherDirectWithdrawalQueued") {
-    return events.map((event) => {
-      const whereClause = getWhereClause(event, previousStatus);
-      const updateData = getUpdateData(event, baseData, eventType);
-
-      return async (tx: TransactionType) => {
-        await tx.update(claimSchema).set(updateData).where(whereClause).execute();
-      };
-    });
-  }
-
-  return async (tx: TransactionType) => {
-    await tx
-      .update(claimSchema)
-      .set(baseData)
-      .where(
-        and(
-          inArray(
-            claimSchema.withdrawalHash,
-            events.map((event) => event.withdrawalHash.toLowerCase()),
-          ),
-          eq(claimSchema.status, previousStatus),
-        ),
-      );
-  };
+    return async (tx: TransactionType) => {
+      await tx.update(claimSchema).set(updateData).where(whereClause).execute();
+    };
+  });
 };
 
 const isDirectWithdrawalQueuedEventLog = (
