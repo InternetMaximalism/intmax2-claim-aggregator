@@ -18,6 +18,7 @@ export interface DirectWithdrawalQueuedEvent extends BaseEvent {
 }
 
 export interface DirectWithdrawalQueuedEventLog extends WithdrawalEventLog {
+  transactionHash: string;
   recipient: string;
   withdrawal: {
     recipient: string;
@@ -32,6 +33,7 @@ export interface DirectWithdrawalSuccessedEvent extends BaseEvent {
 }
 
 export interface DirectWithdrawalSuccessedEventLog extends WithdrawalEventLog {
+  transactionHash: string;
   recipient: string;
 }
 

@@ -14,8 +14,8 @@ export const performJob = async (): Promise<void> => {
     await handleAllWithdrawalEvents(networkState, events);
 
   await batchUpdateClaimStatusTransactions(
-    directWithdrawalQueueState.eventLogs,
-    directWithdrawalSuccessState.eventLogs,
+    directWithdrawalQueueState.events,
+    directWithdrawalSuccessState.events,
   );
 
   await eventDB.transaction(async (tx) => {

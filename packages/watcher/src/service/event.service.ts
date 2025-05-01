@@ -39,7 +39,10 @@ const handleWithdrawalEvent = async <
   });
 
   return {
-    eventLogs: events.map(({ args }) => args) as T["args"][],
+    events: events.map(({ args, transactionHash }) => ({
+      ...args,
+      transactionHash,
+    })) as (T["args"] & { transactionHash: T["transactionHash"] })[],
     eventName: eventName,
     currentBlockNumber: endBlockNumber,
   };
