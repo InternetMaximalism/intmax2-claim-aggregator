@@ -14,7 +14,9 @@ import { parseAbiItem } from "abitype";
 import type { PublicClient } from "viem";
 import type { NetworkState, WatcherEventType } from "../types";
 
-const handleWithdrawalEvent = async <T extends { args: { withdrawalHash: string } }>(
+const handleWithdrawalEvent = async <
+  T extends { args: { withdrawalHash: string }; transactionHash: string },
+>(
   ethereumClient: PublicClient,
   params: {
     startBlockNumber: bigint;

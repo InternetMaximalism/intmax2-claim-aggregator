@@ -5,10 +5,12 @@ export interface BaseEvent {
   address: string;
   blockNumber: bigint;
   blockTimestamp: string;
+  transactionHash: string;
 }
 
 export interface WithdrawalEventLog {
   withdrawalHash: string;
+  transactionHash: string;
 }
 
 export interface DirectWithdrawalQueuedEvent extends BaseEvent {

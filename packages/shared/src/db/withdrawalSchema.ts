@@ -20,6 +20,7 @@ export const withdrawalSchema = table(
     withdrawalHash: t.char("withdrawal_hash", { length: 66 }).notNull(),
     contractWithdrawal: t.jsonb("contract_withdrawal").notNull(),
     singleWithdrawalProof: bytea("single_withdrawal_proof"),
+    l1TxHash: t.varchar("l1_tx_hash", { length: 66 }),
     createdAt: t.timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [
@@ -40,6 +41,7 @@ export const claimSchema = table(
     singleClaimProof: bytea("single_claim_proof"),
     withdrawalHash: t.char("withdrawal_hash", { length: 66 }),
     contractWithdrawal: t.jsonb("contract_withdrawal"),
+    l1TxHash: t.varchar("l1_tx_hash", { length: 66 }),
     createdAt: t.timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [t.index("idx_withdrawals_withdrawal_hash").on(table.withdrawalHash)],
