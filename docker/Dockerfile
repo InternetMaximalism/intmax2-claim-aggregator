@@ -1,4 +1,4 @@
-FROM node:22.15.0-bookworm-slim AS builder
+FROM node:24.0.1-bookworm-slim AS builder
 
 RUN corepack enable && \
     corepack prepare yarn@4.9.1 --activate && \
@@ -36,7 +36,7 @@ RUN mkdir -p /tmp/packages && \
     find /tmp/packages/$pkg_name -type d -empty -delete; \
     done
 
-FROM node:22.15.0-bookworm-slim AS production
+FROM node:24.0.1-bookworm-slim AS production
 
 ENV NODE_ENV=production
 ENV NODE_OPTIONS="\
