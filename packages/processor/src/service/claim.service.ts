@@ -66,5 +66,5 @@ const submitClaimProofToScroll = async (
   };
 
   const receipt = await submitClaimProof(walletClientData, params);
-  return receipt.hash
+  return receipt.hash;
 };
