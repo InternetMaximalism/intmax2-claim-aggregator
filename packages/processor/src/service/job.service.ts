@@ -30,12 +30,13 @@ const performJob = async (data: QueueJobData): Promise<void> => {
       status: ClaimGroupStatus.PROCESSING,
     });
 
-    await processClaimGroup(group.requestingClaims);
+    const txHash = await processClaimGroup(group.requestingClaims);
 
     await withdrawalDB
       .update(claimSchema)
       .set({
         status: "verified",
+        submitClaimProofTxHash: txHash,
       })
       .where(
         inArray(
