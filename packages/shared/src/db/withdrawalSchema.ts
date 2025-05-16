@@ -42,6 +42,7 @@ export const claimSchema = table(
     withdrawalHash: t.char("withdrawal_hash", { length: 66 }),
     contractWithdrawal: t.jsonb("contract_withdrawal"),
     l1TxHash: t.varchar("l1_tx_hash", { length: 66 }),
+    submitClaimProofTxHash: t.varchar("submit_claim_proof_tx_hash", { length: 66 }),
     createdAt: t.timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [t.index("idx_withdrawals_withdrawal_hash").on(table.withdrawalHash)],
