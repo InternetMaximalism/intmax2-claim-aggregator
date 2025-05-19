@@ -658,7 +658,7 @@ __metadata:
     pino: "npm:^9.6.0"
     pino-pretty: "npm:^13.0.0"
     typescript: "npm:^5.8.3"
-    viem: "npm:^2.29.0"
+    viem: "npm:^2.29.4"
   languageName: unknown
   linkType: soft
 
@@ -1299,7 +1299,7 @@ __metadata:
     ethers: "npm:6.13.7"
     tsx: "npm:^4.19.4"
     typescript: "npm:^5.8.3"
-    viem: "npm:^2.29.0"
+    viem: "npm:^2.29.4"
   languageName: unknown
   linkType: soft
 
@@ -2203,12 +2203,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"isows@npm:1.0.6":
-  version: 1.0.6
-  resolution: "isows@npm:1.0.6"
+"isows@npm:1.0.7":
+  version: 1.0.7
+  resolution: "isows@npm:1.0.7"
   peerDependencies:
     ws: "*"
-  checksum: 10c0/f89338f63ce2f497d6cd0f86e42c634209328ebb43b3bdfdc85d8f1589ee75f02b7e6d9e1ba274101d0f6f513b1b8cbe6985e6542b4aaa1f0c5fd50d9c1be95c
+  checksum: 10c0/43c41fe89c7c07258d0be3825f87e12da8ac9023c5b5ae6741ec00b2b8169675c04331ea73ef8c172d37a6747066f4dc93947b17cd369f92828a3b3e741afbda
   languageName: node
   linkType: hard
 
@@ -2913,7 +2913,7 @@ __metadata:
     ethers: "npm:6.13.7"
     tsx: "npm:^4.19.4"
     typescript: "npm:^5.8.3"
-    viem: "npm:^2.29.0"
+    viem: "npm:^2.29.4"
   languageName: unknown
   linkType: soft
 
@@ -3004,7 +3004,7 @@ __metadata:
     ethers: "npm:6.13.7"
     tsx: "npm:^4.19.4"
     typescript: "npm:^5.8.3"
-    viem: "npm:^2.29.0"
+    viem: "npm:^2.29.4"
   languageName: unknown
   linkType: soft
 
@@ -3419,16 +3419,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.29.0":
-  version: 2.29.0
-  resolution: "viem@npm:2.29.0"
+"viem@npm:^2.29.4":
+  version: 2.29.4
+  resolution: "viem@npm:2.29.4"
   dependencies:
     "@noble/curves": "npm:1.8.2"
     "@noble/hashes": "npm:1.7.2"
     "@scure/bip32": "npm:1.6.2"
     "@scure/bip39": "npm:1.5.4"
     abitype: "npm:1.0.8"
-    isows: "npm:1.0.6"
+    isows: "npm:1.0.7"
     ox: "npm:0.6.9"
     ws: "npm:8.18.1"
   peerDependencies:
@@ -3436,7 +3436,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/0cc5c71fed5b8833cff69d875a472048969ca35054dc588445dcd0a2f23033d0b2c24e7af80d9cc823555bceece4f956adf2933870ae4e2126f4884d248aadb8
+  checksum: 10c0/6b69ffce0cabce074d717630d35b539bf09e539db05a7c51444b3c87699a2714a0149ab12efb5008c89d3e9d1617059f3461b575bb34e15ad4aa7164b7a08783
   languageName: node
   linkType: hard
 
@@ -3449,7 +3449,7 @@ __metadata:
     drizzle-orm: "npm:^0.43.1"
     tsx: "npm:^4.19.4"
     typescript: "npm:^5.8.3"
-    viem: "npm:^2.29.0"
+    viem: "npm:^2.29.4"
   languageName: unknown
   linkType: soft
 
