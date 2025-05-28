@@ -37,7 +37,8 @@ const getPendingPeriods = (
   currentPeriod: bigint,
   lastRewardPeriod: { period: bigint } | null,
 ): bigint[] => {
-  const startPeriod = lastRewardPeriod?.period ? Number(lastRewardPeriod.period) + 1 : 0;
+  const startPeriod =
+    lastRewardPeriod?.period !== undefined ? Number(lastRewardPeriod.period) + 1 : 0;
 
   return Array.from({ length: Number(currentPeriod) - startPeriod }, (_, i) =>
     BigInt(i + startPeriod),
