@@ -5,7 +5,7 @@
     "@intmax2-claim-aggregator/shared": "workspace:*",
     "abitype": "^1.0.8",
     "drizzle-orm": "^0.43.1",
-    "viem": "^2.29.4"
+    "viem": "^2.30.2"
   },
   "scripts": {
     "start": "node dist/index.js",
