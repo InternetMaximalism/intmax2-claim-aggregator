@@ -1,8 +1,8 @@
 import { logger } from "@intmax2-claim-aggregator/shared";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { chunkArray } from "../lib/utils";
-import { performJob } from "./job.service";
 import { createClaimGroup, fetchRequestingClaims } from "./claim.service";
+import { performJob } from "./job.service";
 
 vi.mock("./claim.service");
 vi.mock("@intmax2-claim-aggregator/shared", () => ({

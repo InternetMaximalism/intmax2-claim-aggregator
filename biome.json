@@ -8,7 +8,7 @@
     "lineEnding": "lf",
     "lineWidth": 100,
     "attributePosition": "auto",
-    "ignore": ["**/node_modules"]
+    "ignore": ["**/node_modules", "**/coverage", "**/dist"]
   },
   "organizeImports": { "enabled": true },
   "linter": {
@@ -137,6 +137,6 @@
     }
   ],
   "files": {
-    "ignore": ["**/node_modules", "**/dist", "package.json", "**/typechainTypes/**"]
+    "ignore": ["**/node_modules", "**/coverage", "**/dist", "package.json", "**/typechainTypes/**"]
   }
 }
