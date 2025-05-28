@@ -10,7 +10,7 @@ export const config = cleanEnv(process.env, {
   PORT: num({ default: 3000 }),
   LOG_LEVEL: str({
     choices: ["fatal", "error", "warn", "info", "debug", "trace"],
-    default: "debug",
+    default: "info",
   }),
   SERVICE_NAME: str({ default: "intmax2-claim-aggregator" }),
   SERVICE_VERSION: str({ default: version }),
