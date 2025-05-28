@@ -36,7 +36,7 @@ export class QueueManager {
     });
 
     this.queue.on("error", (error) => {
-      logger.error(`Queue error: ${error}`);
+      logger.error(`Queue error: ${error.message}`);
     });
 
     this.queue.on("completed", (job: Job, result: any) => {

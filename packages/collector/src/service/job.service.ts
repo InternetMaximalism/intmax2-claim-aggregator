@@ -13,7 +13,7 @@ export const performJob = async (): Promise<void> => {
 
   const shouldProcess = shouldProcessClaims(requestingClaims);
   if (!shouldProcess) {
-    logger.info("Conditions not met for processing withdrawals");
+    logger.info("Conditions not met for processing claims");
     return;
   }
 
