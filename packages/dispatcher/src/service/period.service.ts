@@ -67,7 +67,8 @@ const getUnprocessedPeriods = (
   currentPeriod: bigint,
   lastClaimPeriod: { period: bigint } | null,
 ): bigint[] => {
-  const startPeriod = lastClaimPeriod?.period ? Number(lastClaimPeriod.period) + 1 : 0;
+  const startPeriod =
+    lastClaimPeriod?.period !== undefined ? Number(lastClaimPeriod.period) + 1 : 0;
 
   return Array.from({ length: Number(currentPeriod) - startPeriod }, (_, i) =>
     BigInt(i + startPeriod),
