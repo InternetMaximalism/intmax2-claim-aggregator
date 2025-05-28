@@ -886,6 +886,7 @@ __metadata:
     pino-pretty: "npm:^13.0.0"
     typescript: "npm:^5.8.3"
     viem: "npm:^2.29.4"
+    vitest: "npm:^3.1.4"
   languageName: unknown
   linkType: soft
 
@@ -1698,6 +1699,7 @@ __metadata:
     drizzle-orm: "npm:^0.43.1"
     tsx: "npm:^4.19.4"
     typescript: "npm:^5.8.3"
+    vitest: "npm:^3.1.4"
   languageName: unknown
   linkType: soft
 
@@ -1883,6 +1885,7 @@ __metadata:
     tsx: "npm:^4.19.4"
     typescript: "npm:^5.8.3"
     viem: "npm:^2.29.4"
+    vitest: "npm:^3.1.4"
   languageName: unknown
   linkType: soft
 
@@ -3750,6 +3753,7 @@ __metadata:
     tsx: "npm:^4.19.4"
     typescript: "npm:^5.8.3"
     viem: "npm:^2.29.4"
+    vitest: "npm:^3.1.4"
   languageName: unknown
   linkType: soft
 
@@ -3841,6 +3845,7 @@ __metadata:
     tsx: "npm:^4.19.4"
     typescript: "npm:^5.8.3"
     viem: "npm:^2.29.4"
+    vitest: "npm:^3.1.4"
   languageName: unknown
   linkType: soft
 
@@ -4578,6 +4583,7 @@ __metadata:
     tsx: "npm:^4.19.4"
     typescript: "npm:^5.8.3"
     viem: "npm:^2.29.4"
+    vitest: "npm:^3.1.4"
   languageName: unknown
   linkType: soft
 

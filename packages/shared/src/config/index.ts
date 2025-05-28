@@ -18,6 +18,16 @@ export const config = cleanEnv(process.env, {
   EVENT_DATABASE_URL: str(),
   WITHDRAWAL_DATABASE_URL: str(),
   USE_DATABASE_SSL: bool({ default: false }),
+  // db pool
+  DB_POOL_MAX: num({ default: 5 }),
+  DB_MAX_LIFETIME: num({ default: 3600 }),
+  DB_MAX_USES: num({ default: 1000 }),
+  DB_IDLE_TIMEOUT: num({ default: 60000 }),
+  DB_KEEPALIVE_DELAY: num({ default: 30000 }),
+  DB_CONNECTION_TIMEOUT: num({ default: 3000 }),
+  DB_STATEMENT_TIMEOUT: num({ default: 10000 }),
+  DB_QUERY_TIMEOUT: num({ default: 8000 }),
+  DB_IDLE_IN_TRANSACTION_TIMEOUT: num({ default: 30000 }),
   // redis
   REDIS_URL: str(),
   USE_REDIS: bool({ default: true }),
@@ -57,3 +67,5 @@ export const config = cleanEnv(process.env, {
   // scroll
   SCROLL_GAS_MULTIPLIER: num({ default: 2 }), // for l1 fee
 });
+
+export const isProduction = config.NODE_ENV === "production";
