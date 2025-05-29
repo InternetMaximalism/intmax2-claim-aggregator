@@ -1,5 +1,3 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { getContract } from "viem";
 import {
   CLAIM_CONTRACT_ADDRESS,
   ClaimAbi,
@@ -8,9 +6,11 @@ import {
   logger,
   sleep,
 } from "@intmax2-claim-aggregator/shared";
-import { getPeriodBlockIntervals } from "./period.service";
+import { getContract } from "viem";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { PERIOD_BATCH_DELAY } from "../constants";
 import type { AllocationConstants } from "../types";
+import { getPeriodBlockIntervals } from "./period.service";
 
 vi.mock("viem", () => ({
   getContract: vi.fn(),
