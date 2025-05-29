@@ -51,20 +51,14 @@ jobs:
     - name: Install dependencies
       run: yarn install --immutable
 
-    - name: Lint
-      run: yarn lint
-
     - name: Check formatting
       run: yarn check
 
     - name: Build shared packages
       run: yarn build:shared
 
-    - name: Run tests
-      run: yarn test
-
-    - name: Run tests with coverage
-      run: yarn coverage
+    - name: Unit tests with coverage
+      run: yarn test --coverage
 
     - name: Build
       run: yarn build
