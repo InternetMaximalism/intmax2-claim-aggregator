@@ -48,7 +48,7 @@
     "ethers": "6.14.3",
     "typechain": "^8.3.2",
     "typescript": "^5.8.3",
-    "vitest": "^3.1.4"
+    "vitest": "^3.2.0"
   },
   "packageManager": "yarn@4.9.1",
   "volta": {
