@@ -33,6 +33,7 @@ export class ClaimManager {
     return data ? JSON.parse(data) : null;
   }
 
+  // TODO: cleanup
   async addGroup(group: ClaimGroup): Promise<string> {
     const id = crypto.randomUUID();
     const key = this.getKey(id);
