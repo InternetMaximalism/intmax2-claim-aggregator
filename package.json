@@ -1,6 +1,6 @@
 {
   "name": "intmax2-claim-aggregator",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "license": "MIT",
   "description": "Claim Aggregator for INTMAX2",
   "repository": {
