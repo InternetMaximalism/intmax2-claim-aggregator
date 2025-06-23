@@ -29,6 +29,10 @@ export const processClaimGroup = async (requestingClaims: RequestingClaim[]) => 
 const fetchClaimsWithProofs = async (requestingClaims: RequestingClaim[]) => {
   const requestingClaimUUIDs = requestingClaims.map((claim) => claim.uuid);
 
+  if (requestingClaimUUIDs.length === 0) {
+    throw new Error("No claims to process");
+  }
+
   const claims = await withdrawalDB
     .select({
       uuid: claimSchema.uuid,
