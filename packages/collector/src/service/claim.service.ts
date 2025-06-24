@@ -12,19 +12,21 @@ import { MAX_PG_SQL_PARAMS, MAX_RESULTS_LIMIT, QUERY_BATCH_SIZE } from "../const
 import type { ClaimResult } from "../types";
 
 export const fetchRequestingClaims = async () => {
-  const processedUUIDs = await ClaimManager.getInstance("claim-aggregator").getAllProcessedUUIDs();
+  const processedKeys = await ClaimManager.getInstance("claim-aggregator").getAllProcessedKeys();
 
-  if (processedUUIDs.length > MAX_PG_SQL_PARAMS) {
-    return await fetchRequestingClaimsBatch(processedUUIDs);
+  if (processedKeys.length > MAX_PG_SQL_PARAMS) {
+    return await fetchRequestingClaimsBatch(processedKeys);
   }
 
   const requestingClaims = await withdrawalDB
     .select({
-      uuid: claimSchema.uuid,
+      nullifier: claimSchema.nullifier,
       createdAt: claimSchema.createdAt,
     })
     .from(claimSchema)
-    .where(and(eq(claimSchema.status, "requested"), notInArray(claimSchema.uuid, processedUUIDs)))
+    .where(
+      and(eq(claimSchema.status, "requested"), notInArray(claimSchema.nullifier, processedKeys)),
+    )
     .orderBy(asc(claimSchema.createdAt))
     .limit(MAX_RESULTS_LIMIT);
 
@@ -33,9 +35,9 @@ export const fetchRequestingClaims = async () => {
 
 // NOTE: better performance
 export const fetchRequestingClaimsBatch = async (
-  processedUUIDs: string[],
+  processedKeys: string[],
 ): Promise<ClaimResult[]> => {
-  const processedUUIDSet = new Set(processedUUIDs);
+  const processedKeySet = new Set(processedKeys);
   const results: ClaimResult[] = [];
   let offset = 0;
   let totalFetched = 0;
@@ -43,7 +45,7 @@ export const fetchRequestingClaimsBatch = async (
   while (results.length < MAX_RESULTS_LIMIT) {
     const batch = await withdrawalDB
       .select({
-        uuid: claimSchema.uuid,
+        nullifier: claimSchema.nullifier,
         createdAt: claimSchema.createdAt,
       })
       .from(claimSchema)
@@ -58,7 +60,7 @@ export const fetchRequestingClaimsBatch = async (
 
     totalFetched += batch.length;
 
-    const filtered = batch.filter((claim) => !processedUUIDSet.has(claim.uuid));
+    const filtered = batch.filter((claim) => !processedKeySet.has(claim.nullifier));
 
     const remainingSlots = MAX_RESULTS_LIMIT - results.length;
     const toAdd = filtered.slice(0, remainingSlots);
@@ -88,7 +90,7 @@ export const createClaimGroup = async (group: RequestingClaim[]) => {
 
   const groupId = await ClaimManager.getInstance("claim-aggregator").addGroup({
     requestingClaims: group.map((withdrawal) => ({
-      uuid: withdrawal.uuid,
+      nullifier: withdrawal.nullifier,
     })),
     status: ClaimGroupStatus.PENDING,
     createdAt: now,

@@ -13,11 +13,10 @@ const claimStatusEnum = t.pgEnum("claim_status", claimStatus);
 export const withdrawalSchema = table(
   "withdrawals",
   {
-    uuid: t.varchar("uuid").primaryKey(),
+    withdrawalHash: t.varchar("withdrawal_hash", { length: 66 }).primaryKey(),
     status: withdrawalStatusEnum("status").default("requested").notNull(),
     pubkey: t.char("pubkey", { length: 66 }).notNull(),
     recipient: t.char("recipient", { length: 42 }).notNull(),
-    withdrawalHash: t.char("withdrawal_hash", { length: 66 }).notNull(),
     contractWithdrawal: t.jsonb("contract_withdrawal").notNull(),
     singleWithdrawalProof: bytea("single_withdrawal_proof"),
     l1TxHash: t.varchar("l1_tx_hash", { length: 66 }),
@@ -32,11 +31,10 @@ export const withdrawalSchema = table(
 export const claimSchema = table(
   "claims",
   {
-    uuid: t.varchar("uuid").primaryKey(),
+    nullifier: t.char("nullifier", { length: 66 }).primaryKey(),
     status: claimStatusEnum("status").default("requested").notNull(),
     pubkey: t.char("pubkey", { length: 66 }).notNull(),
     recipient: t.char("recipient", { length: 42 }).notNull(),
-    nullifier: t.char("nullifier", { length: 66 }).notNull(),
     claim: t.jsonb("claim").notNull(),
     singleClaimProof: bytea("single_claim_proof"),
     withdrawalHash: t.char("withdrawal_hash", { length: 66 }),

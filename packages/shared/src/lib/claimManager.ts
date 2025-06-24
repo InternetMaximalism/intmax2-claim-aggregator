@@ -84,8 +84,8 @@ export class ClaimManager {
     return groups.filter((group): group is ClaimGroup => group !== null);
   }
 
-  async getAllProcessedUUIDs(): Promise<string[]> {
+  async getAllProcessedKeys(): Promise<string[]> {
     const groups = await this.getAllGroups();
-    return groups.flatMap((group) => group.requestingClaims.map(({ uuid }) => uuid));
+    return groups.flatMap((group) => group.requestingClaims.map(({ nullifier }) => nullifier));
   }
 }

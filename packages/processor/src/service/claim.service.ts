@@ -27,25 +27,25 @@ export const processClaimGroup = async (requestingClaims: RequestingClaim[]) => 
 };
 
 const fetchClaimsWithProofs = async (requestingClaims: RequestingClaim[]) => {
-  const requestingClaimUUIDs = requestingClaims.map((claim) => claim.uuid);
+  const requestingClaimKeys = requestingClaims.map((claim) => claim.nullifier);
 
-  if (requestingClaimUUIDs.length === 0) {
+  if (requestingClaimKeys.length === 0) {
     throw new Error("No claims to process");
   }
 
   const claims = await withdrawalDB
     .select({
-      uuid: claimSchema.uuid,
+      nullifier: claimSchema.nullifier,
       singleClaimProof: claimSchema.singleClaimProof,
       withdrawalHash: claimSchema.withdrawalHash,
     })
     .from(claimSchema)
     .where(
-      and(inArray(claimSchema.uuid, requestingClaimUUIDs), eq(claimSchema.status, "requested")),
+      and(inArray(claimSchema.nullifier, requestingClaimKeys), eq(claimSchema.status, "requested")),
     );
-  if (claims.length !== requestingClaimUUIDs.length) {
+  if (claims.length !== requestingClaimKeys.length) {
     logger.warn(
-      `Some requested claims were not found or not in requested status requested: ${requestingClaimUUIDs.length} found: ${claims.length}`,
+      `Some requested claims were not found or not in requested status requested: ${requestingClaimKeys.length} found: ${claims.length}`,
     );
   }
 
