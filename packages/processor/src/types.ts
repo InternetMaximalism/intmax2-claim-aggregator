@@ -40,7 +40,7 @@ export interface SubmitContractClaim {
 }
 
 export interface ClaimWithProof {
-  uuid: string;
+  nullifier: string;
   singleClaimProof: Uint8Array | null;
   withdrawalHash: string;
 }
