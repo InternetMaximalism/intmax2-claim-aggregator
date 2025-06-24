@@ -37,8 +37,8 @@ describe("performJob", () => {
 
   it("should exit early when processing conditions are not met", async () => {
     const mockClaims = [
-      { uuid: "1", createdAt: new Date() },
-      { uuid: "2", createdAt: new Date() },
+      { nullifier: "1", createdAt: new Date() },
+      { nullifier: "2", createdAt: new Date() },
     ];
     mockFetchRequestingClaims.mockResolvedValue(mockClaims);
 
@@ -50,7 +50,7 @@ describe("performJob", () => {
 
   it("should create claim groups when there are enough claims", async () => {
     const mockClaims = Array.from({ length: 15 }, (_, i) => ({
-      uuid: `${i + 1}`,
+      nullifier: `${i + 1}`,
       createdAt: new Date(),
     }));
 
@@ -72,8 +72,8 @@ describe("performJob", () => {
     oldDate.setMinutes(oldDate.getMinutes() - 35);
 
     const mockClaims = [
-      { uuid: "1", createdAt: oldDate },
-      { uuid: "2", createdAt: new Date() },
+      { nullifier: "1", createdAt: oldDate },
+      { nullifier: "2", createdAt: new Date() },
     ];
 
     mockFetchRequestingClaims.mockResolvedValue(mockClaims);
@@ -90,7 +90,7 @@ describe("performJob", () => {
 
   it("should propagate error when createClaimGroup fails", async () => {
     const mockClaims = Array.from({ length: 10 }, (_, i) => ({
-      uuid: `${i + 1}`,
+      nullifier: `${i + 1}`,
       createdAt: new Date(),
     }));
 

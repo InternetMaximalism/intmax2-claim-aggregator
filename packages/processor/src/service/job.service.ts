@@ -40,8 +40,8 @@ const performJob = async (data: QueueJobData): Promise<void> => {
       })
       .where(
         inArray(
-          claimSchema.uuid,
-          group.requestingClaims.map((claim) => claim.uuid),
+          claimSchema.nullifier,
+          group.requestingClaims.map((claim) => claim.nullifier),
         ),
       );
   } catch (error) {
@@ -61,8 +61,8 @@ const performJob = async (data: QueueJobData): Promise<void> => {
         })
         .where(
           inArray(
-            claimSchema.uuid,
-            group!.requestingClaims.map((claim) => claim.uuid),
+            claimSchema.nullifier,
+            group!.requestingClaims.map((claim) => claim.nullifier),
           ),
         );
     }

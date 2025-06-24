@@ -11,5 +11,5 @@ export interface ClaimGroup {
 }
 
 export interface RequestingClaim {
-  uuid: string;
+  nullifier: string;
 }

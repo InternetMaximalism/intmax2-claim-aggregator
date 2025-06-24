@@ -1,4 +1,4 @@
 export type ClaimResult = {
-  uuid: string;
+  nullifier: string;
   createdAt: Date;
 };
