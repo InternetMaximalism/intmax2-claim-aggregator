@@ -13,28 +13,28 @@ export const generateClaimProofs = async (claims: ClaimWithProof[]) => {
   const claimProofs: ClaimProof[] = [];
 
   for (const [index, claim] of claims.entries()) {
-    const { uuid, singleClaimProof } = claim;
+    const { nullifier, singleClaimProof } = claim;
     if (!singleClaimProof) {
-      throw new Error(`Missing single claim proof for claim ${uuid}`);
+      throw new Error(`Missing single claim proof for claim ${nullifier}`);
     }
 
-    logger.info(`Generating proof for claim ${index + 1}/${claims.length}`, { uuid });
+    logger.info(`Generating proof for claim ${index + 1}/${claims.length}`, { nullifier });
 
     try {
       const prevClaimProof = index > 0 ? claimProofs[index - 1].proof : null;
-      await createClaimProof(uuid, bytesToBase64(singleClaimProof), prevClaimProof);
+      await createClaimProof(nullifier, bytesToBase64(singleClaimProof), prevClaimProof);
 
-      const result = await pollClaimProof(uuid);
+      const result = await pollClaimProof(nullifier);
       if (!result.proof) {
-        throw new Error(`Failed to generate proof for claim ${uuid}`);
+        throw new Error(`Failed to generate proof for claim ${nullifier}`);
       }
 
-      logger.debug(`Successfully generated proof for claim ${uuid}`);
+      logger.debug(`Successfully generated proof for claim ${nullifier}`);
 
       claimProofs.push(result.proof);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      logger.error(`Failed to generate proof for claim ${uuid} - ${message}`);
+      logger.error(`Failed to generate proof for claim ${nullifier} - ${message}`);
       throw error;
     }
   }
