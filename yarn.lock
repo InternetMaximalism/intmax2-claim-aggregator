@@ -1926,10 +1926,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"dotenv@npm:^16.5.0":
-  version: 16.5.0
-  resolution: "dotenv@npm:16.5.0"
-  checksum: 10c0/5bc94c919fbd955bf0ba44d33922a1e93d1078e64a1db5c30faeded1d996e7a83c55332cb8ea4fae5a9ca4d0be44cbceb95c5811e70f9f095298df09d1997dd9
+"dotenv@npm:^17.0.1":
+  version: 17.0.1
+  resolution: "dotenv@npm:17.0.1"
+  checksum: 10c0/79d3381832ffc6ada0cab8158120c6190e8f8680c1ff985e9d4d1345229219923b23b800969ff47412a71f965da582c7a86a5ea0d257f9106f8f3522ceb5befa
   languageName: node
   linkType: hard
 
@@ -2929,7 +2929,7 @@ __metadata:
     "@biomejs/biome": "npm:2.0.6"
     "@typechain/ethers-v6": "npm:^0.5.1"
     "@vitest/coverage-v8": "npm:^3.2.4"
-    dotenv: "npm:^16.5.0"
+    dotenv: "npm:^17.0.1"
     drizzle-kit: "npm:^0.31.1"
     ethers: "npm:6.14.4"
     typechain: "npm:^8.3.2"
