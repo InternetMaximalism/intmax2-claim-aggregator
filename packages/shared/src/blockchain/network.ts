@@ -1,4 +1,4 @@
-import { http, type Chain, type PublicClient, createPublicClient } from "viem";
+import { type Chain, createPublicClient, http, type PublicClient } from "viem";
 import { mainnet, scroll, scrollSepolia, sepolia } from "viem/chains";
 import { config } from "../config";
 

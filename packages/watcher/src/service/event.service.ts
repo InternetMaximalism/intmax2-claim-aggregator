@@ -3,11 +3,11 @@ import {
   CLAIM_CONTRACT_ADDRESS,
   CLAIM_CONTRACT_DEPLOYED_BLOCK_NUMBER,
   type DirectWithdrawalQueuedEvent,
-  LIQUIDITY_CONTRACT_ADDRESS,
-  LIQUIDITY_CONTRACT_DEPLOYED_BLOCK_NUMBER,
   directWithdrawalQueuedEvent,
   directWithdrawalSuccessedEvent,
   fetchEvents,
+  LIQUIDITY_CONTRACT_ADDRESS,
+  LIQUIDITY_CONTRACT_DEPLOYED_BLOCK_NUMBER,
   validateBlockRange,
 } from "@intmax2-claim-aggregator/shared";
 import { parseAbiItem } from "abitype";

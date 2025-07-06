@@ -1,4 +1,4 @@
-import { http, createWalletClient } from "viem";
+import { createWalletClient, http } from "viem";
 import { mnemonicToAccount } from "viem/accounts";
 import { config } from "../config";
 import { networkConfig } from "./network";
