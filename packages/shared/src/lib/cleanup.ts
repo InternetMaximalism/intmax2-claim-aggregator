@@ -1,5 +1,5 @@
 import { closeEventDB, closeWithdrawalDB } from "../db";
-import { RedisClient, logger } from "../lib";
+import { logger, RedisClient } from "../lib";
 
 export const cleanup = async () => {
   logger.debug("Cleaning up resources");

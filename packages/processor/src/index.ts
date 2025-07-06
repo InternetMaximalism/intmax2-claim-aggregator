@@ -1,4 +1,4 @@
-import { QueueManager, cleanup, logger } from "@intmax2-claim-aggregator/shared";
+import { cleanup, logger, QueueManager } from "@intmax2-claim-aggregator/shared";
 import { name } from "../package.json";
 import { startHealthCheckServer } from "./lib/healthCheck";
 import { shutdown } from "./lib/shutdown";

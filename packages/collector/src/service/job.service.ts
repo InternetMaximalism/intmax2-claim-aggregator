@@ -1,4 +1,4 @@
-import { type RequestingClaim, config, logger } from "@intmax2-claim-aggregator/shared";
+import { config, logger, type RequestingClaim } from "@intmax2-claim-aggregator/shared";
 import { differenceInMinutes } from "date-fns";
 import { chunkArray } from "../lib/utils";
 import { createClaimGroup, fetchRequestingClaims } from "./claim.service";

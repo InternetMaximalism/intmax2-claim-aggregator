@@ -1,7 +1,7 @@
 import {
   ContributionAbi,
-  L2_CONTRIBUTION_CONTRACT_ADDRESS,
   createNetworkClient,
+  L2_CONTRIBUTION_CONTRACT_ADDRESS,
   logger,
 } from "@intmax2-claim-aggregator/shared";
 import { GetContractReturnType, getContract } from "viem";
