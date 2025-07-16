@@ -27,6 +27,13 @@ vi.mock("@intmax2-claim-aggregator/shared", () => ({
     error: vi.fn(),
   },
   sleep: vi.fn(),
+  config: {
+    CLAIM_GROUP_SIZE: 10,
+    CLAIM_MIN_BATCH_SIZE: 5,
+    CLAIM_MIN_WAIT_MINUTES: 30,
+    PERIOD_BATCH_SIZE: 1,
+    PERIOD_BATCH_DELAY: 1000,
+  },
 }));
 
 const mockGetContract = vi.mocked(getContract);
@@ -169,7 +176,7 @@ describe("period.service", () => {
 
       expect(result).toHaveLength(5);
 
-      expect(mockSleep).toHaveBeenCalledTimes(2);
+      expect(mockSleep).toHaveBeenCalledTimes(4);
       expect(mockSleep).toHaveBeenCalledWith(PERIOD_BATCH_DELAY);
     });
 
