@@ -16,7 +16,7 @@ export const getContributionRecordedEvents = async (
   periodBlockInterval: PeriodBlockInterval,
 ) => {
   try {
-    const { startBlockNumber, endBlockNumber } = periodBlockInterval;
+    const { periodInfo, startBlockNumber, endBlockNumber } = periodBlockInterval;
     validateBlockRange("contributionRecordedEvent", startBlockNumber, endBlockNumber);
 
     const contributionRecordedEvents = await fetchEvents<ContributionRecordedEvent>(
@@ -27,6 +27,9 @@ export const getContributionRecordedEvents = async (
         blockRange: BLOCK_RANGE_MINIMUM,
         contractAddress: CLAIM_CONTRACT_ADDRESS,
         eventInterface: contributionRecordedEvent,
+        args: {
+          period: [periodInfo.period],
+        },
       },
     );
 
