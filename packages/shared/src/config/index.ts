@@ -38,6 +38,9 @@ export const config = cleanEnv(process.env, {
   }),
   ALCHEMY_API_KEY: str(),
   ETHERSCAN_API_KEY: str(),
+  // dispatcher
+  PERIOD_BATCH_SIZE: num({ default: 1 }),
+  PERIOD_BATCH_DELAY: num({ default: 1000 }),
   // contracts
   LIQUIDITY_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
   LIQUIDITY_CONTRACT_DEPLOYED_BLOCK_NUMBER: num({ devDefault: 0 }),
