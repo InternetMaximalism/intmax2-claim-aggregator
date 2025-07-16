@@ -10,6 +10,8 @@ vi.mock("@intmax2-claim-aggregator/shared", () => ({
     CLAIM_GROUP_SIZE: 10,
     CLAIM_MIN_BATCH_SIZE: 5,
     CLAIM_MIN_WAIT_MINUTES: 30,
+    PERIOD_BATCH_SIZE: 1,
+    PERIOD_BATCH_DELAY: 1000,
   },
   logger: {
     info: vi.fn(),
