@@ -25,11 +25,6 @@
       "type": "error"
     },
     {
-      "inputs": [],
-      "name": "AlreadyMigrated",
-      "type": "error"
-    },
-    {
       "inputs": [
         {
           "internalType": "bytes32",
@@ -88,11 +83,6 @@
     },
     {
       "inputs": [],
-      "name": "InvalidInput",
-      "type": "error"
-    },
-    {
-      "inputs": [],
       "name": "NotFinishedPeriod",
       "type": "error"
     },
@@ -121,16 +111,6 @@
         }
       ],
       "name": "OwnableUnauthorizedAccount",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "PeriodIntervalZero",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "RelayLimitExceeded",
       "type": "error"
     },
     {
@@ -242,12 +222,6 @@
     },
     {
       "anonymous": false,
-      "inputs": [],
-      "name": "MigrationCompleted",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
       "inputs": [
         {
           "indexed": true,
@@ -279,45 +253,6 @@
       "type": "event"
     },
     {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "claimVerifier",
-          "type": "address"
-        }
-      ],
-      "name": "VerifierUpdated",
-      "type": "event"
-    },
-    {
-      "inputs": [],
-      "name": "RELAY_LIMIT",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "REWARD_TOKEN_INDEX",
-      "outputs": [
-        {
-          "internalType": "uint32",
-          "name": "",
-          "type": "uint32"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [],
       "name": "UPGRADE_INTERFACE_VERSION",
       "outputs": [
@@ -328,39 +263,6 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "claimVerifier",
-      "outputs": [
-        {
-          "internalType": "contract IPlonkVerifier",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "contribution",
-      "outputs": [
-        {
-          "internalType": "contract IContribution",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "finishMigration",
-      "outputs": [],
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -498,167 +400,11 @@
           "internalType": "address",
           "name": "_contribution",
           "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "periodInterval",
-          "type": "uint256"
         }
       ],
       "name": "initialize",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "isMigrationCompleted",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "l2ScrollMessenger",
-      "outputs": [
-        {
-          "internalType": "contract IL2ScrollMessenger",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "liquidity",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256[]",
-          "name": "periodNumbers",
-          "type": "uint256[]"
-        },
-        {
-          "internalType": "address[]",
-          "name": "users",
-          "type": "address[]"
-        }
-      ],
-      "name": "migrateConsumeUserAllocation",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256[]",
-          "name": "periodNumbers",
-          "type": "uint256[]"
-        },
-        {
-          "internalType": "address[]",
-          "name": "users",
-          "type": "address[]"
-        },
-        {
-          "internalType": "uint256[]",
-          "name": "depositAmounts",
-          "type": "uint256[]"
-        }
-      ],
-      "name": "migrateContributions",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_nullifierNonce",
-          "type": "uint256"
-        }
-      ],
-      "name": "migrateNullifierNonce",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "bytes32[]",
-          "name": "_nullifiers",
-          "type": "bytes32[]"
-        }
-      ],
-      "name": "migrateNullifiers",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_startTimestamp",
-          "type": "uint256"
-        }
-      ],
-      "name": "migrateStartTimestamp",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "nullifierNonce",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "bytes32",
-          "name": "",
-          "type": "bytes32"
-        }
-      ],
-      "name": "nullifiers",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -710,19 +456,6 @@
       "name": "renounceOwnership",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "rollup",
-      "outputs": [
-        {
-          "internalType": "contract IRollup",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -796,19 +529,6 @@
         }
       ],
       "name": "transferOwnership",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_claimVerifier",
-          "type": "address"
-        }
-      ],
-      "name": "updateVerifier",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

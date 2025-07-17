@@ -38,6 +38,7 @@ export const config = cleanEnv(process.env, {
   }),
   ALCHEMY_API_KEY: str(),
   ETHERSCAN_API_KEY: str(),
+  USE_MIGRATED_ABI: bool({ default: false }),
   // dispatcher
   PERIOD_BATCH_SIZE: num({ default: 1 }),
   PERIOD_BATCH_DELAY: num({ default: 1000 }),

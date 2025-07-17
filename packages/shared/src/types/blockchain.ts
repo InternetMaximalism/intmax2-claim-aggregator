@@ -78,3 +78,11 @@ export interface WaitForTransactionOptions {
   confirms?: number;
   timeout?: number;
 }
+
+export interface SubmitContractClaim {
+  recipient: string;
+  amount: bigint;
+  nullifier: string;
+  blockHash: string;
+  blockNumber: bigint;
+}

@@ -1,4 +1,4 @@
-import { withdrawalDB } from "@intmax2-claim-aggregator/shared";
+import { type SubmitContractClaim, withdrawalDB } from "@intmax2-claim-aggregator/shared";
 import type { PublicClient } from "viem";
 
 export const WatcherEvents = {
@@ -20,3 +20,13 @@ export interface NetworkState {
 export type DatabaseType = typeof withdrawalDB;
 export type TransactionType = Parameters<Parameters<DatabaseType["transaction"]>[0]>[0];
 export type Transaction = (tx: TransactionType) => Promise<void>;
+
+export type ClaimTransactions = {
+  txHash: string;
+  txArgs: SubmitContractClaim[];
+};
+
+export type RelayClaimTransaction = {
+  txHash: string;
+  period: bigint;
+};
