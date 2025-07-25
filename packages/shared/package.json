@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "dependencies": {
     "abitype": "^1.0.8",
-    "axios": "^1.10.0",
+    "axios": "^1.11.0",
     "bull": "^4.16.5",
     "drizzle-orm": "^0.44.2",
     "envalid": "^8.0.0",
