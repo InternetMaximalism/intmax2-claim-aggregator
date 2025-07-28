@@ -1,9 +1,12 @@
 import http from "node:http";
-import { config, logger } from "@intmax2-claim-aggregator/shared";
+import { config, eventDB, logger, withdrawalDB } from "@intmax2-claim-aggregator/shared";
+import { sql } from "drizzle-orm";
 import { name } from "../../package.json";
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   if (req.url === "/health-check" && req.method === "GET") {
+    await Promise.all([withdrawalDB.execute(sql`SELECT 1`), eventDB.execute(sql`SELECT 1`)]);
+
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(
       JSON.stringify({
