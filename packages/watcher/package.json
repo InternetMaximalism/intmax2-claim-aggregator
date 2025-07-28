@@ -4,8 +4,8 @@
   "dependencies": {
     "@intmax2-claim-aggregator/shared": "workspace:*",
     "abitype": "^1.0.8",
-    "drizzle-orm": "^0.44.2",
-    "viem": "^2.31.7"
+    "drizzle-orm": "^0.44.3",
+    "viem": "^2.33.1"
   },
   "scripts": {
     "start": "node dist/index.js",
