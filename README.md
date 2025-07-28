@@ -44,6 +44,10 @@ CREATE DATABASE withdrawal;
 # migration
 yarn generate:event
 yarn migrate:event
+
+# migration(local only)
+yarn generate:withdrawal
+yarn migrate:withdrawal
 ```
 
 ## Docker
