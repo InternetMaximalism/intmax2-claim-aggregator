@@ -32,6 +32,7 @@ export const claimSchema = table(
   "claims",
   {
     nullifier: t.char("nullifier", { length: 66 }).primaryKey(),
+    period: t.integer("period"),
     status: claimStatusEnum("status").default("requested").notNull(),
     pubkey: t.char("pubkey", { length: 66 }).notNull(),
     recipient: t.char("recipient", { length: 42 }).notNull(),
