@@ -241,7 +241,7 @@ describe("period.service", () => {
       expect(mockGetBlockNumberByTimestamp).toHaveBeenCalledWith(
         "scroll",
         expectedEndTime,
-        "before",
+        "after",
       );
     });
 
