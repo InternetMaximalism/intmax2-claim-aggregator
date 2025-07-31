@@ -30,7 +30,7 @@ export const config = cleanEnv(process.env, {
   DB_IDLE_IN_TRANSACTION_TIMEOUT: num({ default: 30000 }),
   // redis
   REDIS_URL: str(),
-  USE_REDIS: bool({ default: true }),
+  REDIS_ENABLED: bool({ default: true }),
   // blockchain
   NETWORK_ENVIRONMENT: str({
     choices: ["mainnet", "sepolia"],

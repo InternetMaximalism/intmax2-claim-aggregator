@@ -7,7 +7,7 @@ export class RedisClient {
   private client: Redis | null = null;
 
   private constructor() {
-    if (!config.USE_REDIS) {
+    if (!config.REDIS_ENABLED) {
       logger.info("Redis is disabled by configuration");
       return;
     }

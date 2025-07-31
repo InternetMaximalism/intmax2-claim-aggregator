@@ -1,8 +1,7 @@
 import { type Block, ethers, type FeeData } from "ethers";
 import type { PublicClient } from "viem";
 import { config } from "../config";
-
-const PRECISION = 10n;
+import { PRECISION } from "../constants";
 
 const calculateAdjustedGasPrices = (multiplier: number, baseGasPrice: bigint) => {
   const multiplierScaled = BigInt(Math.round(multiplier * Number(PRECISION)));

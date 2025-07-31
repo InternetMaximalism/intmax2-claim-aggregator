@@ -2,7 +2,7 @@
   "name": "intmax2-claim-aggregator",
   "version": "1.0.4",
   "license": "MIT",
-  "description": "Claim Aggregator for INTMAX2",
+  "description": "Claim Aggregator for INTMAX2 blockchain",
   "repository": {
     "type": "git",
     "url": "https://github.com/InternetMaximalism/intmax2-claim-aggregator.git"
@@ -14,11 +14,13 @@
   "keywords": [
     "intmax2",
     "blockchain",
-    "explorer",
-    "api"
+    "aggregator",
+    "web3",
+    "ethereum",
+    "layer2"
   ],
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=20.0.0",
     "yarn": ">=4.0.0"
   },
   "workspaces": [
