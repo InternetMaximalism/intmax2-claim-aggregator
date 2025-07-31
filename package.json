@@ -1,6 +1,6 @@
 {
   "name": "intmax2-claim-aggregator",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "description": "Claim Aggregator for INTMAX2 blockchain",
   "repository": {
