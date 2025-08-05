@@ -4,7 +4,7 @@
   "dependencies": {
     "@intmax2-claim-aggregator/shared": "workspace:*",
     "axios": "^1.11.0",
-    "drizzle-orm": "^0.44.3",
+    "drizzle-orm": "^0.44.4",
     "ethers": "6.15.0",
     "viem": "^2.33.1"
   },
