@@ -35,10 +35,14 @@ export const config = cleanEnv(process.env, {
   NETWORK_ENVIRONMENT: str({
     choices: ["mainnet", "sepolia"],
     default: "sepolia",
+    desc: "The environment of the blockchain network to connect to",
   }),
   ALCHEMY_API_KEY: str(),
   ETHERSCAN_API_KEY: str(),
-  USE_MIGRATED_ABI: bool({ default: false }),
+  USE_MIGRATED_ABI: bool({
+    default: false,
+    desc: "Use migrated ABI for contracts. Set to `true` on mainnet, and `false` on testnet.",
+  }),
   // dispatcher
   PERIOD_BATCH_SIZE: num({ default: 1 }),
   PERIOD_BATCH_DELAY: num({ default: 1000 }),
@@ -50,15 +54,27 @@ export const config = cleanEnv(process.env, {
   L2_CONTRIBUTION_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
   BLOCK_BUILDER_REWARD_CONTRACT_ADDRESS: str({ devDefault: "0x" }),
   // private key
-  INTMAX2_OWNER_MNEMONIC: str(),
+  INTMAX2_OWNER_MNEMONIC: str({ desc: "The mnemonic of the INTMAX2 owner wallet" }),
   // zkp
-  ZKP_PROVER_URL: str({ default: "http://localhost:3001" }),
+  ZKP_PROVER_URL: str({ default: "http://localhost:3001", desc: "The URL of the ZKP prover API" }),
   // queue
-  QUEUE_CONCURRENCY: num({ default: 2 }),
+  QUEUE_CONCURRENCY: num({
+    default: 2,
+    desc: "Maximum number of concurrent jobs that can be processed simultaneously",
+  }),
   // claim group
-  CLAIM_GROUP_SIZE: num({ default: 50 }),
-  CLAIM_MIN_BATCH_SIZE: num({ default: 5 }),
-  CLAIM_MIN_WAIT_MINUTES: num({ default: 5 }), // 5 minutes
+  CLAIM_GROUP_SIZE: num({
+    default: 50,
+    desc: "Maximum number of claims to group together in a single batch",
+  }),
+  CLAIM_MIN_BATCH_SIZE: num({
+    default: 5,
+    desc: "Minimum number of claims required to create a batch",
+  }),
+  CLAIM_MIN_WAIT_MINUTES: num({
+    default: 5,
+    desc: "Minimum time (in minutes) to wait before a claim batch can be processed",
+  }), // 5 minutes
   CLAIM_MODE: str({
     choices: ["faster", "standard"],
     default: "faster",
@@ -69,7 +85,7 @@ export const config = cleanEnv(process.env, {
     default: "development",
   }),
   // scroll
-  SCROLL_GAS_MULTIPLIER: num({ default: 2 }), // for l1 fee
+  SCROLL_GAS_MULTIPLIER: num({ default: 2, desc: "Gas multiplier for Scroll L1 fee calculations" }), // for l1 fee
 });
 
 export const isProduction = config.NODE_ENV === "production";
