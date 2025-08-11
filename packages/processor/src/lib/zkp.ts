@@ -8,6 +8,7 @@ import type {
   GnarkProof,
   ProverRequestParams,
 } from "../types";
+import { type GnarkVerifierDataType, getVerifierData } from "./verifierData";
 
 export const createClaimProof = async (
   id: string,
@@ -42,11 +43,14 @@ export const createClaimWrappedProof = async (
 };
 
 export const createClaimGnarkProof = async (wrappedProof: string) => {
+  const verifierData = getVerifierData(config.GNARK_VERIFIER_DATA_TYPE as GnarkVerifierDataType);
+
   return makeProverRequest<CreateGnarkProofResponse>({
     method: "post",
     path: getClaimGnarkPath("start-proof"),
     data: {
       proof: wrappedProof,
+      verifierData,
     },
   });
 };
