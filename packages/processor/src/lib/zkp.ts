@@ -50,7 +50,7 @@ export const createClaimGnarkProof = async (wrappedProof: string) => {
     path: getClaimGnarkPath("start-proof"),
     data: {
       proof: wrappedProof,
-      verifierData,
+      verifierData: JSON.stringify(verifierData),
     },
   });
 };
