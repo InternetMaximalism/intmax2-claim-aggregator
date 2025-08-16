@@ -2,7 +2,7 @@
 
 > *We scale Ethereum without sacrificing privacy. You can help.*
 
-Thank you for your interest in improving **INTMAX2-Function**, the zero-knowledge roll-up function service developed by the Internet Maximalism community. Whether you spot a typo, design a new feature, or help triage issues, your contribution makes the project stronger. This guide explains how to participate effectively and respectfully.
+Thank you for your interest in improving **intmax2-claim-aggregator** the zero-knowledge roll-up function service developed by the Internet Maximalism community. Whether you spot a typo, design a new feature, or help triage issues, your contribution makes the project stronger. This guide explains how to participate effectively and respectfully.
 
 ---
 
@@ -44,7 +44,7 @@ Following the steps below shows respect for the maintainers’ time and helps us
 ## Your first contribution
 
 Newcomers are welcome! Look for issues labeled **`good first issue`** or **`help wanted`**:
-[https://github.com/InternetMaximalism/intmax2-function/issues?q=is%3Aopen+label%3A%22good+first+issue%22](https://github.com/InternetMaximalism/intmax2-function/issues?q=is%3Aopen+label%3A%22good+first+issue%22)
+[https://github.com/InternetMaximalism/intmax2-claim-aggregator/issues?q=is%3Aopen+label%3A%22good+first+issue%22](https://github.com/InternetMaximalism/intmax2-claim-aggregator/issues?q=is%3Aopen+label%3A%22good+first+issue%22)
 
 If you’re unsure, ask in **#dev-general** on our [Discord](https://discord.gg/TGMctchPR6).
 
@@ -54,7 +54,7 @@ For a gentle introduction, consider improving docs or adding small tests.
 
 ## Getting started (Workflow)
 
-1. **Fork** the repo: [https://github.com/InternetMaximalism/intmax2-function](https://github.com/InternetMaximalism/intmax2-function) and clone your fork.
+1. **Fork** the repo: [https://github.com/InternetMaximalism/intmax2-claim-aggregator](https://github.com/InternetMaximalism/intmax2-claim-aggregator) and clone your fork.
 
 2. **Create a branch**:
    ```bash
@@ -150,7 +150,7 @@ A maintainer will discuss scope and alignment with the project roadmap before an
 ## Community & support
 
 * **Discord**: [https://discord.gg/TGMctchPR6](https://discord.gg/TGMctchPR6) (`#dev-general`)
-* **GitHub Discussions**: [https://github.com/InternetMaximalism/intmax2-function/discussions](https://github.com/InternetMaximalism/intmax2-function/discussions)
+* **GitHub Discussions**: [https://github.com/InternetMaximalism/intmax2-claim-aggregator/discussions](https://github.com/InternetMaximalism/intmax2-claim-aggregator/discussions)
 * **Support portal (private)**: [intmaxhelp.zendesk.com](https://intmaxhelp.zendesk.com/hc/en-gb/requests/new)
 
 ---
@@ -159,9 +159,7 @@ A maintainer will discuss scope and alignment with the project roadmap before an
 
 | Area         | Convention                                                                                |
 | ------------ | ----------------------------------------------------------------------------------------- |
-| Rust         | `cargo fmt`, forbid warnings in CI                                                        |
-| TypeScript   | `eslint --max-warnings=0`, `prettier --check`                                             |
-| Go           | `go fmt`, `golangci-lint run`                                                             |
+| TypeScript   | `yarn test`, `yarn format`                                                                |
 | Commits      | **Conventional Commits** (`feat:`, `fix:`, `chore:` …)                                    |
 | Issue labels | `bug`, `enhancement`, `good first issue`, `help wanted`, `security`, `docs`, `discussion` |
 
@@ -169,4 +167,4 @@ A maintainer will discuss scope and alignment with the project roadmap before an
 
 ### Thanks
 
-INTMAX2-Function exists because of contributors like **you**. We appreciate your time and effort to make private, scalable blockchain infrastructure a reality.
+intmax2-claim-aggregator exists because of contributors like **you**. We appreciate your time and effort to make private, scalable blockchain infrastructure a reality.
