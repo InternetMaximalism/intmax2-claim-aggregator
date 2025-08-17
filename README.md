@@ -92,3 +92,4 @@ docker run -d --rm \
 This document explains the overall system design of claim-aggregator. It covers the architectural components, interactions between modules, data flow, and the process of generating and verifying ZKPs (Zero-Knowledge Proofs). It is intended to help developers and infrastructure engineers understand the technical foundation of the system.
 
 - [SYSTEM Design](./docs/SYSTEM_DESIGN.md)
+- [ENV](./packages/shared/src/config/index.ts) 
