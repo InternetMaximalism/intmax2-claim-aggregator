@@ -17,6 +17,7 @@ out
 *.local
 .nvmrc
 biome.json
+coverage
 
 # Environment files
 .env
