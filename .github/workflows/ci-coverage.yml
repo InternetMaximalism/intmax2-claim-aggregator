@@ -1,7 +1,7 @@
-name: CI
+name: CI (dev with coverage)
 
 on:
-  pull_request:
+  push:
     branches: [dev]
     paths-ignore:
       - '**.md'
@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-test:
+  test-coverage:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -28,17 +28,16 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           yarn-version: ${{ env.YARN_VERSION }}
 
-      - name: Check formatting
-        run: yarn check
-
       - name: Build shared packages
         run: yarn build:shared
 
       - name: Unit tests with coverage
         run: yarn test --coverage
 
-      - name: Build
-        run: yarn build
-
-      - name: Check for security vulnerabilities
-        run: yarn npm audit
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+            name: coverage-report
+            path: coverage/**
+            if-no-files-found: ignore
+            retention-days: 7

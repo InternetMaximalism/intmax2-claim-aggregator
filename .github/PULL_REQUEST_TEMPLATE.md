@@ -1,19 +1,11 @@
-## Summary
+Closes #
 
-* **What / Why (Background & Purpose)**
+## 🎯 Changes
 
-## Changes
+What changes are made in this PR? Is it a feature or a bug fix?
 
-* **Key Changes** (API / JOB / DB, etc.)
+## ✅ Checklist
 
-## Checklist
-
-* [ ] `yarn format`
-* [ ] `yarn test`
-* [ ] Document any breaking changes
-* [ ] Review from a security perspective (no sensitive information)
-
-## Related
-
-* Closes #
-* Depends on #
+- [ ] I have followed the steps listed in the [Contributing guide](https://github.com/InternetMaximalism/intmax2-claim-aggregator/blob/main/CONTRIBUTING.md).
+- [ ] If necessary, I have added documentation related to the changes made.
+- [ ] I have added or updated the tests related to the changes made.
