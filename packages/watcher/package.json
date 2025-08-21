@@ -15,7 +15,7 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "tsx": "^4.20.3",
+    "tsx": "^4.20.4",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   }
