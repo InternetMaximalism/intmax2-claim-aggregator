@@ -71,18 +71,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@biomejs/biome@npm:2.1.3":
-  version: 2.1.3
-  resolution: "@biomejs/biome@npm:2.1.3"
+"@biomejs/biome@npm:2.2.2":
+  version: 2.2.2
+  resolution: "@biomejs/biome@npm:2.2.2"
   dependencies:
-    "@biomejs/cli-darwin-arm64": "npm:2.1.3"
-    "@biomejs/cli-darwin-x64": "npm:2.1.3"
-    "@biomejs/cli-linux-arm64": "npm:2.1.3"
-    "@biomejs/cli-linux-arm64-musl": "npm:2.1.3"
-    "@biomejs/cli-linux-x64": "npm:2.1.3"
-    "@biomejs/cli-linux-x64-musl": "npm:2.1.3"
-    "@biomejs/cli-win32-arm64": "npm:2.1.3"
-    "@biomejs/cli-win32-x64": "npm:2.1.3"
+    "@biomejs/cli-darwin-arm64": "npm:2.2.2"
+    "@biomejs/cli-darwin-x64": "npm:2.2.2"
+    "@biomejs/cli-linux-arm64": "npm:2.2.2"
+    "@biomejs/cli-linux-arm64-musl": "npm:2.2.2"
+    "@biomejs/cli-linux-x64": "npm:2.2.2"
+    "@biomejs/cli-linux-x64-musl": "npm:2.2.2"
+    "@biomejs/cli-win32-arm64": "npm:2.2.2"
+    "@biomejs/cli-win32-x64": "npm:2.2.2"
   dependenciesMeta:
     "@biomejs/cli-darwin-arm64":
       optional: true
@@ -102,62 +102,62 @@ __metadata:
       optional: true
   bin:
     biome: bin/biome
-  checksum: 10c0/0393412e965e41b1d6278208d895db0b030a465a4e6a7913d2165d61280c192ad3c95c1d0597e319b5980cee75a3ddf787a7e83698ddbfcc9b520734c407ef20
+  checksum: 10c0/108690efd8c3a5fcee9faf89371319b2d066208e8adbb05855650032a1cc9afc98ec4206b73b0be2c49cdf64ef765cf5a24785456b814d5846ab65b293791daf
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-arm64@npm:2.1.3":
-  version: 2.1.3
-  resolution: "@biomejs/cli-darwin-arm64@npm:2.1.3"
+"@biomejs/cli-darwin-arm64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "@biomejs/cli-darwin-arm64@npm:2.2.2"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-x64@npm:2.1.3":
-  version: 2.1.3
-  resolution: "@biomejs/cli-darwin-x64@npm:2.1.3"
+"@biomejs/cli-darwin-x64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "@biomejs/cli-darwin-x64@npm:2.2.2"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64-musl@npm:2.1.3":
-  version: 2.1.3
-  resolution: "@biomejs/cli-linux-arm64-musl@npm:2.1.3"
+"@biomejs/cli-linux-arm64-musl@npm:2.2.2":
+  version: 2.2.2
+  resolution: "@biomejs/cli-linux-arm64-musl@npm:2.2.2"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64@npm:2.1.3":
-  version: 2.1.3
-  resolution: "@biomejs/cli-linux-arm64@npm:2.1.3"
+"@biomejs/cli-linux-arm64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "@biomejs/cli-linux-arm64@npm:2.2.2"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64-musl@npm:2.1.3":
-  version: 2.1.3
-  resolution: "@biomejs/cli-linux-x64-musl@npm:2.1.3"
+"@biomejs/cli-linux-x64-musl@npm:2.2.2":
+  version: 2.2.2
+  resolution: "@biomejs/cli-linux-x64-musl@npm:2.2.2"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64@npm:2.1.3":
-  version: 2.1.3
-  resolution: "@biomejs/cli-linux-x64@npm:2.1.3"
+"@biomejs/cli-linux-x64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "@biomejs/cli-linux-x64@npm:2.2.2"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-arm64@npm:2.1.3":
-  version: 2.1.3
-  resolution: "@biomejs/cli-win32-arm64@npm:2.1.3"
+"@biomejs/cli-win32-arm64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "@biomejs/cli-win32-arm64@npm:2.2.2"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-x64@npm:2.1.3":
-  version: 2.1.3
-  resolution: "@biomejs/cli-win32-x64@npm:2.1.3"
+"@biomejs/cli-win32-x64@npm:2.2.2":
+  version: 2.2.2
+  resolution: "@biomejs/cli-win32-x64@npm:2.2.2"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -881,7 +881,7 @@ __metadata:
   dependencies:
     "@types/bull": "npm:^4.10.4"
     "@types/pg": "npm:^8"
-    abitype: "npm:^1.0.8"
+    abitype: "npm:^1.0.9"
     axios: "npm:^1.11.0"
     bull: "npm:^4.16.5"
     drizzle-orm: "npm:^0.44.4"
@@ -889,7 +889,7 @@ __metadata:
     ethers: "npm:6.15.0"
     ioredis: "npm:^5.7.0"
     pg: "npm:^8.16.3"
-    pino: "npm:^9.7.0"
+    pino: "npm:^9.9.0"
     pino-pretty: "npm:^13.1.1"
     typescript: "npm:^5.9.2"
     viem: "npm:^2.34.0"
@@ -1497,6 +1497,21 @@ __metadata:
     zod:
       optional: true
   checksum: 10c0/d3393f32898c1f0f6da4eed2561da6830dcd0d5129a160fae9517214236ee6a6c8e5a0380b8b960c5bc1b949320bcbd015ec7f38b5d7444f8f2b854a1b5dd754
+  languageName: node
+  linkType: hard
+
+"abitype@npm:^1.0.9":
+  version: 1.0.9
+  resolution: "abitype@npm:1.0.9"
+  peerDependencies:
+    typescript: ">=5.0.4"
+    zod: ^3 >=3.22.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+    zod:
+      optional: true
+  checksum: 10c0/8707fcc80d3edaea14717b0c9ebe15cef1f11825a9c5ffcdbd3ac8e53ae34aaa4c5eb9fb4c352d598d0013fcf71370eeda8eac2fc575f04fa0699a43477ae52b
   languageName: node
   linkType: hard
 
@@ -2938,7 +2953,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "intmax2-claim-aggregator@workspace:."
   dependencies:
-    "@biomejs/biome": "npm:2.1.3"
+    "@biomejs/biome": "npm:2.2.2"
     "@typechain/ethers-v6": "npm:^0.5.1"
     "@vitest/coverage-v8": "npm:^3.2.4"
     dotenv: "npm:^17.2.1"
@@ -3702,9 +3717,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino@npm:^9.7.0":
-  version: 9.7.0
-  resolution: "pino@npm:9.7.0"
+"pino@npm:^9.9.0":
+  version: 9.9.0
+  resolution: "pino@npm:9.9.0"
   dependencies:
     atomic-sleep: "npm:^1.0.0"
     fast-redact: "npm:^3.1.1"
@@ -3719,7 +3734,7 @@ __metadata:
     thread-stream: "npm:^3.0.0"
   bin:
     pino: bin.js
-  checksum: 10c0/c7f8a83a9a9d728b4eff6d0f4b9367f031c91bcaa5806fbf0eedcc8e77faba593d59baf11a8fba0dd1c778bb17ca7ed01418ac1df4ec129faeedd4f3ecaff66f
+  checksum: 10c0/e2b05d4b1cf73447648ec98d247fd0f1f8020a819ebc2c97fab7fa8b9efe2d1a82ebf674ed2489bb7a1d3a75350c044c776f124e9c29c004bfb133b9e2ac0871
   languageName: node
   linkType: hard
 
@@ -4634,7 +4649,7 @@ __metadata:
   resolution: "watcher@workspace:packages/watcher"
   dependencies:
     "@intmax2-claim-aggregator/shared": "workspace:*"
-    abitype: "npm:^1.0.8"
+    abitype: "npm:^1.0.9"
     drizzle-orm: "npm:^0.44.4"
     tsx: "npm:^4.20.4"
     typescript: "npm:^5.9.2"

@@ -18,7 +18,7 @@ export const generateClaimProofs = async (claims: ClaimWithProof[]) => {
       throw new Error(`Missing single claim proof for claim ${nullifier}`);
     }
 
-    logger.info(`Generating proof for claim ${index + 1}/${claims.length}`, { nullifier });
+    logger.info(`Generating proof for claim ${index + 1}/${claims.length}: ${nullifier}`);
 
     try {
       const prevClaimProof = index > 0 ? claimProofs[index - 1].proof : null;
@@ -54,7 +54,7 @@ export const generateClaimWrappedProof = async (
   const wrapperId = getRandomString(DEFAULT_ID_LENGTH);
 
   try {
-    logger.info("Generating wrapped proof", { wrapperId });
+    logger.info(`Generating wrapped proof: ${wrapperId}`);
 
     await createClaimWrappedProof(wrapperId, walletClientData.account.address, lastClaimProof);
 
