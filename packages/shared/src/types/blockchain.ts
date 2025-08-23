@@ -86,3 +86,5 @@ export interface SubmitContractClaim {
   blockHash: string;
   blockNumber: bigint;
 }
+
+export type NetworkLayer = "l1" | "l2";

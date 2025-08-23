@@ -14,11 +14,11 @@ export class ContributionContract {
   >;
 
   constructor() {
-    const ethereumClient = createNetworkClient("scroll");
+    const l2Client = createNetworkClient("l2");
     this.contract = getContract({
       address: L2_CONTRIBUTION_CONTRACT_ADDRESS,
       abi: ContributionAbi,
-      client: ethereumClient,
+      client: l2Client,
     });
   }
 

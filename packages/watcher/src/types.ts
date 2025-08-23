@@ -11,8 +11,8 @@ export type WatcherEventType = (typeof WatcherEvents)[keyof typeof WatcherEvents
 export const WATCHER_EVENT_NAMES = Object.values(WatcherEvents);
 
 export interface NetworkState {
-  ethereumClient: PublicClient;
-  scrollClient: PublicClient;
+  l1Client: PublicClient;
+  l2Client: PublicClient;
   currentBlockNumber: bigint;
   scrollCurrentBlockNumber: bigint;
 }

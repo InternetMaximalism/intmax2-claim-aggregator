@@ -12,7 +12,7 @@ import { fetchPendingPeriods } from "./period.service";
 import { setReward } from "./reward.service";
 
 export const performJob = async () => {
-  const scrollClient = createNetworkClient("scroll");
+  const l2Client = createNetworkClient("l2");
   const lastProcessedPeriod = await eventDB
     .select({
       period: rewardPeriodSchema.period,
@@ -24,7 +24,7 @@ export const performJob = async () => {
   const pendingPeriodInfos = await fetchPendingPeriods(lastProcessedPeriod[0] ?? null);
 
   for (const periodData of pendingPeriodInfos) {
-    await processReward(scrollClient, periodData);
+    await processReward(l2Client, periodData);
     await saveRewardPeriod(periodData);
 
     logger.info(
@@ -34,14 +34,14 @@ export const performJob = async () => {
 };
 
 const processReward = async (
-  scrollClient: ReturnType<typeof createNetworkClient>,
+  l2Client: ReturnType<typeof createNetworkClient>,
   periodData: PeriodInfo,
 ) => {
   const rewardContract = BlockBuilderRewardContract.getInstance();
   const [rewardAlreadySet] = await rewardContract.getReward(periodData.period);
 
   if (!rewardAlreadySet) {
-    await setReward(scrollClient, {
+    await setReward(l2Client, {
       periodNumber: periodData.period,
       amount: parseEther(String(periodData.totalReward)),
     });

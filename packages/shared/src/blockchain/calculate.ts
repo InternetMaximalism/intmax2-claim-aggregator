@@ -13,11 +13,8 @@ const calculateAdjustedGasPrices = (multiplier: number, baseGasPrice: bigint) =>
   };
 };
 
-export const getEthersMaxGasMultiplier = async (
-  ethereumClient: PublicClient,
-  multiplier: number,
-) => {
-  const provider = new ethers.JsonRpcProvider(ethereumClient.transport.url);
+export const getEthersMaxGasMultiplier = async (publicClient: PublicClient, multiplier: number) => {
+  const provider = new ethers.JsonRpcProvider(publicClient.transport.url);
 
   const [block, feeData] = await Promise.all([provider.getBlock("latest"), provider.getFeeData()]);
   const baseGasPrice = getGasPrice(block, feeData);

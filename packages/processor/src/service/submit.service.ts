@@ -30,7 +30,7 @@ export const submitClaimProof = async (
   walletClientData: ReturnType<typeof getWalletClient>,
   params: SubmitClaimParams,
 ) => {
-  const ethereumClient = createNetworkClient("scroll");
+  const l2Client = createNetworkClient("l2");
 
   const retryOptions: RetryOptionsEthers = {
     gasPrice: null,
@@ -41,7 +41,7 @@ export const submitClaimProof = async (
       const multiplier = calculateGasMultiplier(attempt);
 
       const { transactionHash } = await submitClaimProofWithRetry(
-        ethereumClient,
+        l2Client,
         walletClientData,
         params,
         multiplier,
@@ -49,7 +49,7 @@ export const submitClaimProof = async (
       );
 
       const receipt = await ethersWaitForTransactionConfirmation(
-        ethereumClient,
+        l2Client,
         transactionHash,
         "submitClaimProof",
         {
@@ -84,7 +84,7 @@ export const submitClaimProof = async (
 };
 
 export const submitClaimProofWithRetry = async (
-  ethereumClient: PublicClient,
+  l2Client: PublicClient,
   walletClientData: ReturnType<typeof getWalletClient>,
   params: SubmitClaimParams,
   multiplier: number,
@@ -98,8 +98,8 @@ export const submitClaimProofWithRetry = async (
   };
 
   const [{ pendingNonce, currentNonce }, gasPriceData] = await Promise.all([
-    getNonce(ethereumClient, walletClientData.account.address),
-    getEthersMaxGasMultiplier(ethereumClient, multiplier),
+    getNonce(l2Client, walletClientData.account.address),
+    getEthersMaxGasMultiplier(l2Client, multiplier),
   ]);
   let { gasPrice } = gasPriceData;
 
@@ -118,7 +118,7 @@ export const submitClaimProofWithRetry = async (
     gasPrice,
   };
 
-  const provider = new ethers.JsonRpcProvider(ethereumClient.transport.url);
+  const provider = new ethers.JsonRpcProvider(l2Client.transport.url);
   const signer = new ethers.Wallet(
     toHex(walletClientData.account.getHdKey().privateKey!),
     provider,

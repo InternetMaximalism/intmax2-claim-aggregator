@@ -1,7 +1,8 @@
-import { createWalletClient, http } from "viem";
+import { createWalletClient, fallback } from "viem";
 import { mnemonicToAccount } from "viem/accounts";
 import { config } from "../config";
-import { networkConfig } from "./network";
+import type { NetworkLayer } from "../types";
+import { getClientConfig } from "./client";
 
 type WalletType = "builder" | "depositAnalyzer" | "withdrawal" | "blockBuilderReward";
 
@@ -14,7 +15,7 @@ const walletConfigs: Record<WalletType, number> = {
 
 export const getWalletClient = (
   type: WalletType,
-  network: "ethereum" | "scroll",
+  networkLayer: NetworkLayer,
 ): {
   account: ReturnType<typeof mnemonicToAccount>;
   walletClient: ReturnType<typeof createWalletClient>;
@@ -28,12 +29,14 @@ export const getWalletClient = (
     addressIndex,
   });
 
-  const { chain, rpcUrl } = networkConfig[network][config.NETWORK_ENVIRONMENT];
+  const { chain, rpcUrls } = getClientConfig(networkLayer);
 
   const client = createWalletClient({
     account,
     chain,
-    transport: http(rpcUrl),
+    transport: fallback(rpcUrls, {
+      retryCount: 3,
+    }),
   });
 
   return {

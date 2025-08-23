@@ -11,7 +11,7 @@ import { getPeriodBlockIntervals } from "./period.service";
 import { relayClaims } from "./submit.service";
 
 export const performJob = async () => {
-  const ethereumClient = createNetworkClient("scroll");
+  const l2Client = createNetworkClient("l2");
   const lastProcessedPeriod = await eventDB
     .select({
       period: claimPeriodSchema.period,
@@ -21,12 +21,12 @@ export const performJob = async () => {
     .limit(1);
 
   const periodBlockIntervals = await getPeriodBlockIntervals(
-    ethereumClient,
+    l2Client,
     lastProcessedPeriod[0] ?? null,
   );
 
   for (const periodBlockInterval of periodBlockIntervals) {
-    const recipientCount = await processDispatcher(ethereumClient, periodBlockInterval);
+    const recipientCount = await processDispatcher(l2Client, periodBlockInterval);
     await saveClaimPeriod(periodBlockInterval, recipientCount);
     logger.info(
       `Processed period ${periodBlockInterval.periodInfo.period} recipientCount: ${recipientCount} successfully.`,
@@ -35,11 +35,11 @@ export const performJob = async () => {
 };
 
 const processDispatcher = async (
-  ethereumClient: ReturnType<typeof createNetworkClient>,
+  l2Client: ReturnType<typeof createNetworkClient>,
   periodBlockInterval: PeriodBlockInterval,
 ) => {
   const contributionRecordedEvents = await getContributionRecordedEvents(
-    ethereumClient,
+    l2Client,
     periodBlockInterval,
   );
 
@@ -58,7 +58,7 @@ const processDispatcher = async (
 
   let totalRecipients = 0;
   for (const batchRecipients of contributionParams.batchRecipients) {
-    await relayClaims(ethereumClient, {
+    await relayClaims(l2Client, {
       period: contributionParams.period,
       recipients: batchRecipients,
     });

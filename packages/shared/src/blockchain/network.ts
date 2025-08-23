@@ -1,38 +1,17 @@
-import { type Chain, createPublicClient, http, type PublicClient } from "viem";
-import { mainnet, scroll, scrollSepolia, sepolia } from "viem/chains";
-import { config } from "../config";
+import { createPublicClient, fallback, type PublicClient } from "viem";
+import type { NetworkLayer } from "../types";
+import { getClientConfig } from "./client";
 
-export const networkConfig = {
-  ethereum: {
-    mainnet: {
-      chain: mainnet,
-      rpcUrl: `https://eth-mainnet.alchemyapi.io/v2/${config.ALCHEMY_API_KEY}`,
-    },
-    sepolia: {
-      chain: sepolia,
-      rpcUrl: `https://eth-sepolia.g.alchemy.com/v2/${config.ALCHEMY_API_KEY}`,
-    },
-  },
-  scroll: {
-    mainnet: {
-      chain: scroll,
-      rpcUrl: `https://scroll-mainnet.g.alchemy.com/v2/${config.ALCHEMY_API_KEY}`,
-    },
-    sepolia: {
-      chain: scrollSepolia,
-      rpcUrl: `https://scroll-sepolia.g.alchemy.com/v2/${config.ALCHEMY_API_KEY}`,
-    },
-  },
-};
-
-export const createNetworkClient = (network: "ethereum" | "scroll") => {
-  const { chain, rpcUrl } = networkConfig[network][config.NETWORK_ENVIRONMENT];
+export const createNetworkClient = (networkLayer: NetworkLayer) => {
+  const { chain, rpcUrls } = getClientConfig(networkLayer);
 
   return createPublicClient({
     batch: {
       multicall: true,
     },
-    chain: chain as Chain,
-    transport: http(rpcUrl),
+    chain,
+    transport: fallback(rpcUrls, {
+      retryCount: 3,
+    }),
   }) as PublicClient;
 };

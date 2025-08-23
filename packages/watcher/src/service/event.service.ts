@@ -17,7 +17,7 @@ import type { NetworkState, WatcherEventType } from "../types";
 const handleWithdrawalEvent = async <
   T extends { args: { withdrawalHash: string }; transactionHash: string },
 >(
-  ethereumClient: PublicClient,
+  publicClient: PublicClient,
   params: {
     startBlockNumber: bigint;
     endBlockNumber: bigint;
@@ -30,7 +30,7 @@ const handleWithdrawalEvent = async <
 
   validateBlockRange(eventName, startBlockNumber, endBlockNumber);
 
-  const events = await fetchEvents<T>(ethereumClient, {
+  const events = await fetchEvents<T>(publicClient, {
     startBlockNumber,
     endBlockNumber,
     blockRange: BLOCK_RANGE_MINIMUM,
@@ -52,11 +52,10 @@ export const handleAllWithdrawalEvents = async (
   networkState: NetworkState,
   events: { name: string; lastBlockNumber: bigint }[],
 ) => {
-  const { ethereumClient, scrollClient, currentBlockNumber, scrollCurrentBlockNumber } =
-    networkState;
+  const { l1Client, l2Client, currentBlockNumber, scrollCurrentBlockNumber } = networkState;
 
   const [directWithdrawalQueueState, directWithdrawalSuccessState] = await Promise.all([
-    handleWithdrawalEvent<DirectWithdrawalQueuedEvent>(scrollClient, {
+    handleWithdrawalEvent<DirectWithdrawalQueuedEvent>(l2Client, {
       startBlockNumber: getLastProcessedBlockNumberByEventName(
         events,
         "ClaimWatcherDirectWithdrawalQueued",
@@ -67,7 +66,7 @@ export const handleAllWithdrawalEvents = async (
       eventName: "ClaimWatcherDirectWithdrawalQueued",
       contractAddress: CLAIM_CONTRACT_ADDRESS,
     }),
-    handleWithdrawalEvent<DirectWithdrawalQueuedEvent>(ethereumClient, {
+    handleWithdrawalEvent<DirectWithdrawalQueuedEvent>(l1Client, {
       startBlockNumber: getLastProcessedBlockNumberByEventName(
         events,
         "ClaimWatcherDirectWithdrawalSuccessed",

@@ -20,7 +20,7 @@ import { getLastProcessedBlockNumberByEventName } from "../lib/event";
 import type { ClaimTransactions, NetworkState } from "../types";
 
 export const processClaimPeriodUpdates = async (
-  { scrollClient, scrollCurrentBlockNumber }: NetworkState,
+  { l2Client, scrollCurrentBlockNumber }: NetworkState,
   events: { name: string; lastBlockNumber: bigint }[],
 ) => {
   const startBlockNumber = getLastProcessedBlockNumberByEventName(
@@ -30,7 +30,7 @@ export const processClaimPeriodUpdates = async (
   );
 
   const contributionEvents = await getContributionRecordedEvents(
-    scrollClient,
+    l2Client,
     startBlockNumber,
     scrollCurrentBlockNumber,
   );
@@ -38,7 +38,7 @@ export const processClaimPeriodUpdates = async (
     new Set<string>(contributionEvents.map(({ transactionHash }) => transactionHash)),
   );
   const processedClaimTransactions = await parseClaimTransactions(
-    scrollClient,
+    l2Client,
     uniqueTransactionHashes,
   );
 
