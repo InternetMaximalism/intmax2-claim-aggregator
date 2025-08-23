@@ -12,12 +12,36 @@ out
 .vscode
 .idea
 *.md
-!README.md
+README.md
 *.log
 *.local
 .nvmrc
+.npmrc
 biome.json
 coverage
+.yarn
+scripts
+
+# Testing files
+test
+tests
+vite.config.mts
+**/test
+**/tests
+__tests__
+**/__tests__
+*.test.ts
+*.spec.ts
+vitest.config.*
+
+# Documentation
+docs
+**/docs
+*.md
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+SECURITY.md
+LICENSE
 
 # Environment files
 .env
