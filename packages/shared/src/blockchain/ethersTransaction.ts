@@ -107,7 +107,7 @@ export const ethersWaitForTransactionConfirmation = async (
   options?: WaitForTransactionOptions,
 ) => {
   try {
-    const provider = new ethers.JsonRpcProvider(publicClient.transport.url);
+    const provider = new ethers.JsonRpcProvider(publicClient.transport.transports[0].value.url);
     const { confirms, timeout } = options ?? DEFAULT_OPTIONS;
     const receipt = await provider.waitForTransaction(transactionHash, confirms, timeout);
 
