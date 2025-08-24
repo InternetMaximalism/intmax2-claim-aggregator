@@ -17,14 +17,6 @@ export const L2_CONTRIBUTION_CONTRACT_ADDRESS =
 export const BLOCK_BUILDER_REWARD_CONTRACT_ADDRESS =
   config.BLOCK_BUILDER_REWARD_CONTRACT_ADDRESS as `0x${string}`;
 
-// etherscan
-export const ETHERSCAN_URL_MAPS = {
-  "ethereum-mainnet": "https://api.etherscan.io/api",
-  "ethereum-sepolia": "https://api-sepolia.etherscan.io/api",
-  "scroll-mainnet": "https://api.scrollscan.com/api",
-  "scroll-sepolia": "https://api-sepolia.scrollscan.com/api",
-};
-
 // transaction
 export const WAIT_TRANSACTION_TIMEOUT = 15_000;
 export const TRANSACTION_MAX_RETRIES = 5;

@@ -233,16 +233,8 @@ describe("period.service", () => {
         mockAllocationConstants.startTimestamp + mockAllocationConstants.periodInterval - 1n,
       );
 
-      expect(mockGetBlockNumberByTimestamp).toHaveBeenCalledWith(
-        "scroll",
-        expectedStartTime,
-        "after",
-      );
-      expect(mockGetBlockNumberByTimestamp).toHaveBeenCalledWith(
-        "scroll",
-        expectedEndTime,
-        "after",
-      );
+      expect(mockGetBlockNumberByTimestamp).toHaveBeenCalledWith(expectedStartTime, "after");
+      expect(mockGetBlockNumberByTimestamp).toHaveBeenCalledWith(expectedEndTime, "after");
     });
 
     it("should log debug information", async () => {

@@ -11,10 +11,10 @@ import { PERIOD_BATCH_DELAY, PERIOD_BATCH_SIZE } from "../constants";
 import type { AllocationConstants, PeriodBlockInterval, PeriodInfo } from "../types";
 
 export const getPeriodBlockIntervals = async (
-  ethereumClient: ReturnType<typeof createNetworkClient>,
+  l2Client: ReturnType<typeof createNetworkClient>,
   lastClaimPeriod: { period: bigint } | null,
 ) => {
-  const { currentPeriod, allocationConstants } = await fetchContractData(ethereumClient);
+  const { currentPeriod, allocationConstants } = await fetchContractData(l2Client);
 
   if (shouldSkipProcessing(currentPeriod, lastClaimPeriod)) {
     return [];
@@ -26,11 +26,11 @@ export const getPeriodBlockIntervals = async (
   return await processPeriodsInBatches(periodInfos);
 };
 
-const fetchContractData = async (ethereumClient: ReturnType<typeof createNetworkClient>) => {
+const fetchContractData = async (l2Client: ReturnType<typeof createNetworkClient>) => {
   const contract = getContract({
     address: CLAIM_CONTRACT_ADDRESS,
     abi: ClaimAbi,
-    client: ethereumClient,
+    client: l2Client,
   });
 
   const [currentPeriod, allocationConstants] = (await Promise.all([
@@ -87,8 +87,8 @@ const calculatePeriodInfos = (periods: bigint[], allocationConstants: Allocation
 
 const getBlockNumberRange = async (periodInfo: PeriodInfo) => {
   const [startBlockNumber, endBlockNumber] = await Promise.all([
-    getBlockNumberByTimestamp("scroll", Number(periodInfo.startTime), "after"),
-    getBlockNumberByTimestamp("scroll", Number(periodInfo.endTime), "after"),
+    getBlockNumberByTimestamp(Number(periodInfo.startTime), "after"),
+    getBlockNumberByTimestamp(Number(periodInfo.endTime), "after"),
   ]);
   return {
     periodInfo,

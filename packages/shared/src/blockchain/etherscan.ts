@@ -1,16 +1,12 @@
 import axios from "axios";
 import { config } from "../config";
-import { ETHERSCAN_URL_MAPS } from "../constants";
 
 export const getBlockNumberByTimestamp = async (
-  networkType: "ethereum" | "scroll",
   timestamp: number,
   closest: "before" | "after" = "after",
 ) => {
   try {
-    const url =
-      ETHERSCAN_URL_MAPS[`${networkType}-${config.NETWORK_ENVIRONMENT}`] ||
-      ETHERSCAN_URL_MAPS["ethereum-sepolia"];
+    const url = `${config.ETHERSCAN_URL}/api`;
 
     const response = await axios.get(url, {
       params: {

@@ -169,7 +169,7 @@ const getRelayClaimTransactions = async (eventType: WatcherEventType, txHashes: 
   }
 
   const result = [];
-  const scrollClient = createNetworkClient("scroll");
+  const l2Client = createNetworkClient("l2");
 
   for (let i = 0; i < txHashes.length; i += BATCH_SIZE) {
     const batch = txHashes.slice(i, i + BATCH_SIZE);
@@ -177,7 +177,7 @@ const getRelayClaimTransactions = async (eventType: WatcherEventType, txHashes: 
     try {
       const batchResults = await Promise.all(
         batch.map(async (hash) => {
-          const { input: transactionInput } = await scrollClient.getTransaction({
+          const { input: transactionInput } = await l2Client.getTransaction({
             hash: hash as `0x${string}`,
           });
 

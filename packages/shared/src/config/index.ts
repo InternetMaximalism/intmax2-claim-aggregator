@@ -1,5 +1,6 @@
 import { bool, cleanEnv, num, str } from "envalid";
 import { version } from "../../../../package.json";
+import { rpcUrls } from "./validator";
 
 export const config = cleanEnv(process.env, {
   // app
@@ -32,12 +33,11 @@ export const config = cleanEnv(process.env, {
   REDIS_URL: str(),
   REDIS_ENABLED: bool({ default: true }),
   // blockchain
-  NETWORK_ENVIRONMENT: str({
-    choices: ["mainnet", "sepolia"],
-    default: "sepolia",
-    desc: "The environment of the blockchain network to connect to",
-  }),
-  ALCHEMY_API_KEY: str(),
+  L1_CHAIN: str({ default: "sepolia" }),
+  L2_CHAIN: str({ default: "scrollSepolia" }),
+  L1_RPC_URLS: rpcUrls(),
+  L2_RPC_URLS: rpcUrls(),
+  ETHERSCAN_URL: str(),
   ETHERSCAN_API_KEY: str(),
   USE_MIGRATED_ABI: bool({
     default: false,

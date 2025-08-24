@@ -27,10 +27,10 @@ import { type PublicClient, toHex } from "viem";
 import type { SetRewardParams } from "../types";
 
 export const setReward = async (
-  ethereumClient: ReturnType<typeof createNetworkClient>,
+  l2Client: ReturnType<typeof createNetworkClient>,
   params: SetRewardParams,
 ) => {
-  const walletClientData = getWalletClient("blockBuilderReward", "scroll");
+  const walletClientData = getWalletClient("blockBuilderReward", "l2");
   const retryOptions: RetryOptionsEthers = {
     gasPrice: null,
   };
@@ -40,7 +40,7 @@ export const setReward = async (
       const multiplier = calculateGasMultiplier(attempt);
 
       const { transactionHash } = await setRewardWithRetry(
-        ethereumClient,
+        l2Client,
         walletClientData,
         params,
         multiplier,
@@ -48,7 +48,7 @@ export const setReward = async (
       );
 
       const receipt = await ethersWaitForTransactionConfirmation(
-        ethereumClient,
+        l2Client,
         transactionHash,
         "setReward",
         {
@@ -83,7 +83,7 @@ export const setReward = async (
 };
 
 export const setRewardWithRetry = async (
-  ethereumClient: PublicClient,
+  l2Client: PublicClient,
   walletClientData: ReturnType<typeof getWalletClient>,
   params: SetRewardParams,
   multiplier: number,
@@ -97,8 +97,8 @@ export const setRewardWithRetry = async (
   };
 
   const [{ pendingNonce, currentNonce }, gasPriceData] = await Promise.all([
-    getNonce(ethereumClient, walletClientData.account.address),
-    getEthersMaxGasMultiplier(ethereumClient, multiplier),
+    getNonce(l2Client, walletClientData.account.address),
+    getEthersMaxGasMultiplier(l2Client, multiplier),
   ]);
   let { gasPrice } = gasPriceData;
 
@@ -117,7 +117,7 @@ export const setRewardWithRetry = async (
     gasPrice,
   };
 
-  const provider = new ethers.JsonRpcProvider(ethereumClient.transport.url);
+  const provider = new ethers.JsonRpcProvider(l2Client.transport.url);
   const signer = new ethers.Wallet(
     toHex(walletClientData.account.getHdKey().privateKey!),
     provider,

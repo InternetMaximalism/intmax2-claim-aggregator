@@ -16,7 +16,7 @@ import {
 import { submitClaimProof } from "./submit.service";
 
 export const processClaimGroup = async (requestingClaims: RequestingClaim[]) => {
-  const walletClientData = getWalletClient("withdrawal", "scroll");
+  const walletClientData = getWalletClient("withdrawal", "l2");
 
   const claims = await fetchClaimsWithProofs(requestingClaims);
   const claimProofs = await generateClaimProofs(claims);

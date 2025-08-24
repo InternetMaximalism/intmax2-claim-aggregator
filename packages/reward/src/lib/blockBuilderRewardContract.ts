@@ -13,11 +13,11 @@ export class BlockBuilderRewardContract {
   >;
 
   constructor() {
-    const scrollClient = createNetworkClient("scroll");
+    const l2Client = createNetworkClient("l2");
     this.contract = getContract({
       address: BLOCK_BUILDER_REWARD_CONTRACT_ADDRESS,
       abi: BlockBuilderRewardAbi,
-      client: scrollClient,
+      client: l2Client,
     });
   }
 

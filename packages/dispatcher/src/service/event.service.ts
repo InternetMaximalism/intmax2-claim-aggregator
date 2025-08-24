@@ -12,26 +12,23 @@ import { MAX_RECIPIENT_BATCH_SIZE } from "../constants";
 import type { PeriodBlockInterval } from "../types";
 
 export const getContributionRecordedEvents = async (
-  ethereumClient: PublicClient,
+  l2Client: PublicClient,
   periodBlockInterval: PeriodBlockInterval,
 ) => {
   try {
     const { periodInfo, startBlockNumber, endBlockNumber } = periodBlockInterval;
     validateBlockRange("contributionRecordedEvent", startBlockNumber, endBlockNumber);
 
-    const contributionRecordedEvents = await fetchEvents<ContributionRecordedEvent>(
-      ethereumClient,
-      {
-        startBlockNumber,
-        endBlockNumber,
-        blockRange: BLOCK_RANGE_MINIMUM,
-        contractAddress: CLAIM_CONTRACT_ADDRESS,
-        eventInterface: contributionRecordedEvent,
-        args: {
-          period: [periodInfo.period],
-        },
+    const contributionRecordedEvents = await fetchEvents<ContributionRecordedEvent>(l2Client, {
+      startBlockNumber,
+      endBlockNumber,
+      blockRange: BLOCK_RANGE_MINIMUM,
+      contractAddress: CLAIM_CONTRACT_ADDRESS,
+      eventInterface: contributionRecordedEvent,
+      args: {
+        period: [periodInfo.period],
       },
-    );
+    });
 
     return contributionRecordedEvents;
   } catch (error) {
