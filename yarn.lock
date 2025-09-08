@@ -889,7 +889,7 @@ __metadata:
     ethers: "npm:6.15.0"
     ioredis: "npm:^5.7.0"
     pg: "npm:^8.16.3"
-    pino: "npm:^9.9.0"
+    pino: "npm:^9.9.4"
     pino-pretty: "npm:^13.1.1"
     typescript: "npm:^5.9.2"
     viem: "npm:^2.37.0"
@@ -3699,9 +3699,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino@npm:^9.9.0":
-  version: 9.9.0
-  resolution: "pino@npm:9.9.0"
+"pino@npm:^9.9.4":
+  version: 9.9.4
+  resolution: "pino@npm:9.9.4"
   dependencies:
     atomic-sleep: "npm:^1.0.0"
     fast-redact: "npm:^3.1.1"
@@ -3716,7 +3716,7 @@ __metadata:
     thread-stream: "npm:^3.0.0"
   bin:
     pino: bin.js
-  checksum: 10c0/e2b05d4b1cf73447648ec98d247fd0f1f8020a819ebc2c97fab7fa8b9efe2d1a82ebf674ed2489bb7a1d3a75350c044c776f124e9c29c004bfb133b9e2ac0871
+  checksum: 10c0/dde6cde45b569da42f5b1741f4242ec121e1e20125a41a7aa0c92104eabae45fe04f7692b29e7baf295bff63e1a69c65c1f39ec2aa3ed8139529894e75a9716b
   languageName: node
   linkType: hard
 
