@@ -892,7 +892,7 @@ __metadata:
     pino: "npm:^9.9.0"
     pino-pretty: "npm:^13.1.1"
     typescript: "npm:^5.9.2"
-    viem: "npm:^2.37.0"
+    viem: "npm:^2.37.4"
     vitest: "npm:^3.2.4"
   languageName: unknown
   linkType: soft
@@ -1467,18 +1467,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"abitype@npm:1.0.8":
-  version: 1.0.8
-  resolution: "abitype@npm:1.0.8"
+"abitype@npm:1.1.0":
+  version: 1.1.0
+  resolution: "abitype@npm:1.1.0"
   peerDependencies:
     typescript: ">=5.0.4"
-    zod: ^3 >=3.22.0
+    zod: ^3.22.0 || ^4.0.0
   peerDependenciesMeta:
     typescript:
       optional: true
     zod:
       optional: true
-  checksum: 10c0/d3393f32898c1f0f6da4eed2561da6830dcd0d5129a160fae9517214236ee6a6c8e5a0380b8b960c5bc1b949320bcbd015ec7f38b5d7444f8f2b854a1b5dd754
+  checksum: 10c0/99218d442951c60324fcd96a372c30d71ca8d5434cab62b95d5d80bae89e3024a445a90db323ef1fe4da0d749d86e815ca555a37719b06e6ca03ccad2116c45b
   languageName: node
   linkType: hard
 
@@ -1941,7 +1941,7 @@ __metadata:
     ethers: "npm:6.15.0"
     tsx: "npm:^4.20.5"
     typescript: "npm:^5.9.2"
-    viem: "npm:^2.37.0"
+    viem: "npm:^2.37.4"
     vitest: "npm:^3.2.4"
   languageName: unknown
   linkType: soft
@@ -3794,7 +3794,7 @@ __metadata:
     ethers: "npm:6.15.0"
     tsx: "npm:^4.20.5"
     typescript: "npm:^5.9.2"
-    viem: "npm:^2.37.0"
+    viem: "npm:^2.37.4"
     vitest: "npm:^3.2.4"
   languageName: unknown
   linkType: soft
@@ -3886,7 +3886,7 @@ __metadata:
     ethers: "npm:6.15.0"
     tsx: "npm:^4.20.5"
     typescript: "npm:^5.9.2"
-    viem: "npm:^2.37.0"
+    viem: "npm:^2.37.4"
     vitest: "npm:^3.2.4"
   languageName: unknown
   linkType: soft
@@ -4479,15 +4479,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:^2.37.0":
-  version: 2.37.0
-  resolution: "viem@npm:2.37.0"
+"viem@npm:^2.37.4":
+  version: 2.37.4
+  resolution: "viem@npm:2.37.4"
   dependencies:
     "@noble/curves": "npm:1.9.1"
     "@noble/hashes": "npm:1.8.0"
     "@scure/bip32": "npm:1.7.0"
     "@scure/bip39": "npm:1.6.0"
-    abitype: "npm:1.0.8"
+    abitype: "npm:1.1.0"
     isows: "npm:1.0.7"
     ox: "npm:0.9.3"
     ws: "npm:8.18.3"
@@ -4496,7 +4496,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/846cb4c5367c91aa4e794a13c27e5a18da3130e256edff0a12060bfa77d48dba0d4c8dafe563304cce136117b9b352254aea43eca173f1938d2e96c2869a718a
+  checksum: 10c0/6dee0f1673fbe7560ba3e73721e77f639e33878fe54c0b9f9440d7c45d880fbd5d4730c034414363746545289208f4d1458c73fe777588323da3c3d2993ace29
   languageName: node
   linkType: hard
 
@@ -4635,7 +4635,7 @@ __metadata:
     drizzle-orm: "npm:^0.44.5"
     tsx: "npm:^4.20.5"
     typescript: "npm:^5.9.2"
-    viem: "npm:^2.37.0"
+    viem: "npm:^2.37.4"
     vitest: "npm:^3.2.4"
   languageName: unknown
   linkType: soft
