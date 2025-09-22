@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "dependencies": {
-    "abitype": "^1.0.9",
+    "abitype": "^1.1.1",
     "axios": "^1.11.0",
     "bull": "^4.16.5",
     "drizzle-orm": "^0.44.5",

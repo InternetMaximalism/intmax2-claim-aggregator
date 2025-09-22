@@ -881,7 +881,7 @@ __metadata:
   dependencies:
     "@types/bull": "npm:^4.10.4"
     "@types/pg": "npm:^8"
-    abitype: "npm:^1.0.9"
+    abitype: "npm:^1.1.1"
     axios: "npm:^1.11.0"
     bull: "npm:^4.16.5"
     drizzle-orm: "npm:^0.44.5"
@@ -1494,6 +1494,21 @@ __metadata:
     zod:
       optional: true
   checksum: 10c0/8707fcc80d3edaea14717b0c9ebe15cef1f11825a9c5ffcdbd3ac8e53ae34aaa4c5eb9fb4c352d598d0013fcf71370eeda8eac2fc575f04fa0699a43477ae52b
+  languageName: node
+  linkType: hard
+
+"abitype@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "abitype@npm:1.1.1"
+  peerDependencies:
+    typescript: ">=5.0.4"
+    zod: ^3.22.0 || ^4.0.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+    zod:
+      optional: true
+  checksum: 10c0/d52fd8195cb37cdb462ba4d1817dafdba8da403eeab50f144f251748d7458a43308ee29ea46889db2969c91c074780e6d1f00f86acd22dc5772570432ee56b9c
   languageName: node
   linkType: hard
 
@@ -4631,7 +4646,7 @@ __metadata:
   resolution: "watcher@workspace:packages/watcher"
   dependencies:
     "@intmax2-claim-aggregator/shared": "workspace:*"
-    abitype: "npm:^1.0.9"
+    abitype: "npm:^1.1.1"
     drizzle-orm: "npm:^0.44.5"
     tsx: "npm:^4.20.5"
     typescript: "npm:^5.9.2"
