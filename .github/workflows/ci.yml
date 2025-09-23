@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 env:
-  NODE_VERSION: 24.6.0
-  YARN_VERSION: 4.9.3
+  NODE_VERSION: 24.8.0
+  YARN_VERSION: 4.10.2
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
