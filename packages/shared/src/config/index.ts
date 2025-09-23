@@ -38,6 +38,7 @@ export const config = cleanEnv(process.env, {
   L1_RPC_URLS: rpcUrls(),
   L2_RPC_URLS: rpcUrls(),
   ETHERSCAN_URL: str(),
+  ETHERSCAN_CHAIN_ID: num(),
   ETHERSCAN_API_KEY: str(),
   USE_MIGRATED_ABI: bool({
     default: false,
