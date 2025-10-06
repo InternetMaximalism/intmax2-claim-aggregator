@@ -1769,7 +1769,7 @@ __metadata:
     "@intmax2-claim-aggregator/shared": "workspace:*"
     date-fns: "npm:^4.1.0"
     drizzle-orm: "npm:^0.44.5"
-    tsx: "npm:^4.20.5"
+    tsx: "npm:^4.20.6"
     typescript: "npm:^5.9.2"
     vitest: "npm:^3.2.4"
   languageName: unknown
@@ -1954,7 +1954,7 @@ __metadata:
     "@intmax2-claim-aggregator/shared": "workspace:*"
     drizzle-orm: "npm:^0.44.5"
     ethers: "npm:6.15.0"
-    tsx: "npm:^4.20.5"
+    tsx: "npm:^4.20.6"
     typescript: "npm:^5.9.2"
     viem: "npm:^2.37.8"
     vitest: "npm:^3.2.4"
@@ -3807,7 +3807,7 @@ __metadata:
     axios: "npm:^1.12.2"
     drizzle-orm: "npm:^0.44.5"
     ethers: "npm:6.15.0"
-    tsx: "npm:^4.20.5"
+    tsx: "npm:^4.20.6"
     typescript: "npm:^5.9.2"
     viem: "npm:^2.37.8"
     vitest: "npm:^3.2.4"
@@ -3899,7 +3899,7 @@ __metadata:
     "@intmax2-claim-aggregator/shared": "workspace:*"
     drizzle-orm: "npm:^0.44.5"
     ethers: "npm:6.15.0"
-    tsx: "npm:^4.20.5"
+    tsx: "npm:^4.20.6"
     typescript: "npm:^5.9.2"
     viem: "npm:^2.37.8"
     vitest: "npm:^3.2.4"
@@ -4374,9 +4374,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsx@npm:^4.20.5":
-  version: 4.20.5
-  resolution: "tsx@npm:4.20.5"
+"tsx@npm:^4.20.6":
+  version: 4.20.6
+  resolution: "tsx@npm:4.20.6"
   dependencies:
     esbuild: "npm:~0.25.0"
     fsevents: "npm:~2.3.3"
@@ -4386,7 +4386,7 @@ __metadata:
       optional: true
   bin:
     tsx: dist/cli.mjs
-  checksum: 10c0/70f9bf746be69281312a369c712902dbf9bcbdd9db9184a4859eb4859c36ef0c5a6d79b935c1ec429158ee73fd6584089400ae8790345dae34c5b0222bdb94f3
+  checksum: 10c0/07757a9bf62c271e0a00869b2008c5f2d6e648766536e4faf27d9d8027b7cde1ac8e4871f4bb570c99388bcee0018e6869dad98c07df809b8052f9c549cd216f
   languageName: node
   linkType: hard
 
@@ -4648,7 +4648,7 @@ __metadata:
     "@intmax2-claim-aggregator/shared": "workspace:*"
     abitype: "npm:^1.1.1"
     drizzle-orm: "npm:^0.44.5"
-    tsx: "npm:^4.20.5"
+    tsx: "npm:^4.20.6"
     typescript: "npm:^5.9.2"
     viem: "npm:^2.37.8"
     vitest: "npm:^3.2.4"
