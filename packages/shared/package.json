@@ -23,7 +23,7 @@
   "devDependencies": {
     "@types/bull": "^4.10.4",
     "@types/pg": "^8",
-    "typescript": "^5.9.2",
+    "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   }
 }
