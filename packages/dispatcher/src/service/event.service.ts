@@ -26,7 +26,7 @@ export const getContributionRecordedEvents = async (
       contractAddress: CLAIM_CONTRACT_ADDRESS,
       eventInterface: contributionRecordedEvent,
       args: {
-        period: [periodInfo.period],
+        period: periodInfo.period,
       },
     });
 
